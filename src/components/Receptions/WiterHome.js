@@ -1,16 +1,19 @@
 import React, { useState } from 'react';
 
-import ToggleButton from './UIcomponents/ToggleButton';
+
+import HotDeal from './UIcomponents/HotDeal';
+import TabsMenu from './UIcomponents/TabsMenu'
+
 
 const WiterHome = (props) => {
 
 
     return (
-        <div className="container">
+        <div className="container-fluid">
             <div className="row align-items-start">
                 <div className="col-12 col-md m-2">
-                    <ToggleButton />        
-                    <ToggleButton />   
+                    {/* <HotDeal hotdeals={props.hotdeals} />         */}
+                    <TabsMenu  products={props.products} />
                 </div>
               
     

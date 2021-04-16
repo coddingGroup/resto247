@@ -1,9 +1,6 @@
 import { useState } from 'react';
 import React, { Component } from 'react';
-import './Some.css';
-import Search from './homepagecomponents/Search';
 import { NavLink } from "react-router-dom";
-import { baseUrl } from "../shared/baseUrl";
 import {
   Collapse,
   Navbar,
@@ -41,18 +38,18 @@ var Navigation = (props) => {
   return (
     <div className="container-fluid">
       <Navbar color="light" light expand="md">
-        <NavbarBrand href="/"><img src= "http://localhost:3000/logo.jpg" width="40px" /> 24/7 Resto</NavbarBrand>
+      
         <NavbarToggler onClick={toggle} />
         <Collapse isOpen={isOpen} navbar>
-          <Nav className="mr-auto" navbar>
+          <Nav className="mr-auto flex-column" navbar>
             <NavItem>
-              <NavLink className="nav-link" to="/home">
-                <span className="fa fa-home fa-lg"> Home </span>
+              <NavLink className="nav-link" to="/management/dashboard">
+                <span className="fa fa-home fa-lg"> Dashboard </span>
               </NavLink>
             </NavItem>
             <NavItem>
-              <NavLink className="nav-link" to="/aboutus">
-                <span className="fa fa-info fa-lg"> About Us </span>
+              <NavLink className="nav-link" to="/management/products">
+                <span className="fa fa-info fa-lg"> Products </span>
               </NavLink>
             </NavItem>
             <NavItem><NavLink className="nav-link" to="/menu">
@@ -77,21 +74,11 @@ var Navigation = (props) => {
             </UncontrolledDropdown>
 
           </Nav>
-          <span className="mr-5"> <Search searchbar="searchbar" /></span>
+        
         </Collapse>
 
         <span className="navbar-text">
 
-
-
-          <ButtonGroup>
-            <Button id="loginClass" onClick={togglerModal}>
-              Login
-                  </Button>
-            <Button id="signupClass">
-              Sign Up
-                  </Button>
-          </ButtonGroup>
 
 
 

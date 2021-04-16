@@ -1,29 +1,32 @@
 import React, { useState } from "react";
 import { Collapse, Button, CardBody, Card } from 'reactstrap';
+import '../../../css/home.css';
+import CircleMenu from "./CicleMenu";
+
 
 
 const ToggleButton = () => {
 
     const [collapse, setCollapse] = useState(true);
 
-    const [status, setStatus] = useState('Closed');
+    const [status, setStatus] = useState('');
 
-    const onEntering = () => setStatus('Opening...');
+    const onEntering = () => setStatus('');
 
-    const onEntered = () => setStatus('Opened');
+    const onEntered = () => setStatus('');
 
-    const onExiting = () => setStatus('Closing...');
+    const onExiting = () => setStatus('');
 
-    const onExited = () => setStatus('Closed');
+    const onExited = () => setStatus(' ');
 
     const toggle = () => setCollapse(!collapse);
 
     return (
         <React.Fragment>
-            <h2>Services: </h2>
-            <Button color="primary" onClick={toggle} style={{ marginBottom: '1rem' }}>Toggle</Button>{' '}
 
-            <h5>Current state: {status}</h5>
+            <Button className="color3" onClick={toggle} style={{ marginTop: '1rem', marginLeft: '1rem' }}>Manage</Button>{' '}
+
+            <h5> {status}</h5>
             <Collapse
                 isOpen={collapse}
                 onEntering={onEntering}
@@ -31,14 +34,11 @@ const ToggleButton = () => {
                 onExiting={onExiting}
                 onExited={onExited}
             >
-                <Card>
-                    <CardBody>
-                        Anim pariatur cliche reprehenderit,
-                        enim eiusmod high life accusamus terry richardson ad squid. Nihil
-                        anim keffiyeh helvetica, craft beer labore wes anderson cred
-                        nesciunt sapiente ea proident.
-                            </CardBody>
-                </Card>
+                <div className="col-12 col-md-11 offset-md-1">
+                    
+                        <CircleMenu />
+                    </div>
+                
             </Collapse>
         </React.Fragment>
     );

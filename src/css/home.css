@@ -7,19 +7,18 @@
 
 .color3{
     color:white;
-    background-color: rgba(0, 0, 0, 0.3);
-    /*751a1a*/
+    background-color: #751a1a;   
    }
-.titleOfCard{
-    color:white;
-    font-size: larger;
-    background-color: rgba(0, 0, 0, 0.3);
-}
 
    .add-to-cart-icon {
     color: #FF7300;
     text-shadow: 1px 1px 1px #ccc;
     font-size: 1.5em;
+}
+.add-to-cart-icon2 {
+    color: #FF7300;
+    text-shadow: 1px 1px 1px #ccc;
+   
 }
 
 .add-to-cart-btn {
@@ -50,3 +49,25 @@
       position: absolute;
       right: 29px;
   }
+
+  .btn-circle.btn-xl {
+    width: 70px;
+    height: 70px;
+    padding: 10px 16px;
+    border-radius: 35px;
+    font-size: 24px;
+    line-height: 1.33;
+}
+
+.btn-circle {
+    width: 30px;
+    height: 30px;
+    padding: 6px 0px;
+    border-radius: 15px;
+    text-align: center;
+    font-size: 12px;
+    line-height: 1.42857;
+}
+.menu-background{
+    background-color: #FF7300;
+}

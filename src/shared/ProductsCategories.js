@@ -5,7 +5,7 @@ export const ITEMS = [
     },
     {
         id: '2',
-        name: 'Suggestions'
+        name: 'Surgestions'
       },
       {
         id: '3',

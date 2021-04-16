@@ -6,10 +6,7 @@ export const addComment = (comment) =>({
     type: ActionTypes.ADD_COMMENT,
     payload: comment
 });
-export const changeProductToDisplay = (product) =>({
-    type: ActionTypes.CHANGE_TEXT_TO_SEARCH,
-    payload:product
-});
+
 export const postComment = (dishId, rating, author, comment) => (dispatch) =>{
     
     const newComment ={
@@ -48,99 +45,6 @@ export const postComment = (dishId, rating, author, comment) => (dispatch) =>{
         alert('Your comment could be posted\nError:'+error.message)})
         
 }
-
-export const fetchOutOfStockProducts = () =>(dispatch)=>{
-    dispatch(OutOfStockLoading(true));
-
-    return fetch(baseUrl + 'outOfStockProducts').then(response=>{
-        if(response.ok){
-            return response;
-        }
-        else {
-            var error = new Error ('Error '+ response.status + ': '+ response.statusText);
-            error.response = response;
-            throw error;
-        }
-    },
-        error => {
-            var err = new Error (error.message);
-            throw err;
-        }
-    ).then(response => response.json())
-        .then(dishes => dispatch(addOutOfStockProducts(dishes)))
-        .catch(error => dispatch(OutOfStockProductsFailed(error.message)));
-
-};
-export const OutOfStockLoading = ()=>({
-    type: ActionTypes.OUT_OF_STOCK_PRODUCTS_LOADING
-});
-export const OutOfStockProductsFailed =(errMess) => ({
-    type: ActionTypes.OUT_OUT_STOCK_PRODUCTS_FAILED,
-    payload:errMess
-});
-
-export const addOutOfStockProducts =(outOfStockProducts) =>({
-    type: ActionTypes.ADD_OUT_OF_STOCK_PRODUCTS,
-    payload: outOfStockProducts
-});
-
-
-
-
-
-
-
-
-
-
-export const searchText = (products, text) => (dispatch) => {
-    // dispatch(searchLoading(true))
-    dispatch(addSearchingText(text));
-
-    let output = products.map(product =>{
-        if(product.name.includes(text)){
-            return product;
-        }
-        else {
-            return null;
-        }
-    });
-    dispatch(addSearchOutPut(output));
-}
-
-
-
-// export const searchLoading = ()=>({
-//     type: ActionTypes.SEARCH_LOADING
-// });
-
-export const searchFail =(errmess) => ({
-    type: ActionTypes.SEARCH_FAIL,
-    payload:errmess
-});
-
-export const addSearchOutPut =(output) =>({
-    type: ActionTypes.ADD_SEARCH_RESULT,
-    payload: output
-});
-export const addSearchingText = (text) =>({
-   type: ActionTypes.CHANGE_TEXT_TO_SEARCH,
-   payload: text
-});
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 export const fetchDishes = () => (dispatch) => {
@@ -250,10 +154,10 @@ export const addRecommanded=(recommanded) =>({
 });
 
 
-export const fetchLeaders = () => (dispatch) => {
-    dispatch(leadersLoading(true))
+export const fetchHotdeals = () => (dispatch) => {
+    dispatch(hotdealsLoading(true))
 
-    return fetch(baseUrl + 'leaders')
+    return fetch(baseUrl + 'hotdeals')
             .then(response => {
                 if(response.ok){
                     return response;
@@ -269,22 +173,22 @@ export const fetchLeaders = () => (dispatch) => {
                 throw errmess;
             })
             .then(response => response.json())
-            .then(leaders => dispatch(addLeaders(leaders)))
-            .catch(error => dispatch(leadersFailed(error.message)));
+            .then(hotdeals => dispatch(addHotdeals(hotdeals)))
+            .catch(error => dispatch(hotdealsFailed(error.message)));
 }
 
-export const leadersLoading = ()=>({
-    type: ActionTypes.LEADERS_LOADING
+export const hotdealsLoading = ()=>({
+    type: ActionTypes.HOTDEALS_LOADING
 });
 
-export const leadersFailed =(errmess) => ({
-    type: ActionTypes.LEADERS_FAILED,
+export const hotdealsFailed =(errmess) => ({
+    type: ActionTypes.HOTDEALS_FAILED,
     payload:errmess
 });
 
-export const addLeaders =(leaders) =>({
-    type: ActionTypes.ADD_LEADERS,
-    payload: leaders
+export const addHotdeals =(hotdeals) =>({
+    type: ActionTypes.ADD_HOTDEALS,
+    payload: hotdeals
 });
 
 
@@ -303,6 +207,7 @@ export const postFeedback= (firstname, lastname, email, contactType, telnum,agre
         email: email,
         telnum: telnum,
         contactType: contactType,
+        telnum: telnum,
         agree:agree
     }
 
@@ -335,4 +240,40 @@ export const postFeedback= (firstname, lastname, email, contactType, telnum,agre
         alert('Your feedback could be posted\nError:'+error.message)})
         
 }
+
+export const fetchOutOfStockProducts = () =>(dispatch)=>{
+    dispatch(OutOfStockLoading(true));
+
+    return fetch(baseUrl + 'outOfStockProducts').then(response=>{
+        if(response.ok){
+            return response;
+        }
+        else {
+            var error = new Error ('Error '+ response.status + ': '+ response.statusText);
+            error.response = response;
+            throw error;
+        }
+    },
+        error => {
+            var err = new Error (error.message);
+            throw err;
+        }
+    ).then(response => response.json())
+        .then(dishes => dispatch(addOutOfStockProducts(dishes)))
+        .catch(error => dispatch(OutOfStockProductsFailed(error.message)));
+
+};
+export const OutOfStockLoading = ()=>({
+    type: ActionTypes.OUT_OF_STOCK_PRODUCTS_LOADING
+});
+export const OutOfStockProductsFailed =(errMess) => ({
+    type: ActionTypes.OUT_OUT_STOCK_PRODUCTS_FAILED,
+    payload:errMess
+});
+
+export const addOutOfStockProducts =(outOfStockProducts) =>({
+    type: ActionTypes.ADD_OUT_OF_STOCK_PRODUCTS,
+    payload: outOfStockProducts
+});
+
 

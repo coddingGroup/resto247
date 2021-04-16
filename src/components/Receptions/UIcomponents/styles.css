@@ -1,0 +1,12 @@
+
+.scrollbar-cyan {
+scrollbar-color: #FF7300 #F5F5F5;
+}
+
+
+
+.example-1 {
+position: block;
+overflow-y: scroll;
+height: 400px; 
+}

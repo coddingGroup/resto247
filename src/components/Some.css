@@ -39,6 +39,7 @@
   .carousel .hotDealCarouselItem img {
    
     max-width: 100%;
+    max-height: auto;
     
   }
   .carousel .hotDealCarouselItem .hotDealImageBox{
@@ -111,7 +112,7 @@
     }
 
     .searchbarFix{
-      margin-bottom: 2em;
+      margin-bottom: 10em;
       margin-top: 5em;
       height: 60px;
       background-color:#751a1a;

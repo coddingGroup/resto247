@@ -3,7 +3,6 @@ import { TabContent, TabPane, Nav, NavItem, NavLink, Card, Button, CardTitle, Ca
 import classnames from 'classnames';
 import {ITEMS} from '../../shared/ProductsCategories'
 import FlippingCard from "./FlippingCard";
-import ListOfProductCard from "../no_more_used_components/ListOfProductCard";
 import {Loading} from "../LoadingComponent";
 
 

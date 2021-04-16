@@ -7,45 +7,38 @@ import Home from "./HomeComponent";
 import { Switch, Route, Redirect, withRouter } from 'react-router-dom';
 import { connect } from "react-redux";
 import About from './AboutComponent';
-import {
-  postComment,
-  postFeedback,
-  fetchDishes,
-  fetchRecommanded,
-  fetchComments,
-  fetchLeaders,
-  fetchOutOfStockProducts,
-  searchText
-} from "../redux/ActionCreators";
+import { postComment, postFeedback, fetchDishes, fetchRecommanded, fetchComments, fetchHotdeals,   fetchOutOfStockProducts } from "../redux/ActionCreators";
 import { actions } from "react-redux-form";
 import { TransitionGroup, CSSTransition } from "react-transition-group";
 import Login from "./Login";
 import WiterHome from './Receptions/WiterHome';
 import Navigation from './Navigation';
+import Dashboard from './Manager/Dashboard';
+import MainManager from './Manager/Main';
 import Management from "./Manager/Management";
+
+
 
 const mapStateToProps = state => {
   return {
     products: state.products,
     comments: state.comments,
     recommanded: state.recommanded,
-    leaders: state.leaders,
-    oneProduct:state.oneProduct,
+    hotdeals: state.hotdeals,
     outOfStockProducts: state.outOfStockProducts,
-    searchingOutput: state.searchingOutput
   }
 }
 
 const mapDispatchToProps = (dispatch) => ({
   postComment: (dishId, rating, author, comment) => dispatch(postComment(dishId, rating, author, comment)),
-  fetchOutOfStockProducts: () =>{dispatch(fetchOutOfStockProducts()) },
   fetchDishes: () => { dispatch(fetchDishes()) },
-  searchText: (products,text) =>dispatch(searchText(products, text)),
   resetFeedbackForm: () => { dispatch(actions.reset('feedback')) },
   fetchComments: () => { dispatch(fetchComments()) },
   fetchRecommanded: () => { dispatch(fetchRecommanded()) },
-  fetchLeaders: () => { dispatch(fetchLeaders()) },
-  postFeedback: (firstname, lastname, email, contactType, telnum, agree) => dispatch(postFeedback(firstname, lastname, email, contactType, telnum, agree))
+  fetchHotdeals: () => { dispatch(fetchHotdeals()) },
+  postFeedback: (firstname, lastname, email, contactType, telnum, agree) => dispatch(postFeedback(firstname, lastname, email, contactType, telnum, agree)),
+  fetchDishes: () => { dispatch(fetchDishes()) },
+  fetchOutOfStockProducts: () =>{dispatch(fetchOutOfStockProducts()) }
 
 });
 
@@ -59,10 +52,8 @@ class Main extends Component {
     this.props.fetchDishes();
     this.props.fetchComments();
     this.props.fetchRecommanded();
-    this.props.fetchLeaders();
+    this.props.fetchHotdeals();
     this.props.fetchOutOfStockProducts();
-
-
 
 
   }
@@ -76,11 +67,11 @@ class Main extends Component {
           dishesLoading={this.props.products.isLoading}
           dishesErrMess={this.props.products.errMess}
           promotion={this.props.recommanded.recommanded.filter((promo) => promo.featured)[0]}
-          leader={this.props.leaders.leaders.filter((leader) => leader.featured)[0]}
-          leadersLoading={this.props.leaders.isLoading}
-          leadersErrMess={this.props.leaders.errMess}
+          hotdeal={this.props.hotdeals.hotdeals.filter((hotdeal) => hotdeal.featured)[0]}
+          hotdealsLoading={this.props.hotdeals.isLoading}
+          hotdealsErrMess={this.props.hotdeals.errMess}
           promosLoading={this.props.recommanded.isLoading}
-          promosErrMess={this.props.recommanded.errMess}
+          promosErrMess={this.props.recommanded.errMess} 
 
         />
       );
@@ -115,12 +106,16 @@ class Main extends Component {
               <Route exact path="/contactus" component={() => <Contact resetFeedbackForm={this.props.resetFeedbackForm} postFeedback={this.props.postFeedback} />} />
               <Route exact path="/aboutus" component={() => <About leaders={this.props.leaders} />} />
               <Route exact path="/login" component={() =><Login /> } />
-              <Route exact path="/witer" component={() => <WiterHome />}/>
-              <Route exact path="/Manage" component={() => <Management outOfStockProducts={this.props.outOfStockProducts}
+              <Route exact path="/witer" component={() => <WiterHome products={this.props.products} hotdeals={this.props.hotdeals}/>}/>
+              <Route exact path="/manage" component={() => <Management outOfStockProducts={this.props.outOfStockProducts}
                                                                        searchingOutput={this.props.searchingOutput}
                                                                        searchText = {this.props.searchText}
                                                                        products={this.props.products}/>}/>
-                
+              <Route exact path="/management" component={() => <MainManager products={this.props.products} />}/>
+              <Route exact path="/management/dashboard" component={() => <MainManager section={'dashboard'} products={this.props.products} />}/>
+              <Route exact path="/management/products" component={() => <MainManager section={'products'} products={this.props.products} />}/>
+
+                            
               <Redirect to="/home" />
             </Switch>
           </CSSTransition>
