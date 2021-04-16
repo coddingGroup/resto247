@@ -1,0 +1,131 @@
+#loginClass{
+ color:white;
+ background-color: #751a1a;   
+}
+#signupClass{
+    color:white;
+    background-color: #FF7300;
+}
+.carousel #mainCarousel{
+    background-color: #512DA8;
+  }
+  .carousel .mainCarouselItem{
+    height: 400px;
+  }
+  .carousel .carousel-item .mainCarouselItem img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    min-height: 300px;
+  }
+  #carouselButton {
+    right: 0px;
+    position: absolute;
+    bottom: 0px;
+  }
+  .carousel .carousel-item .color3 {
+   background-color: #751a1a;
+  }
+
+
+
+
+  .carousel {
+    background-color: white;
+  }
+  .carousel .carousel-item {
+    height: 300px;
+  }
+  .carousel .hotDealCarouselItem img {
+   
+    max-width: 100%;
+    
+  }
+  .carousel .hotDealCarouselItem .hotDealImageBox{
+    position: absolute;
+    top: 0;
+    left: 0;
+    min-height: 300px;
+    max-width: 40%;
+  }
+
+  #carouselButton {
+    right: 0px;
+    position: absolute;
+    bottom: 0px;
+  }
+  .carousel .hotDealCarouselItem .captionOfHotDeal {
+    position: absolute;
+    top: 0;
+    right:0 ;
+    color:#FF7300;
+  }
+  .carousel .hotDealCarouselItem .captionOfHotDeal .buttonInHotDeal{
+    position: absolute;
+    bottom : 10px;
+    right: 0;
+  }
+
+   .searchbar{
+    margin-bottom: auto;
+    margin-top: auto;
+    height: 60px;
+    background-color: #353b48;
+    border-radius: 30px;
+    padding: 10px;
+    }
+
+    .search_input{
+    color: white;
+    border: 0;
+    outline: 0;
+    background: none;
+    width: 0;
+    caret-color:transparent;
+    line-height: 40px;
+    transition: width 0.4s linear;
+    }
+
+    .searchbar:hover > .search_input{
+    padding: 0 10px;
+    width: 450px;
+    caret-color:red;
+    transition: width 0.4s linear;
+    }
+
+    .searchbar:hover > .search_icon{
+    background: white;
+    color: #FF7300;
+    }
+
+    .search_icon{
+    height: 40px;
+    width: 40px;
+    float: right;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    color:white;
+    text-decoration:none;
+    }
+
+    .searchbarFix{
+      margin-bottom: 2em;
+      margin-top: 5em;
+      height: 60px;
+      background-color:#751a1a;
+      border-radius: 30px;
+      padding: 10px;
+      }
+    
+    .searchbarFix .search_input{
+      padding: 0 10px;
+      width: 450px;
+      caret-color:red;
+      transition: width 0.4s linear;
+      }
+      .searchbarFix:hover > .search_icon{
+        background: white;
+        color: #FF7300;
+        }
