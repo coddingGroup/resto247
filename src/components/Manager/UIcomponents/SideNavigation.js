@@ -24,7 +24,46 @@ import {
   ModalFooter
 
 } from 'reactstrap';
+import '../../../css/styles.css';
 
+let sideBarItems = [
+  {
+    name:'Increase Product',
+    icon:'fa fa-plus',
+    color:'btn-success',
+    to: 'dashboard'
+  },
+  {
+    name: 'Increase resources',
+    icon: 'fa fa-trash',
+    color:'btn-danger',
+    to: 'dashboard'
+  },
+  {
+    name:'Daily usage',
+    icon: 'fa fa-tasks',
+    color: 'btn-warning',
+    to: 'products'
+  },
+  {
+    name:'Add new resource',
+    icon: 'fa fa-tasks',
+    color: 'btn-warning',
+    to: 'products'
+  },
+  {
+    name:'Add new product',
+    icon: 'fa fa-tasks',
+    color: 'btn-warning',
+    to: 'products'
+  },
+  {
+    name:'March product to resource',
+    icon: 'fa fa-tasks',
+    color: 'btn-warning',
+    to: 'products'
+  }
+];
 
 var Navigation = (props) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -35,32 +74,23 @@ var Navigation = (props) => {
 
   const togglerModal = () => setIsModalOpen(!isModalOpen);
 
+  let output = sideBarItems.map(item =>{
+    return (
+        <NavItem>
+          <NavLink className="nav-link" to={item.to}>
+            <span className={item.icon}> {item.name} </span>
+          </NavLink>
+        </NavItem>
+    )
+  })
   return (
     <div className="container-fluid">
       <Navbar color="light" light expand="md">
       
         <NavbarToggler onClick={toggle} />
         <Collapse isOpen={isOpen} navbar>
-          <Nav className="mr-auto flex-column" navbar>
-            <NavItem>
-              <NavLink className="nav-link" to="/management/dashboard">
-                <span className="fa fa-home fa-lg"> Dashboard </span>
-              </NavLink>
-            </NavItem>
-            <NavItem>
-              <NavLink className="nav-link" to="/management/products">
-                <span className="fa fa-info fa-lg"> Products </span>
-              </NavLink>
-            </NavItem>
-            <NavItem><NavLink className="nav-link" to="/menu">
-              <span className="fa fa-list fa-lg"> Menu </span>
-            </NavLink>
-            </NavItem>
-            <NavItem>
-              <NavLink className="nav-link" to="/contactus">
-                <span className="fa fa-address-card fa-lg"> Contact Us </span>
-              </NavLink>
-            </NavItem>
+          <Nav className="mr-auto flex-column navItems " navbar>
+            {output}
             <UncontrolledDropdown nav inNavbar>
               <DropdownToggle nav caret>
                 Options

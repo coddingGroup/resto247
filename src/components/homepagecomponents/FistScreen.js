@@ -1,4 +1,4 @@
-import '../Some.css'
+import '../../css/Some.css'
 import {
     Carousel,
     CarouselItem,

@@ -39,7 +39,6 @@
   .carousel .hotDealCarouselItem img {
    
     max-width: 100%;
-    max-height: auto;
     
   }
   .carousel .hotDealCarouselItem .hotDealImageBox{
@@ -112,8 +111,8 @@
     }
 
     .searchbarFix{
-      margin-bottom: 10em;
-      margin-top: 5em;
+      margin-bottom: 2em;
+      margin-top: 4em;
       height: 60px;
       background-color:#751a1a;
       border-radius: 30px;
@@ -130,3 +129,48 @@
         background: white;
         color: #FF7300;
         }
+      .z-index-front{
+          z-index: 100;
+      }
+      .priceInCardForWaiter{
+          position: absolute;
+          top: 3px;
+          right:3px;
+
+      }
+      .nameInCardForWaiter{
+          position: absolute;
+          top: 3px;
+          left: 3px;
+          color: white;
+          background-color: rgba(0, 0, 0, 0.3);
+          font-size: large;
+      }
+      .cardInWaiter{
+          border-radius: 7px;
+          border: #FF7300 solid 2px;
+          width: 16rem;
+      }
+      .bottom-shadow{
+          box-shadow: 1px 3px #FF7300;
+      }
+      .add-to-cart-btn{
+          border: #FF7300 solid 1px;
+      }
+      .descriptionPartOfCart{
+
+          position: absolute;
+          top: 4em;
+          color: white;
+          background-color: rgba(0, 0, 0, 0.5);
+          transition: 1000ms all;
+          display: inline;
+
+      }
+.descriptionPartOfCartD_none{
+    opacity: 0;
+
+}
+.descriptionPartOfCartD_block{
+    opacity: 1;
+}

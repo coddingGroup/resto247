@@ -4,47 +4,29 @@ import classnames from 'classnames';
 import {ITEMS} from '../../shared/ProductsCategories'
 import FlippingCard from "./FlippingCard";
 import {Loading} from "../LoadingComponent";
-
-
-
-const arrayToFilter =
-  {
-    All: [
-      <FlippingCard/>,
-      <FlippingCard/>,<FlippingCard/>,
-      <FlippingCard/>,<FlippingCard/>,
-      <FlippingCard/>,<FlippingCard/>,
-      <FlippingCard/>,<FlippingCard/>,
-      <FlippingCard/>
-    ],
-    Suggestions:[
-        <FlippingCard/>
-    ]
-  }
-
-;
+import RenderCard3 from "../homepagecomponents/RenderCard3";
 
 
 
 
 
 
-const SearchFilterInM = ({allProducts, isLoading , errMess}) => {
+const SearchFilterInM = (props) => {
 
     const [activeTab, setActiveTab] = useState('mains');
     // const[cathegories,setCAthegories] = useState(ITEMS);
-    if (isLoading) {
+    if (props.isLoading) {
         return (
             <Loading />
         );
     }
-    else if (errMess) {
+    else if (props.errMess) {
         return (
-            <h4> {errMess} </h4>
+            <h4> {props.errMess} </h4>
         );
     }
     else{
-        let keysToUse = allProducts.reduce(
+        let keysToUse = props.allProducts.reduce(
             (keysToUse,pr) =>{
                 if(!keysToUse.includes(pr.category)){
                     keysToUse = [...keysToUse,pr.category];
@@ -62,11 +44,22 @@ const SearchFilterInM = ({allProducts, isLoading , errMess}) => {
         for(let i = 0; i <  keysToUse.length; i++){
             arry[keysToUse[i]] = [];
         }
+        let cardT = undefined;
+        if(props.cardToRender ==="FlippingCard"){
+            cardT = (productT) =>{
+                return <FlippingCard oneProduct={productT} />
+            }
+        }
+        else{
+            cardT = (productT)=>{
+                return <RenderCard3 item={productT} addToCart={props.addToCart} cart={props.cart} />
+            }
+        }
 
-        const arr = allProducts.reduce(
+        const arr = props.allProducts.reduce(
             (arrayOfItems, productT) =>{
                 arrayOfItems[productT.category] = [...arrayOfItems[productT.category],
-                    <FlippingCard oneProduct = {productT}/>];
+                    cardT(productT)];
                 return arrayOfItems;
             },arry
         )
@@ -78,7 +71,6 @@ const SearchFilterInM = ({allProducts, isLoading , errMess}) => {
             if(activeTab !== tab) setActiveTab(tab);
         }
 
-        const allKey = Object.keys(arrayToFilter);
 
         let allNavItemNew = keysToUse.map(cathegory =>{
             return(

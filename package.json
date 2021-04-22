@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@react-google-maps/api": "^2.1.1",
     "@testing-library/jest-dom": "^5.11.4",
     "@testing-library/react": "^11.1.0",
     "@testing-library/user-event": "^12.1.10",
@@ -24,6 +25,7 @@
     "react-scripts": "4.0.1",
     "react-scroll": "^1.8.2",
     "react-sticky": "^6.0.3",
+    "react-to-print": "^2.12.4",
     "react-transition-group": "2.3.0",
     "reactstrap": "5.0.0",
     "reactstrap-date-picker": "^0.0.11",

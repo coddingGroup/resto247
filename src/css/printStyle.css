@@ -1,0 +1,18 @@
+
+@media print {
+    .allContentToPrint{
+
+        width: 100%;
+    }
+    tr{
+        border: none;
+
+    }
+    .dontPrint{
+        display: none;
+    }
+    .changeFont{
+        font-size: 70px;
+    }
+
+}

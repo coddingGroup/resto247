@@ -32,9 +32,13 @@ class Login extends Component {
 
     render() {
         return (
-            <div className="row mt-5">
-                <div className="col-12 col-md-6 offset-sm-3">
-                    <Form model="feedback" onSubmit={(values) => this.handleSubmit(values)}>
+            <div className="d-flex justify-content-center">
+                <div className="bg-light shadow-lg mt-5 mb-5 ">
+
+
+            <div className="p-5">
+                <div className="">
+                    <Form model="login" onSubmit={(values) => this.handleSubmit(values)}>
 
                         <Row className="form-group">
                             <Label htmlFor="email" md={2}> Email </Label>
@@ -79,7 +83,7 @@ class Login extends Component {
                             </Col>
                         </Row>
                         <Row className="form-group">
-                            <Col md={{ size: 6, offset: 2 }}>
+                            <Col md={{ size: 10, offset: 2 }}>
                                 <div className="form-check">
                                     <Control.checkbox model=".agree" name="agree" className="form-check-input" /> {' '}
                                     <strong>Remember password? </strong>
@@ -90,7 +94,7 @@ class Login extends Component {
                         </Row>
 
                         <Row className="form-group">
-                            <Col md={{ size: 10, offset: 2 }}>
+                            <Col md={{ size: 7, offset: 5 }}>
                                 <Button type="submit" color="primary">
                                     Login
                                     </Button>
@@ -99,6 +103,8 @@ class Login extends Component {
                     </Form>
                 </div>
                 <div className="col-12 col-md-3"></div>
+            </div>
+                </div>
             </div>
         );
     }

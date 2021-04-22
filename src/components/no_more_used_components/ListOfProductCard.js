@@ -3,7 +3,7 @@ import {FadeTransform} from "react-animation-components";
 import {Button, Card, CardBody, CardImg, CardImgOverlay, CardSubtitle, CardText, CardTitle} from "reactstrap";
 import {baseUrl} from "../../shared/baseUrl";
 import {useState} from "react";
-import '../Manager/Manager.css';
+import '../../css/Manager.css';
 
 function ListOfProductCard(props) {
     //categorized cards

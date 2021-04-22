@@ -13,7 +13,7 @@ const WiterHome = (props) => {
             <div className="row align-items-start">
                 <div className="col-12 col-md m-2">
                     {/* <HotDeal hotdeals={props.hotdeals} />         */}
-                    <TabsMenu  products={props.products} />
+                    <TabsMenu cart={props.cart} addToCart={props.addToCart} removeToCart={props.removeToCart}  products={props.products} />
                 </div>
               
     

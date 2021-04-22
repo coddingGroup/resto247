@@ -1,8 +1,6 @@
-import { array } from "prop-types";
 import React from "react";
-import { render } from "react-dom";
 import InfiniteScroll from "react-infinite-scroll-component";
-import RenderCard2 from "../../homepagecomponents/RenderCard2";
+import RenderCard3 from "../../homepagecomponents/RenderCard3";
 import {Component} from 'react';
 
 
@@ -12,16 +10,22 @@ const style = {
     margin: 6,
     padding: 8
 };
-let lastIndex = 6;
+let lastIndex = 12;
 class ReactInfiniteScroll extends Component {
     
     constructor(props) {
         super(props);
-        let opElement = this.props.products.products.slice(0, lastIndex);
+        let opElement = this.props.products.slice(0, lastIndex);
         let menu = opElement.map((product) => {
             return (
                 <div className="">
-                    <RenderCard2 item={product} />
+                    <RenderCard3 item={product}
+                                 key={product.id}
+                                 cart={this.props.cart}
+                                 addToCart = {this.props.addToCart}
+                                 removeToCart = { this.props.removeToCart}
+
+                    />
                 </div>
             );
         });
@@ -30,40 +34,45 @@ class ReactInfiniteScroll extends Component {
         ];
         
 
-        this.state = {
-            items2: arr,
-            hasMoreS:true,
-            itemsToFetch: lastIndex,
-            itemToStartOn: lastIndex
-        };
+        // this.state = {
+        //     items2: arr,
+        //     hasMoreS:true,
+        //     itemsToFetch: lastIndex,
+        //     itemToStartOn: lastIndex
+        // };
         this.funMenu = this.funMenu.bind(this);
 
     }
     funMenu = () =>{
-        let products  = this.props.products.products;
-        var last = this.state.itemToStartOn + this.state.itemsToFetch;
-        let lastIndex = (products.length > this.state.itemToStartOn && products.length < last)? products.length : last;
+        let products  = this.props.products;
+        let last = this.props.itemToStartOn + this.props.itemToFetch;
+        let lastIndex = (products.length > this.props.itemToStartOn && products.length < last)? products.length : last;
         if(products.length >=  lastIndex){
             
-        let opElement = products.slice(this.state.itemToStartOn, lastIndex);
-        this.setState({
-            itemToStartOn:lastIndex
-        }
-            
-        )
+        let opElement = products.slice(this.props.itemToStartOn, lastIndex);
+        // this.setState({
+        //     itemToStartOn:lastIndex
+        // }
+        //
+        //
+        // )
+            this.props.setItemToStartOn(lastIndex);
         let menu = opElement.map((product) => {
             return (
                 <div className="">
-                    <RenderCard2 item={product} />
+                    <RenderCard3 key={product.id +"op"} cart={this.props.cart} addToCart={this.props.addToCart} removeToCart={this.props.removeToCart}  item={product} />
                 </div>
             );
         });
         if(products.length === lastIndex){
-            this.setState({hasMoreS: false});
+            // this.setState({hasMoreS: false});
+            this.props.setHasMoreS(false);
         }
         return menu;
         }
         else{
+            // this.setState({hasMores:false});
+            this.props.setHasMoreS(false);
            
             return null;
             
@@ -77,13 +86,14 @@ class ReactInfiniteScroll extends Component {
         // a fake async api call like which sends
         // 20 more records in 1.5 secs
         setTimeout(() => {
-            this.setState({
-                
-                items2: [...this.state.items2,...this.funMenu()]
-                
-            });
-            
-            
+            // this.setState({
+            //
+            //     items2: [...this.state.items2,...this.funMenu()]
+            //
+            // });
+            let item2 = [...this.props.items2, ...this.props.funMenu()];
+
+            this.props.setItems2(item2);
         }, 1500);
     };
 
@@ -94,9 +104,9 @@ class ReactInfiniteScroll extends Component {
             <div className="mt-2">
                 <InfiniteScroll
                 scrollableTarget={this.props.scrollableDiv}
-                    dataLength={this.state.items2.length}
+                    dataLength={this.props.items2.length}
                     next={this.fetchMoreData}
-                    hasMore={this.state.hasMoreS}
+                    hasMore={this.props.hasMoreS}
                     loader={<h4>Loading...</h4>}
                     endMessage={
                         <p> no more results </p>
@@ -105,13 +115,12 @@ class ReactInfiniteScroll extends Component {
                 >
                  <div className="row">  
                 {
-                    this.state.items2.map(
+                    this.props.items2.map(
                         (item,i) =>{
                             return(
                                 <span>{item}
                                 
                                 </span>
-                                
                             )
                         }
                     )

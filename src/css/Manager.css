@@ -112,8 +112,8 @@ body #root footer {
 }
 .searchResult{
     z-index: 1;
-    position: absolute;
-    background-color: white;
+    position: relative;
+    background-color: rgba(255, 255, 255, 0.5);
     width: 100%;
 }
 .searchResult:hover{

@@ -1,9 +1,9 @@
-import { useState } from 'react';
-import React, { Component } from 'react';
-import './Some.css';
+import React, { useState } from 'react';
+import '../css/Some.css';
 import Search from './homepagecomponents/Search';
 import { NavLink } from "react-router-dom";
 import { baseUrl } from "../shared/baseUrl";
+import AddedCart from "./cartComponent/AddedCart";
 import {
   Collapse,
   Navbar,
@@ -30,6 +30,7 @@ import {
 
 
 var Navigation = (props) => {
+
   const [isOpen, setIsOpen] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -82,14 +83,15 @@ var Navigation = (props) => {
 
         <span className="navbar-text">
 
-
+          <AddedCart cart={props.cart} />
 
           <ButtonGroup>
             <Button id="loginClass" onClick={togglerModal}>
               Login
                   </Button>
             <Button id="signupClass">
-              Sign Up
+
+              <NavLink to="/signup">Sign Up</NavLink>
                   </Button>
           </ButtonGroup>
 

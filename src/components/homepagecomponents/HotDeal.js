@@ -1,5 +1,5 @@
 
-import '../Some.css'
+import '../../css/Some.css'
 import { useState } from 'react';
 import {
     Carousel,

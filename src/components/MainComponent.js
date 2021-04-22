@@ -7,15 +7,17 @@ import Home from "./HomeComponent";
 import { Switch, Route, Redirect, withRouter } from 'react-router-dom';
 import { connect } from "react-redux";
 import About from './AboutComponent';
-import { postComment, postFeedback, fetchDishes, fetchRecommanded, fetchComments, fetchHotdeals,   fetchOutOfStockProducts } from "../redux/ActionCreators";
+import { postComment, postFeedback, fetchDishes, fetchRecommanded, fetchComments, fetchHotdeals,   fetchOutOfStockProducts, addToCart, removeToCart } from "../redux/ActionCreators";
 import { actions } from "react-redux-form";
 import { TransitionGroup, CSSTransition } from "react-transition-group";
 import Login from "./Login";
+import SignUp from "./SignUp";
 import WiterHome from './Receptions/WiterHome';
 import Navigation from './Navigation';
-import Dashboard from './Manager/Dashboard';
+import Dashboard from './Manager/Reports/Dashboard';
 import MainManager from './Manager/Main';
-import Management from "./Manager/Management";
+import IncreaseProduct from "./Manager/Products/IncreaseProduct";
+import * as ActionTypes from "../redux/ActionTypes";
 
 
 
@@ -26,12 +28,14 @@ const mapStateToProps = state => {
     recommanded: state.recommanded,
     hotdeals: state.hotdeals,
     outOfStockProducts: state.outOfStockProducts,
+    cart: state.cart
   }
 }
 
 const mapDispatchToProps = (dispatch) => ({
+  addToCart: (item) => dispatch(addToCart(item)),
+  removeToCart:(removeId) => dispatch(removeToCart(removeId)),
   postComment: (dishId, rating, author, comment) => dispatch(postComment(dishId, rating, author, comment)),
-  fetchDishes: () => { dispatch(fetchDishes()) },
   resetFeedbackForm: () => { dispatch(actions.reset('feedback')) },
   fetchComments: () => { dispatch(fetchComments()) },
   fetchRecommanded: () => { dispatch(fetchRecommanded()) },
@@ -42,11 +46,42 @@ const mapDispatchToProps = (dispatch) => ({
 
 });
 
+
+
+
 class Main extends Component {
 
   constructor(props) {
     super(props);
+
+    this.state =({
+      mainNavItems : {
+        1:{
+          name: 'Home',
+          to:'/home',
+          icon: 'fa fa-home fa-lg'
+
+        },
+        2:{
+          name: 'About Us',
+          to:'/aboutus',
+          icon: 'fa fa-info fa-lg'
+        },
+        3:{
+          name: 'Menu',
+          to:'/menu',
+          icon: 'fa fa-list fa-lg'
+        },
+        4:{
+          name:'Contact Us',
+          to:'/contactus',
+          icon: 'fa fa-address-card fa-lg'
+        }
+      }
+    });
+
   }
+
 
   componentDidMount() {
     this.props.fetchDishes();
@@ -71,7 +106,11 @@ class Main extends Component {
           hotdealsLoading={this.props.hotdeals.isLoading}
           hotdealsErrMess={this.props.hotdeals.errMess}
           promosLoading={this.props.recommanded.isLoading}
-          promosErrMess={this.props.recommanded.errMess} 
+          promosErrMess={this.props.recommanded.errMess}
+              addToCart = {this.props.addToCart}
+              removeToCart = { this.props.removeToCart}
+              cart={this.props.cart}
+              hotdeals={this.props.hotdeals}
 
         />
       );
@@ -96,7 +135,7 @@ class Main extends Component {
     }
     return (
       <div>
-        <Navigation />
+        <Navigation mainNavItems={this.state.mainNavItems} cart={this.props.cart} />
         <TransitionGroup>
           <CSSTransition key={this.props.location.key} classNames="page" timeout={300}>
             <Switch>
@@ -106,14 +145,18 @@ class Main extends Component {
               <Route exact path="/contactus" component={() => <Contact resetFeedbackForm={this.props.resetFeedbackForm} postFeedback={this.props.postFeedback} />} />
               <Route exact path="/aboutus" component={() => <About leaders={this.props.leaders} />} />
               <Route exact path="/login" component={() =><Login /> } />
-              <Route exact path="/witer" component={() => <WiterHome products={this.props.products} hotdeals={this.props.hotdeals}/>}/>
-              <Route exact path="/manage" component={() => <Management outOfStockProducts={this.props.outOfStockProducts}
-                                                                       searchingOutput={this.props.searchingOutput}
-                                                                       searchText = {this.props.searchText}
-                                                                       products={this.props.products}/>}/>
-              <Route exact path="/management" component={() => <MainManager products={this.props.products} />}/>
-              <Route exact path="/management/dashboard" component={() => <MainManager section={'dashboard'} products={this.props.products} />}/>
-              <Route exact path="/management/products" component={() => <MainManager section={'products'} products={this.props.products} />}/>
+              <Route exact path="/witer" component={() => <WiterHome products={this.props.products}
+                                                                     addToCart = {this.props.addToCart}
+                                                                     removeToCart = { this.props.removeToCart}
+                                                                     cart={this.props.cart}
+                                                                     />}/>
+
+              <Route path="/management" component={() => <MainManager products={this.props.products}
+                                                                            searchingOutput={this.props.searchingOutput}
+                                                                            searchText = {this.props.searchText}
+                                                                            outOfStockProducts={this.props.outOfStockProducts} />}/>
+
+              <Route path="/signup" component={() => <SignUp/> } />
 
                             
               <Redirect to="/home" />

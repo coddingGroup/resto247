@@ -1,18 +1,7 @@
-import FlippingCard from "./FlippingCard";
-import './Manager.css';
-import {Loading} from "../LoadingComponent";
-import React, {Component} from "react";
-
-
-
-
-
-
-
-
-
-
-
+import FlippingCard from "../FlippingCard";
+import '../../../css/Manager.css';
+import {Loading} from "../../LoadingComponent";
+import React from "react";
 
 const OutOfStock = ({allProducts, isLoading, errMess}) =>{
 

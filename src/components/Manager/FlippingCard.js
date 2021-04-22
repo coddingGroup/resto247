@@ -1,5 +1,5 @@
 import React,{Component} from "react";
-import './Manager.css';
+import '../../css/Manager.css';
 import {Form, FormGroup, Input, Label} from "reactstrap";
 import { baseUrl } from "../../shared/baseUrl";
 import { useState } from 'react';

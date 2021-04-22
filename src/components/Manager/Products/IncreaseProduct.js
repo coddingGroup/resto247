@@ -1,12 +1,12 @@
 import React,{useEffect, useState} from 'react';
-import ManagerBar from "./ManagerSideBar";
 import {Col, Container, Row} from "reactstrap";
 import OutOfStock from "./HorizontalOutOfStock";
-import Search from "../homepagecomponents/Search";
-import SearchFilterInM from "./FiltersInManager";
-import SearchOutputDisplay from "./SearchOutputDisplay";
+import Search from "../../homepagecomponents/Search";
+import SearchFilterInM from "../SearchFilterIn";
+import SearchOutputDisplay from "../SearchOutputDisplay";
+import Navigation from "../UIcomponents/SideNavigation";
 
-const Management =({products, outOfStockProducts}) =>{
+const IncreaseProduct =({products, outOfStockProducts}) =>{
 
     const [text, setText] = useState('');
     const [searchOutput, setSearchOutput] = useState([]);
@@ -35,39 +35,30 @@ const Management =({products, outOfStockProducts}) =>{
     return (
         <React.Fragment>
 
-        <Row>
-            <Col md={2}>
-                <Container fluid className="h-100">
-                    <ManagerBar />
-
-
-                </Container>
-
-            </Col>
-            <Col md={10}>
-                <Container fluid>
-
-
+            <div className="row">
+                <div className="col-md-2">
+                    <Navigation />
+                </div>
+                <div className="col-md-10">
                     <OutOfStock allProducts ={outOfStockProducts.outOfStockProducts} isLoading={outOfStockProducts.isLoading} errMess={outOfStockProducts.errMess} />
 
 
 
 
-                        <Search searchText={searchText} searchbar="searchbarFix" setText={setText} text={text} />
-                        <SearchOutputDisplay output={searchOutput}/>
-                        <div className="w-100" >
+                    <Search searchText={searchText} searchbar="searchbarFix" setText={setText} text={text} />
+                    <SearchOutputDisplay output={searchOutput}/>
+                    <div className="w-100" >
 
-                            <SearchFilterInM allProducts = { products.products} isLoading={products.isLoading} errMess={products.errMess}/>
-                        </div>
+                        <SearchFilterInM cardToRender={"FlippingCard"} allProducts = { products.products} isLoading={products.isLoading} errMess={products.errMess}/>
+                    </div>
+                </div>
 
-
-                </Container>
-
-            </Col>
+            </div>
 
 
-        </Row>
+
+
         </React.Fragment>
     )
 }
-export default Management;
+export default IncreaseProduct;

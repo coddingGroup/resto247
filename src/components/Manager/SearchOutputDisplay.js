@@ -1,5 +1,5 @@
 import FlippingCard from "./FlippingCard";
-import './Manager.css';
+import '../../css/Manager.css';
 const SearchOutputDisplay = ({output}) =>{
     let result = output.map(
         oneProduct => {

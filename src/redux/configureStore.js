@@ -5,9 +5,10 @@ import { Comments } from "./comments";
 import { Hotdeals } from "./hotdeals";
 import { Recommanded } from "./recommanded";
 import {OutOfStockProducts} from "./outOfStockProducts";
+import {Cart} from "./Cart";
 import thunk from "redux-thunk";
 import logger from 'redux-logger';
-import { InitialFeedback } from "./Forms";
+import { InitialFeedback, quantity, login, signUp } from "./Forms";
 
 export const ConfigureStore = () => {
     const store = createStore(
@@ -17,8 +18,12 @@ export const ConfigureStore = () => {
             recommanded: Recommanded,
             hotdeals: Hotdeals,
             outOfStockProducts: OutOfStockProducts,
+            cart: Cart,
             ...createForms({
-                feedback: InitialFeedback
+                feedback: InitialFeedback,
+                quantity: quantity,
+                login:login,
+                signUp:signUp
             })
             
         }),

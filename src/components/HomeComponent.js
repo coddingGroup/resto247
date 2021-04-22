@@ -4,9 +4,10 @@ import classnames from 'classnames';
 import { ITEMS } from '../shared/ProductsCategories';
 import '../css/home.css';
 import Header from "./HeaderComponent";
-import RenderCard2 from './homepagecomponents/RenderCard2'
+import RenderCard3 from './homepagecomponents/RenderCard3'
 import RenderCard from './homepagecomponents/RenderCard'
-
+import SearchFilterInM from "./Manager/SearchFilterIn";
+import GoogleMapExample from "./homepagecomponents/GoogleMap";
 
 
 
@@ -35,7 +36,7 @@ function Home(props) {
     const menu = props.products.products.map((product) => {
         return (
             <div className="col-12 col-md-3 pl-1">
-                <RenderCard2 item={product} />
+                <RenderCard3 item={product} addToCart={props.addToCart} cart={props.cart} />
             </div>
         );
     });
@@ -83,6 +84,10 @@ function Home(props) {
                     </TabPane>
                 </TabContent>
 
+                <SearchFilterInM cardToRender={"RenderCard3"} allProducts={props.products.products} isLoading={props.products.isLoading}
+                                 cart={props.cart}
+                                 addToCart={props.addToCart}
+                                 errMess={props.products.errMess} />
 
 
             </div>

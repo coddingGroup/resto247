@@ -46,6 +46,14 @@ export const postComment = (dishId, rating, author, comment) => (dispatch) =>{
         
 }
 
+export const addToCart = (item) => ({
+    type: ActionTypes.ADD_TO_CART,
+    payload: item
+})
+export const removeToCart = (removeId) => ({
+   type:ActionTypes.REMOVE_TO_CART,
+   removeId: removeId
+});
 
 export const fetchDishes = () => (dispatch) => {
     dispatch(dishesLoading(true))
@@ -62,7 +70,7 @@ export const fetchDishes = () => (dispatch) => {
                 }
             },
             error => {
-                var errmess = new Error (error.message);
+                let errmess = new Error (error.message);
                 throw errmess;
             })
             .then(response => response.json())
@@ -205,7 +213,6 @@ export const postFeedback= (firstname, lastname, email, contactType, telnum,agre
         firstname: firstname,
         lastname: lastname,
         email: email,
-        telnum: telnum,
         contactType: contactType,
         telnum: telnum,
         agree:agree
