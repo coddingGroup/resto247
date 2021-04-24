@@ -20,7 +20,8 @@ import {
     removeToCart,
     loginUser,
     logoutUser,
-    googleLogin
+    googleLogin,
+    increaseStock
 } from "../redux/ActionCreators";
 import {actions} from "react-redux-form";
 import {TransitionGroup, CSSTransition} from "react-transition-group";
@@ -32,6 +33,7 @@ import Dashboard from './Manager/Reports/Dashboard';
 import MainManager from './Manager/Main';
 import IncreaseProduct from "./Manager/Products/IncreaseProduct";
 import * as ActionTypes from "../redux/ActionTypes";
+import {quantity} from "../redux/Forms";
 
 
 const mapStateToProps = state => {
@@ -49,6 +51,7 @@ const mapStateToProps = state => {
 }
 
 const mapDispatchToProps = (dispatch) => ({
+    increaseStock:(resourceId, unitPrice,quantity,from)=>dispatch(increaseStock(resourceId,unitPrice,quantity,from)),
     addToCart: (item) => dispatch(addToCart(item)),
     removeToCart: (removeId) => dispatch(removeToCart(removeId)),
     postComment: (dishId, rating, author, comment) => dispatch(postComment(dishId, rating, author, comment)),
@@ -196,14 +199,15 @@ class Main extends Component {
                                                              postFeedback={this.props.postFeedback}/>}/>
                             <Route exact path="/aboutus" component={() => <About leaders={this.props.leaders}/>}/>
                             <Route exact path="/login" component={() => <Login loginUser={this.props.loginUser} googleLogin={this.props.googleLogin} />}/>
-                            <PrivateRoute exact path="/witer" component={() => <WiterHome products={this.props.products}
+                            <Route exact path="/witer" component={() => <WiterHome products={this.props.products}
                                                                                    addToCart={this.props.addToCart}
                                                                                    removeToCart={this.props.removeToCart}
                                                                                    cart={this.props.cart}
                             />}/>
 
-                            <PrivateRoute path="/management" component={() => <MainManager products={this.props.products}
+                            <Route path="/management" component={() => <MainManager products={this.props.products}
                                                                                     resources={this.props.resources}
+                                                                                    increaseStock={this.props.increaseStock}
                                                                                     searchingOutput={this.props.searchingOutput}
                                                                                     searchText={this.props.searchText}
                                                                                     outOfStockProducts={this.props.outOfStockProducts}/>}/>

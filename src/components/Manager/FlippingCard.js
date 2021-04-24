@@ -3,18 +3,19 @@ import '../../css/Manager.css';
 import {Form, FormGroup, Input, Label} from "reactstrap";
 import {baseUrl} from "../../shared/baseUrl";
 import {useState} from 'react';
+import {quantity} from "../../redux/Forms";
 
-const FlippingCard = ({oneProduct, showPriceField = true}) => {
+const FlippingCard = ({increaseStock,oneProduct, showPriceField = true}) => {
 
     return (
         <div className="page-container">
 
-            <BlogCard oneProduct={oneProduct}/>
+            <BlogCard oneProduct={oneProduct} increaseStock={increaseStock} />
         </div>
     )
 }
 
-const BlogCard = ({oneProduct}) => {
+const BlogCard = ({oneProduct, increaseStock}) => {
 
     const [flipped, setFlipped] = useState(false);
 
@@ -29,7 +30,7 @@ const BlogCard = ({oneProduct}) => {
         <div onMouseEnter={flip} onMouseLeave={flip} className={"card-container" + (flipped ? " flipped" : "")}>
 
             <Front oneProduct={oneProduct}/>
-            <Back oneProduct={oneProduct}/>
+            <Back oneProduct={oneProduct} increaseStock={increaseStock} />
         </div>
 
     )
@@ -46,7 +47,23 @@ const Front = ({oneProduct}) => {
     )
 }
 
-const Back = ({oneProduct}) => {
+const Back = ({oneProduct, increaseStock}) => {
+    const [qtyN, setQtyN] = useState('');
+    const[unitPrice,setUnitPrice] = useState(0);
+    const handleChange = (event) =>{
+        event.preventDefault();
+        let name = event.target.name;
+        let value=event.target.value;
+        if(name ==='qtyN'){
+            setQtyN(value);
+        }
+        else if(name==='unitPrice'){
+            setUnitPrice(value);
+        }
+    }
+    const handleSave = (event) =>{
+        increaseStock(oneProduct.id, unitPrice,qtyN,"client" );
+    }
 
     return (
         <div className="back">
@@ -55,15 +72,15 @@ const Back = ({oneProduct}) => {
 
                 <div className="form-group">
 
-                    <Label className=""> New price </Label>
-                    <Input className="" type={"number"}/>
+                    <Label className=""> unit price </Label>
+                    <Input onChange={handleChange} value={unitPrice} name="unitPrice" className="" type={"number"}/>
                 </div>
                 <FormGroup>
                     <Label className="">Added quantity</Label>
-                    <Input className="" type="number"/>
+                    <Input onChange={handleChange} value={qtyN} name="qtyN" className="" type="number"/>
                 </FormGroup>
                 <FormGroup>
-                    <button className="btn btn-warning" type="submit"> Save</button>
+                    <button type="button" onClick={handleSave} className="btn btn-warning"> Save</button>
                 </FormGroup>
             </Form>
         </div>

@@ -6,7 +6,7 @@ import SearchFilterInM from "../SearchFilterIn";
 import SearchOutputDisplay from "../SearchOutputDisplay";
 import Navigation from "../UIcomponents/SideNavigation";
 
-const IncreaseProduct = ({products, outOfStockProducts, opName}) => {
+const IncreaseProduct = ({products, outOfStockProducts, opName, increaseStock}) => {
 
     const [text, setText] = useState('');
     const [searchOutput, setSearchOutput] = useState([]);
@@ -54,6 +54,7 @@ const IncreaseProduct = ({products, outOfStockProducts, opName}) => {
                     <div className="w-100">
 
                         <SearchFilterInM cardToRender={"FlippingCard"} allProducts={products.products}
+                                         increaseStock={increaseStock}
                                          isLoading={products.isLoading} errMess={products.errMess}/>
                     </div>
                 </div>

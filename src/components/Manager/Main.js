@@ -49,6 +49,7 @@ const MainManager = (props) => {
                                                                  searchingOutput={props.searchingOutput}
                                                                  searchText={props.searchText}
                                                                  resources={props.resources}
+                                                                 increaseStock={props.increaseStock}
                                                                  products={props.products}/>}/>
                         <Route exact path="/management/dashboard" component={() => <Dashboard/>}/>
 

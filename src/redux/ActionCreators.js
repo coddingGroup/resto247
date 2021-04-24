@@ -14,8 +14,51 @@ export const addComment = (comment) => ({
     type: ActionTypes.ADD_COMMENT,
     payload: comment
 });
-
-
+export const increaseStockComplete = () =>({
+    type: "",
+    payload: true
+});
+export const changeStock = (resourceId, quantity,unitPrice,from) =>({
+    type: ActionTypes.ADD_STOCK,
+    payload:{
+        resourceId:resourceId,
+        quantity: quantity,
+        unitPrice:unitPrice,
+        from:from
+    }
+});
+export const increaseStock = (resourceId, unitPrice,quantity,from )=> (dispatch) =>{
+    if(!auth.currentUser){
+        alert("login first");
+        console.log("login first");
+        return;
+    }
+    return firestore.collection('stockUp').add({
+        quantity:quantity,
+        unitPrice:unitPrice,
+        from:from,
+        resourceId:resourceId,
+        createdAt:firebasestore.FieldValue.serverTimestamp()
+    })
+        .then(docRef =>{
+            firestore.collection('stockUp').doc(docRef.id).get()
+                .then(doc =>{
+                    if (doc.exists) {
+                        const data = doc.data();
+                        const id = doc.id;
+                        let newStock = {id, ...data};
+                        dispatch(changeStock(newStock));
+                    } else {
+                        // doc.data() will be undefined in this case
+                        console.log("No such document!");
+                    }
+                })
+        })
+        .catch(error => {
+        console.log('Post comments ', error.message);
+        alert('Your comment could not be posted\nError: ' + error.message);
+    })
+}
 export const postComment = (dishId, rating, comment) => (dispatch) => {
 
     if (!auth.currentUser) {
@@ -405,25 +448,39 @@ export const removeToCart = (removeId) => ({
 
 
 export const fetchResources = () => (dispatch) => {
-    dispatch(resourcesLoading(true))
+    dispatch(resourcesLoading(true));
 
-    return fetch(baseUrl + 'resources')
-        .then(response => {
-                if (response.ok) {
-                    return response;
-                } else {
-                    var error = new Error('Error ' + response.status + ': ' + response.statusText);
-                    error.response = response;
-                    throw error;
-                }
-            },
-            error => {
-                let errmess = new Error(error.message);
-                throw errmess;
-            })
-        .then(response => response.json())
-        .then(resources => dispatch(addResources(resources)))
+    return firestore.collection('resources').get()
+        .then(snapshot => {
+            let resources = [];
+            snapshot.forEach(doc => {
+                const data = doc.data()
+                const id = doc.id
+                resources.push({id, ...data});
+            });
+            return resources;
+        })
+        .then(products => dispatch(addResources(products)))
         .catch(error => dispatch(resourcesFailed(error.message)));
+    // dispatch(resourcesLoading(true))
+    //
+    // return fetch(baseUrl + 'resources')
+    //     .then(response => {
+    //             if (response.ok) {
+    //                 return response;
+    //             } else {
+    //                 var error = new Error('Error ' + response.status + ': ' + response.statusText);
+    //                 error.response = response;
+    //                 throw error;
+    //             }
+    //         },
+    //         error => {
+    //             let errmess = new Error(error.message);
+    //             throw errmess;
+    //         })
+    //     .then(response => response.json())
+    //     .then(resources => dispatch(addResources(resources)))
+    //     .catch(error => dispatch(resourcesFailed(error.message)));
 }
 
 export const resourcesLoading = () => ({

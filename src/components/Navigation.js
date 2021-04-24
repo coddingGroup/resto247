@@ -124,8 +124,9 @@ let Navigation = (props) => {
                                         </Button>
                                         :
                                         <div>
+                                            <NavLink to="/management">Management</NavLink>
                                             <NavLink to="/witer"> waiter</NavLink>
-                                            <div className="navbar-text mr-3">{props.auth.user.displayName} oooop</div>
+                                            <div className="navbar-text mr-3">{props.auth.user.displayName} </div>
                                             <Button outline onClick={handleLogout}>
                                                 <span className="fa fa-sign-out fa-lg"></span> Logout
                                                 {props.auth.isFetching ?

@@ -19,13 +19,14 @@ let StockManagement = (props) => {
                                                              searchingOutput={props.searchingOutput}
                                                              searchText={props.searchText}
                                                              opName="products"
-
+                                                             increaseStock={props.increaseStock}
                                                              products={props.products}/>}/>
                     <Route exact path="/management/stock/Resources"
                            component={() => <IncreaseProduct outOfStockProducts={props.outOfStockProducts}
                                                              searchingOutput={props.searchingOutput}
                                                              searchText={props.searchText}
                                                              opName="resources"
+                                                             increaseStock={props.increaseStock}
                                                              products={props.resources}/>}/> />}/>
 
                     <Route exact path="/management/stock/dailyUsage"
@@ -33,6 +34,7 @@ let StockManagement = (props) => {
                                                              searchingOutput={props.searchingOutput}
                                                              searchText={props.searchText}
                                                              opName="dailyUsage"
+                                                             increaseStock={props.increaseStock}
                                                              products={props.resources}/>}/> />}/>
                     <Route exact path="/management/stock/marchProductToResources"
                            component={() => <MarchProductToResources/>}/>

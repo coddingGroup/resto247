@@ -40,7 +40,7 @@ const SearchFilterInM = (props) => {
         let cardT = undefined;
         if (props.cardToRender === "FlippingCard") {
             cardT = (productT) => {
-                return <FlippingCard oneProduct={productT}/>
+                return <FlippingCard increaseStock={props.increaseStock} oneProduct={productT}/>
             }
         } else {
             cardT = (productT) => {
