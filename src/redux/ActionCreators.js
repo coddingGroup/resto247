@@ -15,6 +15,7 @@ export const addComment = (comment) => ({
     payload: comment
 });
 
+
 export const postComment = (dishId, rating, comment) => (dispatch) => {
 
     if (!auth.currentUser) {
@@ -24,7 +25,7 @@ export const postComment = (dishId, rating, comment) => (dispatch) => {
 
     return firestore.collection('comments').add({
         author: {
-            '_id': auth.currentUser.uid,
+            'id': auth.currentUser.uid,
             'firstname': auth.currentUser.displayName ? auth.currentUser.displayName : auth.currentUser.email
         },
         dish: dishId,
@@ -38,8 +39,8 @@ export const postComment = (dishId, rating, comment) => (dispatch) => {
                 .then(doc => {
                     if (doc.exists) {
                         const data = doc.data();
-                        const _id = doc.id;
-                        let comment = {_id, ...data};
+                        const id = doc.id;
+                        let comment = {id, ...data};
                         dispatch(addComment(comment))
                     } else {
                         // doc.data() will be undefined in this case
@@ -61,8 +62,8 @@ export const fetchDishes = () => (dispatch) => {
             let products = [];
             snapshot.forEach(doc => {
                 const data = doc.data()
-                const _id = doc.id
-                products.push({_id, ...data});
+                const id = doc.id
+                products.push({id, ...data});
             });
             return products;
         })
@@ -90,8 +91,8 @@ export const fetchComments = () => (dispatch) => {
             let comments = [];
             snapshot.forEach(doc => {
                 const data = doc.data()
-                const _id = doc.id
-                comments.push({_id, ...data});
+                const id = doc.id
+                comments.push({id, ...data});
             });
             return comments;
         })
@@ -117,8 +118,8 @@ export const fetchPromos = () => (dispatch) => {
             let promos = [];
             snapshot.forEach(doc => {
                 const data = doc.data()
-                const _id = doc.id
-                promos.push({_id, ...data});
+                const id = doc.id
+                promos.push({id, ...data});
             });
             return promos;
         })
@@ -149,8 +150,8 @@ export const fetchLeaders = () => (dispatch) => {
             let leaders = [];
             snapshot.forEach(doc => {
                 const data = doc.data()
-                const _id = doc.id
-                leaders.push({_id, ...data});
+                const id = doc.id
+                leaders.push({id, ...data});
             });
             return leaders;
         })
