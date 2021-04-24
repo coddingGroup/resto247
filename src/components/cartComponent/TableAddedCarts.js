@@ -1,15 +1,15 @@
 import React, {useState, useRef} from 'react';
 import {Button, Col, Form, FormGroup, Input, Label, Row, Table} from 'reactstrap';
-import ReactToPrint, { useReactToPrint  } from 'react-to-print';
+import ReactToPrint, {useReactToPrint} from 'react-to-print';
 import '../../css/printStyle.css';
 
- const OneItem = ({item, itemKey, removeToCart}) =>{
+const OneItem = ({item, itemKey, removeToCart}) => {
 
-    const deleteItem = (event) =>{
+    const deleteItem = (event) => {
         removeToCart(item.id);
     }
-    return(
-        <tr className="changeFont" key={item.id + "k"+itemKey}>
+    return (
+        <tr className="changeFont" key={item.id + "k" + itemKey}>
             <th scope="row">
                 {itemKey}
             </th>
@@ -23,9 +23,8 @@ import '../../css/printStyle.css';
                 {item.price * item.quantity}
             </td>
             <td className="dontPrint">
-                    <Button onClick={deleteItem} id={item.id + "k"+itemKey} className="bg-danger"><span className="fa fa-lg fa-trash"></span></Button>
-
-
+                <Button onClick={deleteItem} id={item.id + "k" + itemKey} className="bg-danger"><span
+                    className="fa fa-lg fa-trash"></span></Button>
 
 
             </td>
@@ -33,14 +32,13 @@ import '../../css/printStyle.css';
         </tr>
     )
 }
-const TableItems =React.forwardRef(
+const TableItems = React.forwardRef(
     (props, ref) => {
 
 
-        if(props.cart.items.length == 0){
+        if (props.cart.items.length == 0) {
             return <tr></tr>
-        }
-        else {
+        } else {
 
 
             let keys = Object.keys(props.cart.items);
@@ -92,53 +90,52 @@ const TableItems =React.forwardRef(
                     <div className="mt-5">
 
 
-                    <Form >
-                        <Row >
-                            <Col>
-                                <Row className="form-group">
-                                    <Col><Label>Client Name</Label></Col>
-                                    <Col>
-                                        <Input type="text" />
+                        <Form>
+                            <Row>
+                                <Col>
+                                    <Row className="form-group">
+                                        <Col><Label>Client Name</Label></Col>
+                                        <Col>
+                                            <Input type="text"/>
 
-                                    </Col>
-                                </Row>
-                                <Row>
-                                    <Col>Order Paid</Col>
-                                    <Col>
-                                        <Input type="checkBox" />
-                                    </Col>
+                                        </Col>
+                                    </Row>
+                                    <Row>
+                                        <Col>Order Paid</Col>
+                                        <Col>
+                                            <Input type="checkBox"/>
+                                        </Col>
 
-                                </Row>
-                            </Col>
-                            <Col >
-                                <Row className="form-group">
-                                    <Col>
-                                        <Label > <b>waiter</b>  </Label>
-                                    </Col>
-                                    <Col>
-                                        <select>
-                                            <option>
-                                                Kilungi
-                                            </option>
-                                            <option>
-                                                Aime
-                                            </option>
-                                            <option>
-                                                Paterne
-                                            </option>
-                                        </select>
-                                    </Col>
-
-
-                                </Row>
-
-                            </Col>
+                                    </Row>
+                                </Col>
+                                <Col>
+                                    <Row className="form-group">
+                                        <Col>
+                                            <Label> <b>waiter</b> </Label>
+                                        </Col>
+                                        <Col>
+                                            <select>
+                                                <option>
+                                                    Kilungi
+                                                </option>
+                                                <option>
+                                                    Aime
+                                                </option>
+                                                <option>
+                                                    Paterne
+                                                </option>
+                                            </select>
+                                        </Col>
 
 
+                                    </Row>
 
-                        </Row>
+                                </Col>
 
-                    </Form>
+
+                            </Row>
+
+                        </Form>
                     </div>
                 </div>
 
@@ -146,30 +143,30 @@ const TableItems =React.forwardRef(
         }
     }
 );
-let TableAddedCarts = ({cart, removeToCart}) =>{
+let TableAddedCarts = ({cart, removeToCart}) => {
     const [date, setDate] = useState('');
     const componentRef = useRef();
     const handlePrint = useReactToPrint({
         content: () => componentRef.current,
     });
-    let handleClick = (event) =>{
+    let handleClick = (event) => {
         let orderDate = new Date();
-        let hour = String(orderDate.getHours()).padStart(2,'0');
-        let min = String(orderDate.getMinutes()).padStart(2,'0');
+        let hour = String(orderDate.getHours()).padStart(2, '0');
+        let min = String(orderDate.getMinutes()).padStart(2, '0');
         let dd = String(orderDate.getDate()).padStart(2, '0');
         let mm = String(orderDate.getMonth() + 1).padStart(2, '0'); //January is 0!
         let yyyy = orderDate.getFullYear();
 
-        orderDate = mm + '/' + dd + '/' + yyyy + ' ' + hour +':'+ min  ;
+        orderDate = mm + '/' + dd + '/' + yyyy + ' ' + hour + ':' + min;
         setDate(orderDate);
         handlePrint();
     }
 
-    return(
+    return (
         <div>
-            <TableItems date={date} cart={cart} removeToCart={removeToCart} ref={componentRef} />
+            <TableItems date={date} cart={cart} removeToCart={removeToCart} ref={componentRef}/>
             <div className="d-flex justify-content-center">
-                <Button onClick={handleClick}  color="light"> <i className="d-flex add-to-cart-icon2"> Print {' '} </i><i
+                <Button onClick={handleClick} color="light"> <i className="d-flex add-to-cart-icon2"> Print {' '} </i><i
                     className="fa fa-3x fa-arrow-circle-right add-to-cart-icon2"></i> </Button>
 
             </div>

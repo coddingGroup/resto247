@@ -1,17 +1,19 @@
-
 @media print {
-    .allContentToPrint{
+    .allContentToPrint {
 
         width: 100%;
     }
-    tr{
+
+    tr {
         border: none;
 
     }
-    .dontPrint{
+
+    .dontPrint {
         display: none;
     }
-    .changeFont{
+
+    .changeFont {
         font-size: 70px;
     }
 

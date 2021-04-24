@@ -1,104 +1,113 @@
-#loginClass{
- color:white;
- background-color: #751a1a;   
+#loginClass {
+    color: white;
+    background-color: #751a1a;
 }
-#signupClass{
-    color:white;
+
+#signupClass {
+    color: white;
     background-color: #FF7300;
 }
-.carousel #mainCarousel{
+
+.carousel #mainCarousel {
     background-color: #512DA8;
-  }
-  .carousel .mainCarouselItem{
+}
+
+.carousel .mainCarouselItem {
     height: 400px;
-  }
-  .carousel .carousel-item .mainCarouselItem img {
+}
+
+.carousel .carousel-item .mainCarouselItem img {
     position: absolute;
     top: 0;
     left: 0;
     min-height: 300px;
-  }
-  #carouselButton {
+}
+
+#carouselButton {
     right: 0px;
     position: absolute;
     bottom: 0px;
-  }
-  .carousel .carousel-item .color3 {
-   background-color: #751a1a;
-  }
+}
+
+.carousel .carousel-item .color3 {
+    background-color: #751a1a;
+}
 
 
-
-
-  .carousel {
+.carousel {
     background-color: white;
-  }
-  .carousel .carousel-item {
+}
+
+.carousel .carousel-item {
     height: 300px;
-  }
-  .carousel .hotDealCarouselItem img {
-   
+}
+
+.carousel .hotDealCarouselItem img {
+
     max-width: 100%;
-    
-  }
-  .carousel .hotDealCarouselItem .hotDealImageBox{
+
+}
+
+.carousel .hotDealCarouselItem .hotDealImageBox {
     position: absolute;
     top: 0;
     left: 0;
     min-height: 300px;
     max-width: 40%;
-  }
+}
 
-  #carouselButton {
+#carouselButton {
     right: 0px;
     position: absolute;
     bottom: 0px;
-  }
-  .carousel .hotDealCarouselItem .captionOfHotDeal {
+}
+
+.carousel .hotDealCarouselItem .captionOfHotDeal {
     position: absolute;
     top: 0;
-    right:0 ;
-    color:#FF7300;
-  }
-  .carousel .hotDealCarouselItem .captionOfHotDeal .buttonInHotDeal{
-    position: absolute;
-    bottom : 10px;
     right: 0;
-  }
+    color: #FF7300;
+}
 
-   .searchbar{
+.carousel .hotDealCarouselItem .captionOfHotDeal .buttonInHotDeal {
+    position: absolute;
+    bottom: 10px;
+    right: 0;
+}
+
+.searchbar {
     margin-bottom: auto;
     margin-top: auto;
     height: 60px;
     background-color: #353b48;
     border-radius: 30px;
     padding: 10px;
-    }
+}
 
-    .search_input{
+.search_input {
     color: white;
     border: 0;
     outline: 0;
     background: none;
     width: 0;
-    caret-color:transparent;
+    caret-color: transparent;
     line-height: 40px;
     transition: width 0.4s linear;
-    }
+}
 
-    .searchbar:hover > .search_input{
+.searchbar:hover > .search_input {
     padding: 0 10px;
     width: 450px;
-    caret-color:red;
+    caret-color: red;
     transition: width 0.4s linear;
-    }
+}
 
-    .searchbar:hover > .search_icon{
+.searchbar:hover > .search_icon {
     background: white;
     color: #FF7300;
-    }
+}
 
-    .search_icon{
+.search_icon {
     height: 40px;
     width: 40px;
     float: right;
@@ -106,71 +115,81 @@
     justify-content: center;
     align-items: center;
     border-radius: 50%;
-    color:white;
-    text-decoration:none;
-    }
+    color: white;
+    text-decoration: none;
+}
 
-    .searchbarFix{
-      margin-bottom: 2em;
-      margin-top: 4em;
-      height: 60px;
-      background-color:#751a1a;
-      border-radius: 30px;
-      padding: 10px;
-      }
-    
-    .searchbarFix .search_input{
-      padding: 0 10px;
-      width: 450px;
-      caret-color:red;
-      transition: width 0.4s linear;
-      }
-      .searchbarFix:hover > .search_icon{
-        background: white;
-        color: #FF7300;
-        }
-      .z-index-front{
-          z-index: 100;
-      }
-      .priceInCardForWaiter{
-          position: absolute;
-          top: 3px;
-          right:3px;
+.searchbarFix {
+    margin-bottom: 2em;
+    margin-top: 4em;
+    height: 60px;
+    background-color: #751a1a;
+    border-radius: 30px;
+    padding: 10px;
+}
 
-      }
-      .nameInCardForWaiter{
-          position: absolute;
-          top: 3px;
-          left: 3px;
-          color: white;
-          background-color: rgba(0, 0, 0, 0.3);
-          font-size: large;
-      }
-      .cardInWaiter{
-          border-radius: 7px;
-          border: #FF7300 solid 2px;
-          width: 16rem;
-      }
-      .bottom-shadow{
-          box-shadow: 1px 3px #FF7300;
-      }
-      .add-to-cart-btn{
-          border: #FF7300 solid 1px;
-      }
-      .descriptionPartOfCart{
+.searchbarFix .search_input {
+    padding: 0 10px;
+    width: 450px;
+    caret-color: red;
+    transition: width 0.4s linear;
+}
 
-          position: absolute;
-          top: 4em;
-          color: white;
-          background-color: rgba(0, 0, 0, 0.5);
-          transition: 1000ms all;
-          display: inline;
+.searchbarFix:hover > .search_icon {
+    background: white;
+    color: #FF7300;
+}
 
-      }
-.descriptionPartOfCartD_none{
+.z-index-front {
+    z-index: 100;
+}
+
+.priceInCardForWaiter {
+    position: absolute;
+    top: 3px;
+    right: 3px;
+
+}
+
+.nameInCardForWaiter {
+    position: absolute;
+    top: 3px;
+    left: 3px;
+    color: white;
+    background-color: rgba(0, 0, 0, 0.3);
+    font-size: large;
+}
+
+.cardInWaiter {
+    border-radius: 7px;
+    border: #FF7300 solid 2px;
+    width: 16rem;
+}
+
+.bottom-shadow {
+    box-shadow: 1px 3px #FF7300;
+}
+
+.add-to-cart-btn {
+    border: #FF7300 solid 1px;
+}
+
+.descriptionPartOfCart {
+
+    position: absolute;
+    top: 4em;
+    color: white;
+    background-color: rgba(0, 0, 0, 0.5);
+    transition: 1000ms all;
+    display: inline;
+
+}
+
+.descriptionPartOfCartD_none {
     opacity: 0;
 
 }
-.descriptionPartOfCartD_block{
+
+.descriptionPartOfCartD_block {
     opacity: 1;
 }

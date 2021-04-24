@@ -1,0 +1,14 @@
+.marchBody {
+    width: 500px;
+}
+
+.marchImage {
+    float: left;
+    max-width: 40%;
+    max-height: 100%;
+    display: block;
+}
+
+.clear {
+    clear: both;
+}

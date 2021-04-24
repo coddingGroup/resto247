@@ -1,6 +1,22 @@
-import React, { Component } from "react";
-import { Jumbotron, Navbar, Nav, NavbarToggler, Collapse, NavItem, NavbarBrand, Button, Modal, ModalBody, ModalHeader, Form, FormGroup, Label, Input } from 'reactstrap';
-import { NavLink } from "react-router-dom";
+import React, {Component} from "react";
+import {
+    Jumbotron,
+    Navbar,
+    Nav,
+    NavbarToggler,
+    Collapse,
+    NavItem,
+    NavbarBrand,
+    Button,
+    Modal,
+    ModalBody,
+    ModalHeader,
+    Form,
+    FormGroup,
+    Label,
+    Input
+} from 'reactstrap';
+import {NavLink} from "react-router-dom";
 
 import FirstScreen from './homepagecomponents/FistScreen'
 
@@ -25,6 +41,7 @@ class Header extends Component {
         });
 
     }
+
     // togglerModal() {
     //     this.setState({
     //         isModalOpen: !this.state.isModalOpen
@@ -38,8 +55,8 @@ class Header extends Component {
     render() {
         return (
             <React.Fragment>
-                
-                <FirstScreen />
+
+                <FirstScreen/>
                 {/* <Navbar dark expand="md">
                     <div className="container">
                         <NavbarToggler onClick={this.togglerNav} />
@@ -80,11 +97,8 @@ class Header extends Component {
                         
                     </div>
                 </Navbar> */}
-               
-                    
-                        
-                
-                
+
+
                 {/* <Modal isOpen={this.state.isModalOpen} toggle={this.togglerModal}>
                     <ModalHeader toggle={this.togglerModal}>Login</ModalHeader>
                     <ModalBody>

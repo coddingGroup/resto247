@@ -3,28 +3,46 @@ import SignUp from "../../SignUp";
 import IncreaseProduct from "./IncreaseProduct";
 import Dashboard from "../Reports/Dashboard";
 import React from "react";
+import MarchProductToResources from "./MarchProductToResources";
+import Navigation from "../UIcomponents/SideNavigation";
 
 
 let StockManagement = (props) => {
 
 
     return (
-        <Switch>
-            <Route path="/signup" component={() => <SignUp/>}/>
-            <Route exact path="products" component={() => <IncreaseProduct outOfStockProducts={props.outOfStockProducts}
-                                                                           searchingOutput={props.searchingOutput}
-                                                                           searchText={props.searchText}
+        <div className="row">
+            <div className="col-md-12">
+                <Switch>
+                    <Route exact path="/management/stock/products"
+                           component={() => <IncreaseProduct outOfStockProducts={props.outOfStockProducts}
+                                                             searchingOutput={props.searchingOutput}
+                                                             searchText={props.searchText}
+                                                             opName="products"
 
-                                                                           products={props.products}/>}/>
-            <Route exact path="Resources"
-                   component={() => <IncreaseProduct outOfStockProducts={props.outOfStockProducts}
-                                                     searchingOutput={props.searchingOutput}
-                                                     searchText={props.searchText}
+                                                             products={props.products}/>}/>
+                    <Route exact path="/management/stock/Resources"
+                           component={() => <IncreaseProduct outOfStockProducts={props.outOfStockProducts}
+                                                             searchingOutput={props.searchingOutput}
+                                                             searchText={props.searchText}
+                                                             opName="resources"
+                                                             products={props.resources}/>}/> />}/>
 
-                                                     products={props.products}/>}/> />}/>
+                    <Route exact path="/management/stock/dailyUsage"
+                           component={() => <IncreaseProduct outOfStockProducts={props.outOfStockProducts}
+                                                             searchingOutput={props.searchingOutput}
+                                                             searchText={props.searchText}
+                                                             opName="dailyUsage"
+                                                             products={props.resources}/>}/> />}/>
+                    <Route exact path="/management/stock/marchProductToResources"
+                           component={() => <MarchProductToResources/>}/>
 
-            <Redirect to="/management/dashboard"/>
-        </Switch>
+                    <Redirect to="/management/stock/products"/>
+                </Switch>
+            </div>
+        </div>
+
+
     )
 }
 export default StockManagement;

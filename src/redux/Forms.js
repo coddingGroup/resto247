@@ -1,25 +1,25 @@
 export const InitialFeedback = {
-    firstname:'',
-    lastname:'',
-    telnum:'',
-    email:'',
-    agree:false,
-    contactType:'Tel.',
+    firstname: '',
+    lastname: '',
+    telnum: '',
+    email: '',
+    agree: false,
+    contactType: 'Tel.',
     message: ''
 }
 export const login = {
-    email:'',
-    password:'',
+    email: '',
+    password: '',
 }
 export const signUp = {
-    firstName:'',
-    lastName:'',
-    telNum:'',
-    email:'',
-    agree:false,
-    password:'',
-    rePassword:''
+    firstName: '',
+    lastName: '',
+    telNum: '',
+    email: '',
+    agree: false,
+    password: '',
+    rePassword: ''
 }
 export const quantity = {
-    quantity:1
+    quantity: 1
 }

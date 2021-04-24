@@ -1,6 +1,5 @@
-
 import '../../../css/Some.css'
-import React, { useState } from 'react';
+import React, {useState} from 'react';
 import {
     Carousel,
     CarouselItem,
@@ -9,9 +8,9 @@ import {
     CarouselCaption,
     Button
 } from 'reactstrap';
-import { ITEMS } from '../../../shared/hotDealData';
-import { Loading } from "../../LoadingComponent";
-import { baseUrl } from "../../../shared/baseUrl";
+import {ITEMS} from '../../../shared/hotDealData';
+import {Loading} from "../../LoadingComponent";
+import {baseUrl} from "../../../shared/baseUrl";
 
 var HotDeal = (props) => {
     const [activeIndex, setActiveIndex] = useState(0);
@@ -41,55 +40,52 @@ var HotDeal = (props) => {
         return (
 
             <CarouselItem className="hotDealCarouselItem"
-                onExiting={() => setAnimating(true)}
-                onExited={() => setAnimating(false)}
-                key={item.src}
+                          onExiting={() => setAnimating(true)}
+                          onExited={() => setAnimating(false)}
+                          key={item.src}
             >
-                <div className="hotDealImageBox"><img src={baseUrl + item.image} alt={item.altText} /></div>
+                <div className="hotDealImageBox"><img src={item.image} alt={item.altText}/></div>
 
 
                 <CarouselCaption className="captionOfHotDeal"
-                    captionText={<div>
-                        <p className="d-none d-sm-block">{item.caption}</p>
-                        <div className="buttonInHotDeal"> <Button className="color3">{item.mainlink}</Button> </div>
-                    </div>
-                    }
-                    captionHeader={<h2 className="headOfHotDeal">{item.name} <span class="badge badge-danger">{item.badgeMessage}</span><span class="badge badge-pill badge-secondary">{item.price} RWF</span>  </h2>} />
+                                 captionText={<div>
+                                     <p className="d-none d-sm-block">{item.caption}</p>
+                                     <div className="buttonInHotDeal"><Button
+                                         className="color3">{item.mainlink}</Button></div>
+                                 </div>
+                                 }
+                                 captionHeader={<h2 className="headOfHotDeal">{item.name} <span
+                                     class="badge badge-danger">{item.badgeMessage}</span><span
+                                     class="badge badge-pill badge-secondary">{item.price} RWF</span></h2>}/>
             </CarouselItem>
         );
     });
 
     if (props.hotdeals.isLoading) {
         return (
-            <Loading />
+            <Loading/>
         );
-    }
-    else if (props.hotdeals.errMess) {
+    } else if (props.hotdeals.errMess) {
         return (
             <h4> {items.errMess} </h4>
         );
-    }
-    else
+    } else
 
-    return (
+        return (
 
-        <Carousel id="hotDealCarousel" className="mt-5"
-            activeIndex={activeIndex}
-            next={next}
-            previous={previous}
-        >
-            <CarouselIndicators items={items} activeIndex={activeIndex} onClickHandler={goToIndex} />
-            {slides}
-            <CarouselControl direction="prev" directionText="Previous" onClickHandler={previous} />
-            <CarouselControl direction="next" directionText="Next" onClickHandler={next} />
-        </Carousel>
-
+            <Carousel id="hotDealCarousel" className="mt-5"
+                      activeIndex={activeIndex}
+                      next={next}
+                      previous={previous}
+            >
+                <CarouselIndicators items={items} activeIndex={activeIndex} onClickHandler={goToIndex}/>
+                {slides}
+                <CarouselControl direction="prev" directionText="Previous" onClickHandler={previous}/>
+                <CarouselControl direction="next" directionText="Next" onClickHandler={next}/>
+            </Carousel>
 
 
-    );
-
-
-
+        );
 
 
 }

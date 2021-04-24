@@ -1,12 +1,13 @@
 import React from 'react';
-import { Button } from 'reactstrap';
+import {Button} from 'reactstrap';
 import '../../../css/home.css';
 import WaiterCategoryButton from "../WaiterCategoryButton";
+
 const FilterMenu = (props) => {
 
     let allCat = props.categories.map(
-        (category) =>{
-            return(
+        (category) => {
+            return (
                 <WaiterCategoryButton changeProductToDisplay={props.changeProductToDisplay} category={category}/>
             )
         }

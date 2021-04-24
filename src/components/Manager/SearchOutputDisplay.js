@@ -1,15 +1,16 @@
 import FlippingCard from "./FlippingCard";
 import '../../css/Manager.css';
-const SearchOutputDisplay = ({output}) =>{
+
+const SearchOutputDisplay = ({output}) => {
     let result = output.map(
         oneProduct => {
             return (
 
-                    <FlippingCard oneProduct={oneProduct}/>
+                <FlippingCard oneProduct={oneProduct}/>
 
             )
         })
-    return(
+    return (
         <div className="row searchResult shadow-lg">
             {result}
         </div>

@@ -1,5 +1,5 @@
 import React from 'react'
-import { GoogleMap, useJsApiLoader } from '@react-google-maps/api';
+import {GoogleMap, useJsApiLoader} from '@react-google-maps/api';
 
 const containerStyle = {
     width: '400px',
@@ -12,7 +12,7 @@ const center = {
 };
 
 function GoogleMapExample() {
-    const { isLoaded } = useJsApiLoader({
+    const {isLoaded} = useJsApiLoader({
         id: 'google-map-script',
         googleMapsApiKey: "AIzaSyARqGl76OBuKJuriRHa9kX3kxGlAZkNfwU"
     })
@@ -38,7 +38,7 @@ function GoogleMapExample() {
             onLoad={onLoad}
             onUnmount={onUnmount}
         >
-            { /* Child components, such as markers, info windows, etc. */ }
+            { /* Child components, such as markers, info windows, etc. */}
             <></>
         </GoogleMap>
     ) : <></>

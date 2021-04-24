@@ -8,10 +8,8 @@ import {
     Button
 } from 'reactstrap';
 
-import { useState } from 'react';
-import { ITEMS } from '../../shared/carouselHome';
-
-
+import {useState} from 'react';
+import {ITEMS} from '../../shared/carouselHome';
 
 
 var FirstScreen = (props) => {
@@ -42,13 +40,14 @@ var FirstScreen = (props) => {
         return (
 
             <CarouselItem className="mainCarouselItem"
-                onExiting={() => setAnimating(true)}
-                onExited={() => setAnimating(false)}
-                key={item.src}
+                          onExiting={() => setAnimating(true)}
+                          onExited={() => setAnimating(false)}
+                          key={item.src}
             >
-                <img src={item.src} alt={item.altText} />
-                
-                <CarouselCaption captionText={item.caption} captionHeader={<Button className="color3"><span className="fa fa-phone fa-lg"></span>  {item.mainlink}</Button>} />
+                <img src={item.src} alt={item.altText}/>
+
+                <CarouselCaption captionText={item.caption} captionHeader={<Button className="color3"><span
+                    className="fa fa-phone fa-lg"></span> {item.mainlink}</Button>}/>
             </CarouselItem>
         );
     });
@@ -56,22 +55,18 @@ var FirstScreen = (props) => {
     return (
 
         <Carousel id="mainCarousel"
-            activeIndex={activeIndex}
-            next={next}
-            previous={previous}
+                  activeIndex={activeIndex}
+                  next={next}
+                  previous={previous}
         >
-            <CarouselIndicators items={items} activeIndex={activeIndex} onClickHandler={goToIndex} />
+            <CarouselIndicators items={items} activeIndex={activeIndex} onClickHandler={goToIndex}/>
             {slides}
-            <CarouselControl direction="prev" directionText="Previous" onClickHandler={previous} />
-            <CarouselControl direction="next" directionText="Next" onClickHandler={next} />
+            <CarouselControl direction="prev" directionText="Previous" onClickHandler={previous}/>
+            <CarouselControl direction="next" directionText="Next" onClickHandler={next}/>
         </Carousel>
 
 
-
     );
-
-
-
 
 
 }

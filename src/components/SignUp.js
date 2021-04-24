@@ -1,7 +1,7 @@
-import React, { Component } from 'react';
-import { Breadcrumb, BreadcrumbItem, Col, Label, Button, Row } from "reactstrap";
-import { Link } from "react-router-dom";
-import { Control, Form, Errors, actions } from "react-redux-form";
+import React, {Component} from 'react';
+import {Breadcrumb, BreadcrumbItem, Col, Label, Button, Row} from "reactstrap";
+import {Link} from "react-router-dom";
+import {Control, Form, Errors, actions} from "react-redux-form";
 
 
 const required = (val) => val && val.length;
@@ -30,7 +30,6 @@ class SignUp extends Component {
     }
 
 
-
     render() {
         return (
             <div className="d-flex justify-content-center">
@@ -43,10 +42,11 @@ class SignUp extends Component {
                                 <Row className="form-group">
                                     <Label htmlFor="firstname" md={2}> First Name</Label>
                                     <Col md={10}>
-                                        <Control.text model=".firstname" id="firstname" name="firstname" placeholder="First Name"
+                                        <Control.text model=".firstname" id="firstname" name="firstname"
+                                                      placeholder="First Name"
                                                       className="form-control"
                                                       validators={{
-                                                          required, minLength:minLength(3), maxLength: maxLength(15)
+                                                          required, minLength: minLength(3), maxLength: maxLength(15)
                                                       }}
                                         />
                                         <Errors
@@ -64,10 +64,11 @@ class SignUp extends Component {
                                 <Row className="form-group">
                                     <Label htmlFor="lastname" md={2}> Last Name</Label>
                                     <Col md={10}>
-                                        <Control.text model=".lastname" id="lastname" name="lastname" placeholder="Last Name"
+                                        <Control.text model=".lastname" id="lastname" name="lastname"
+                                                      placeholder="Last Name"
                                                       className="form-control"
                                                       validators={{
-                                                          required, minLength:minLength(3), maxLength: maxLength(15)
+                                                          required, minLength: minLength(3), maxLength: maxLength(15)
                                                       }}
                                         />
                                         <Errors
@@ -85,10 +86,14 @@ class SignUp extends Component {
                                 <Row className="form-group">
                                     <Label htmlFor="telnum" md={2}> Contact Tel</Label>
                                     <Col md={10}>
-                                        <Control.text model=".telnum" id="telnum" name="telnum" placeholder="Tel. Number"
+                                        <Control.text model=".telnum" id="telnum" name="telnum"
+                                                      placeholder="Tel. Number"
                                                       className="form-control"
                                                       validators={{
-                                                          required, minLength:minLength(3), maxLength: maxLength(15), isNumber
+                                                          required,
+                                                          minLength: minLength(3),
+                                                          maxLength: maxLength(15),
+                                                          isNumber
                                                       }}
                                         />
                                         <Errors
@@ -130,10 +135,13 @@ class SignUp extends Component {
                                 <Row className="form-group">
                                     <Label htmlFor="password" md={2}> Password</Label>
                                     <Col md={10}>
-                                        <Control.password model=".password" id="password" name="password" placeholder="Password"
+                                        <Control.password model=".password" id="password" name="password"
+                                                          placeholder="Password"
                                                           className="form-control"
                                                           validators={{
-                                                              required, minLength: minLength(3), maxLength: maxLength(15)
+                                                              required,
+                                                              minLength: minLength(3),
+                                                              maxLength: maxLength(15)
                                                           }}
                                         />
                                         <Errors
@@ -151,10 +159,13 @@ class SignUp extends Component {
                                 <Row className="form-group">
                                     <Label htmlFor="confirmPassword" md={2}> Password</Label>
                                     <Col md={10}>
-                                        <Control.password model=".confirmPassword" id="confirmPassword" name="confirmPassword" placeholder="Confirm Password"
+                                        <Control.password model=".confirmPassword" id="confirmPassword"
+                                                          name="confirmPassword" placeholder="Confirm Password"
                                                           className="form-control"
                                                           validators={{
-                                                              required, minLength: minLength(3), maxLength: maxLength(15)
+                                                              required,
+                                                              minLength: minLength(3),
+                                                              maxLength: maxLength(15)
                                                           }}
                                         />
                                         <Errors
@@ -170,9 +181,10 @@ class SignUp extends Component {
                                     </Col>
                                 </Row>
                                 <Row className="form-group">
-                                    <Col md={{ size: 10, offset: 2 }}>
+                                    <Col md={{size: 10, offset: 2}}>
                                         <div className="form-check">
-                                            <Control.checkbox model=".agree" name="agree" className="form-check-input" /> {' '}
+                                            <Control.checkbox model=".agree" name="agree"
+                                                              className="form-check-input"/> {' '}
                                             <strong>Remember password? </strong>
 
                                         </div>
@@ -181,7 +193,7 @@ class SignUp extends Component {
                                 </Row>
 
                                 <Row className="form-group">
-                                    <Col md={{ size: 7, offset: 5 }}>
+                                    <Col md={{size: 7, offset: 5}}>
                                         <Button type="submit" color="primary">
                                             Sign Up
                                         </Button>
@@ -196,4 +208,5 @@ class SignUp extends Component {
         );
     }
 }
+
 export default SignUp;

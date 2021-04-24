@@ -4,36 +4,36 @@ import PaginationComponent from "react-reactstrap-pagination";
 
 
 class PageComponent extends React.Component {
-  constructor(props) {
-    super(props);
+    constructor(props) {
+        super(props);
 
-    this.state = {
-      selectedPage: 1
-    };
+        this.state = {
+            selectedPage: 1
+        };
 
-    this.handleSelected = this.handleSelected.bind(this);
-  }
+        this.handleSelected = this.handleSelected.bind(this);
+    }
 
-  handleSelected(selectedPage) {
-    console.log("selected", selectedPage);
-    this.setState({ selectedPage: selectedPage });
-  }
+    handleSelected(selectedPage) {
+        console.log("selected", selectedPage);
+        this.setState({selectedPage: selectedPage});
+    }
 
-  render() {
-    return (
-      <div className="container-fluid mt-2">
-        
-        <PaginationComponent
-          totalItems={50}
-          pageSize={3}
-          onSelect={this.handleSelected}
-        />
-        <h3>Reacstrap Pagination Component</h3>
-        <hr />
-        <h5>Selected page: {this.state.selectedPage}</h5>
-        <hr />
-        <h5>Default maxPaginationNumbers (5)</h5>
-        {/* <h5>Specific maxPaginationNumbers (9) defaultActivePage (10)</h5>
+    render() {
+        return (
+            <div className="container-fluid mt-2">
+
+                <PaginationComponent
+                    totalItems={50}
+                    pageSize={3}
+                    onSelect={this.handleSelected}
+                />
+                <h3>Reacstrap Pagination Component</h3>
+                <hr/>
+                <h5>Selected page: {this.state.selectedPage}</h5>
+                <hr/>
+                <h5>Default maxPaginationNumbers (5)</h5>
+                {/* <h5>Specific maxPaginationNumbers (9) defaultActivePage (10)</h5>
         <PaginationComponent
           totalItems={50}
           pageSize={3}
@@ -57,9 +57,9 @@ class PageComponent extends React.Component {
           pageSize={5}
           onSelect={this.handleSelected}
         /> */}
-      </div>
-    );
-  }
+            </div>
+        );
+    }
 }
 
 export default PageComponent;

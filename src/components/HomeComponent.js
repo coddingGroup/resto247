@@ -1,14 +1,13 @@
-import React, { useState } from "react";
-import { TabContent, TabPane, Nav, NavItem, NavLink, Row, Col } from "reactstrap";
+import React, {useState} from "react";
+import {TabContent, TabPane, Nav, NavItem, NavLink, Row, Col} from "reactstrap";
 import classnames from 'classnames';
-import { ITEMS } from '../shared/ProductsCategories';
+import {ITEMS} from '../shared/ProductsCategories';
 import '../css/home.css';
 import Header from "./HeaderComponent";
 import RenderCard3 from './homepagecomponents/RenderCard3'
 import RenderCard from './homepagecomponents/RenderCard'
 import SearchFilterInM from "./Manager/SearchFilterIn";
 import GoogleMapExample from "./homepagecomponents/GoogleMap";
-
 
 
 function Home(props) {
@@ -25,8 +24,10 @@ function Home(props) {
 
             <NavItem>
                 <NavLink
-                    className={classnames({ active: activeTab === cathegory.id })}
-                    onClick={() => { toggle(cathegory.id); }}>
+                    className={classnames({active: activeTab === cathegory.id})}
+                    onClick={() => {
+                        toggle(cathegory.id);
+                    }}>
                     {cathegory.name}
                 </NavLink>
             </NavItem>
@@ -36,7 +37,7 @@ function Home(props) {
     const menu = props.products.products.map((product) => {
         return (
             <div className="col-12 col-md-3 pl-1">
-                <RenderCard3 item={product} addToCart={props.addToCart} cart={props.cart} />
+                <RenderCard3 item={product} addToCart={props.addToCart} cart={props.cart}/>
             </div>
         );
     });
@@ -45,7 +46,7 @@ function Home(props) {
 
         <React.Fragment>
 
-            <Header />
+            <Header/>
             <div className="container ">
 
                 <Nav pills>
@@ -58,18 +59,18 @@ function Home(props) {
                                 <div className="row align-items-start">
                                     <div className="col-12 col-md m-2">
                                         <RenderCard item={props.dish}
-                                            isLoading={props.dishesLoading}
-                                            errMess={props.dishesErrMess} />
+                                                    isLoading={props.dishesLoading}
+                                                    errMess={props.dishesErrMess}/>
                                     </div>
                                     <div className="col-12 col-md m-2">
                                         <RenderCard item={props.promotion}
-                                            isLoading={props.promosLoading}
-                                            errMess={props.promosErrMess} />
+                                                    isLoading={props.promosLoading}
+                                                    errMess={props.promosErrMess}/>
                                     </div>
                                     <div className="col-12 col-md m-2">
                                         <RenderCard item={props.hotdeal}
-                                            isLoading={props.hotdealsLoading}
-                                            errMess={props.hotdealsErrMess} />
+                                                    isLoading={props.hotdealsLoading}
+                                                    errMess={props.hotdealsErrMess}/>
                                     </div>
                                 </div>
                             </Col>
@@ -84,14 +85,16 @@ function Home(props) {
                     </TabPane>
                 </TabContent>
 
-                <SearchFilterInM cardToRender={"RenderCard3"} allProducts={props.products.products} isLoading={props.products.isLoading}
+                <SearchFilterInM cardToRender={"RenderCard3"} allProducts={props.products.products}
+                                 isLoading={props.products.isLoading}
                                  cart={props.cart}
                                  addToCart={props.addToCart}
-                                 errMess={props.products.errMess} />
+                                 errMess={props.products.errMess}/>
 
 
             </div>
         </React.Fragment>
     );
 }
+
 export default Home;

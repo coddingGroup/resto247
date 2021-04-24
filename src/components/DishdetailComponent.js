@@ -1,13 +1,13 @@
-import React, { Component } from "react";
+import React, {Component} from "react";
 import {
     Card, CardImg, CardText, CardBody, CardTitle, BreadcrumbItem, Breadcrumb, Button, ModalBody,
     ModalHeader, Modal, Label, Col, Row
 } from 'reactstrap';
-import { Link } from "react-router-dom";
-import { Control, LocalForm, Errors } from "react-redux-form";
-import { Loading } from "./LoadingComponent";
-import { baseUrl } from "../shared/baseUrl";
-import { FadeTransform, Fade, Stagger } from "react-animation-components";
+import {Link} from "react-router-dom";
+import {Control, LocalForm, Errors} from "react-redux-form";
+import {Loading} from "./LoadingComponent";
+import {baseUrl} from "../shared/baseUrl";
+import {FadeTransform, Fade, Stagger} from "react-animation-components";
 
 
 const maxLength = (len) => (val) => !(val) || (val.length <= len);
@@ -39,7 +39,8 @@ class CommentForm extends Component {
     render() {
         return (
             <div>
-                <Button outline onClick={this.togglerModal}><span className="fa fa-pencil"></span> Submit Comment</Button>
+                <Button outline onClick={this.togglerModal}><span className="fa fa-pencil"></span> Submit
+                    Comment</Button>
 
                 <Modal isOpen={this.state.isModalOpen} toggle={this.togglerModal}>
                     <ModalHeader toggle={this.togglerModal}>Submit Comment.</ModalHeader>
@@ -50,9 +51,14 @@ class CommentForm extends Component {
                                 <Label htmlFor="rating" md={12}> Rating </Label>
                                 <Col md={12}>
                                     <Control.select model=".rating" name="rating"
-                                        className="form-control">
-                                        <option>1</option><option>2</option><option>3</option><option>4</option><option>5</option>
-                                        <option>5</option><option>6</option>
+                                                    className="form-control">
+                                        <option>1</option>
+                                        <option>2</option>
+                                        <option>3</option>
+                                        <option>4</option>
+                                        <option>5</option>
+                                        <option>5</option>
+                                        <option>6</option>
                                     </Control.select>
                                 </Col>
                             </Row>
@@ -61,10 +67,10 @@ class CommentForm extends Component {
                                 <Label htmlFor="author" md={12}> Your Name </Label>
                                 <Col md={12}>
                                     <Control.text model=".author" id="author" name="author" placeholder="Name"
-                                        className="form-control"
-                                        validators={{
-                                            maxLength: maxLength(15), minLength: minLength(3)
-                                        }}
+                                                  className="form-control"
+                                                  validators={{
+                                                      maxLength: maxLength(15), minLength: minLength(3)
+                                                  }}
                                     />
                                     <Errors
                                         className="text-danger"
@@ -81,14 +87,14 @@ class CommentForm extends Component {
                             </Row>
 
                             <Row className="form-group">
-                                <Label htmlFor="comment" md={12} > Comment </Label>
+                                <Label htmlFor="comment" md={12}> Comment </Label>
                                 <Col md={12}>
                                     <Control.textarea model=".comment" type="textarea" id="comment" name="comment"
-                                        rows="6" className="form-control" />
+                                                      rows="6" className="form-control"/>
                                 </Col>
                             </Row>
                             <Row className="form-group">
-                                <Col >
+                                <Col>
                                     <Button type="submit" color="primary">
                                         Submit
                                     </Button>
@@ -104,17 +110,15 @@ class CommentForm extends Component {
 }
 
 
-
-
-function RenderDish({ dish }) {
+function RenderDish({dish}) {
     if (dish != null)
         return (
             <FadeTransform in
-                trasformProps={{
-                    exitTransform: 'scale(0.5) translateY(-50%)'
-                }} >
+                           trasformProps={{
+                               exitTransform: 'scale(0.5) translateY(-50%)'
+                           }}>
                 <Card className="m-1">
-                    <CardImg top src={baseUrl + dish.image} alt={dish.name} />
+                    <CardImg top src={dish.image} alt={dish.name}/>
                     <CardBody>
                         <CardTitle>{dish.name}</CardTitle>
                         <CardText>{dish.description}</CardText>
@@ -128,19 +132,24 @@ function RenderDish({ dish }) {
             <div></div>
         );
 }
-function RenderComments({ comment, postComment, dishId }) {
+
+function RenderComments({comment, postComment, dishId}) {
     const comments = comment.map((comment) => {
         return (
             <div key={comment.id}>
                 <ul className="list-unstyled ">
                     <Stagger in>
                         <Fade in>
-                        <li>
-                            {comment.comment}
-                        </li>
-                        <li>
-                            -- {comment.author} , {new Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'short', day: '2-digit' }).format(new Date(Date.parse(comment.date)))}
-                        </li>
+                            <li>
+                                {comment.comment}
+                            </li>
+                            <li>
+                                -- {comment.author} , {new Intl.DateTimeFormat('en-US', {
+                                year: 'numeric',
+                                month: 'short',
+                                day: '2-digit'
+                            }).format(new Date(Date.parse(comment.date)))}
+                            </li>
                         </Fade>
                     </Stagger>
                 </ul>
@@ -154,7 +163,7 @@ function RenderComments({ comment, postComment, dishId }) {
         <div>
             <h4>Comments</h4>
             {comments}
-            <CommentForm dishId={dishId} postComment={postComment} />
+            <CommentForm dishId={dishId} postComment={postComment}/>
         </div>
     );
 }
@@ -164,12 +173,11 @@ const DishDetail = (props) => {
         return (
             <div className='container'>
                 <div className="row">
-                    <Loading />
+                    <Loading/>
                 </div>
             </div>
         );
-    }
-    else if (props.errMess) {
+    } else if (props.errMess) {
         return (
             <div className='container'>
                 <div className="row">
@@ -177,8 +185,7 @@ const DishDetail = (props) => {
                 </div>
             </div>
         );
-    }
-    else if (props.dish != null) {
+    } else if (props.dish != null) {
         return (
             <div className="container">
                 <div className="row">
@@ -188,18 +195,18 @@ const DishDetail = (props) => {
                     </Breadcrumb>
                     <div className="col-12">
                         <h3>{props.dish.name}</h3>
-                        <hr />
+                        <hr/>
                     </div>
                 </div>
                 <div className="row">
                     <div className="col-12 col-sm m-1">
-                        <RenderDish dish={props.dish} />
+                        <RenderDish dish={props.dish}/>
                     </div>
 
                     <div className="col-12 col-sm m-1">
                         <RenderComments comment={props.comments}
-                            postComment={props.postComment}
-                            dishId={props.dish.id}
+                                        postComment={props.postComment}
+                                        dishId={props.dish.id}
                         />
 
                     </div>
@@ -208,14 +215,12 @@ const DishDetail = (props) => {
             </div>
 
         );
-    }
-    else {
+    } else {
         return (
             <div></div>
         );
     }
 }
-
 
 
 export default DishDetail;

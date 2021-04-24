@@ -1,14 +1,14 @@
 
 .scrollbar-cyan {
-scrollbar-color: #FF7300 #F5F5F5;
+    scrollbar-color: #FF7300 #F5F5F5;
 }
-
 
 
 .fixedDiv {
-overflow-y: scroll;
-height: 600px;
+    overflow-y: scroll;
+    height: 600px;
 }
-.navItems{
+
+.navItems {
     font-size: 21px;
 }

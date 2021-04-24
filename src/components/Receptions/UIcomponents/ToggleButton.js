@@ -1,17 +1,17 @@
-import React, { useState } from "react";
-import { Collapse, Button, CardBody, Card } from 'reactstrap';
+import React, {useState} from "react";
+import {Collapse, Button, CardBody, Card} from 'reactstrap';
 import '../../../css/home.css';
 import CircleMenu from "./CicleMenu";
 
 let items = [
     {
-        name:'Add Product',
-        icon:'fa fa-plus',
-        color:'btn-success',
+        name: 'Add Product',
+        icon: 'fa fa-plus',
+        color: 'btn-success',
         to: '/management/products'
     },
     {
-        name:'Edit Product',
+        name: 'Edit Product',
         icon: 'fa fa-pencil',
         color: 'btn-primary',
         to: '/management/products'
@@ -19,11 +19,11 @@ let items = [
     {
         name: 'Delete Product',
         icon: 'fa fa-trash',
-        color:'btn-danger',
+        color: 'btn-danger',
         to: '/management/products'
     },
     {
-        name:'Stock IncreaseProduct',
+        name: 'Stock IncreaseProduct',
         icon: 'fa fa-tasks',
         color: 'btn-warning',
         to: '/management/products'
@@ -49,7 +49,8 @@ const ToggleButton = () => {
     return (
         <React.Fragment>
 
-            <Button className="color3" onClick={toggle} style={{ marginTop: '1rem', marginLeft: '1rem' }}>Manage</Button>{' '}
+            <Button className="color3" onClick={toggle}
+                    style={{marginTop: '1rem', marginLeft: '1rem'}}>Manage</Button>{' '}
 
             <h5> {status}</h5>
             <Collapse
@@ -61,8 +62,8 @@ const ToggleButton = () => {
             >
                 <div className="col-12 col-md-11 offset-md-1">
 
-                        <CircleMenu items={items} />
-                    </div>
+                    <CircleMenu items={items}/>
+                </div>
 
             </Collapse>
         </React.Fragment>

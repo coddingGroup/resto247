@@ -1,24 +1,25 @@
-.cardBodyForProductShow .rightContents{
+.cardBodyForProductShow .rightContents {
     position: absolute;
     right: 3px;
     bottom: 5px;
 
 }
 
-.color3{
-    color:white;
-    background-color: #751a1a;   
-   }
+.color3 {
+    color: white;
+    background-color: #751a1a;
+}
 
-   .add-to-cart-icon {
+.add-to-cart-icon {
     color: #FF7300;
     text-shadow: 1px 1px 1px #ccc;
     font-size: 1.5em;
 }
+
 .add-to-cart-icon2 {
     color: #FF7300;
     text-shadow: 1px 1px 1px #ccc;
-   
+
 }
 
 .add-to-cart-btn {
@@ -37,20 +38,21 @@
 
 @media all and (min-width: 480px) {
     .Login {
-      padding: 60px 0;
+        padding: 60px 0;
     }
-  
-    .Login form {
-      margin: 0 auto;
-      max-width: 320px;
-    }
-  }
-  .priceInHomepage {
-      position: absolute;
-      right: 29px;
-  }
 
-  .btn-circle.btn-xl {
+    .Login form {
+        margin: 0 auto;
+        max-width: 320px;
+    }
+}
+
+.priceInHomepage {
+    position: absolute;
+    right: 29px;
+}
+
+.btn-circle.btn-xl {
     width: 70px;
     height: 70px;
     padding: 10px 16px;
@@ -68,9 +70,11 @@
     font-size: 12px;
     line-height: 1.42857;
 }
-.menu-background{
+
+.menu-background {
     background-color: #FF7300;
 }
-.googleMapConfig{
+
+.googleMapConfig {
     height: 200px;
 }

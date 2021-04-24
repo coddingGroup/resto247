@@ -1,8 +1,8 @@
 import React from 'react';
 
-let ComponentToPrint =React.forwardRef(
-    (props,ref) =>{
-        return(
+let ComponentToPrint = React.forwardRef(
+    (props, ref) => {
+        return (
             <div ref={ref}>
                 <table>
                     <thead>

@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Card, CardBody, Row, Col, CardHeader, CardFooter, Button } from 'reactstrap';
+import {Card, CardBody, Row, Col, CardHeader, CardFooter, Button} from 'reactstrap';
 
 const ItemsSold = () => {
 
@@ -12,23 +12,23 @@ const ItemsSold = () => {
                     <Row>
                         <Col className="border-right border-danger">
                             <Row>
-                            <h1>  <i class="fa fa-shopping-cart " > </i> <br />  </h1>
+                                <h1><i class="fa fa-shopping-cart "> </i> <br/></h1>
                             </Row>
                             <Row>
-                                <div class="p-1 bg-secondary text-white mr-1 d-flex flex-fill "> Sold </div>
+                                <div class="p-1 bg-secondary text-white mr-1 d-flex flex-fill "> Sold</div>
                             </Row>
-                             
+
                         </Col>
-                        <Col >
+                        <Col>
                             <i class="badge badge-warning">Products</i>
-                            <h1>  100  </h1>
+                            <h1> 100 </h1>
                         </Col>
 
                     </Row>
 
                 </CardBody>
                 <CardFooter className="d-flex flex-column ">
-                    <Button className="p-2 bg-info"><i className="fa fa-plus-circle" > </i> More info</Button>
+                    <Button className="p-2 bg-info"><i className="fa fa-plus-circle"> </i> More info</Button>
                 </CardFooter>
             </CardBody>
         </Card>

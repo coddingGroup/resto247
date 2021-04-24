@@ -1,12 +1,15 @@
-.card_image{
+.card_image {
     height: 200px;
 }
+
 .color3F {
     color: #751a1a;
 }
-.color2F{
-    color:#FF7300;
+
+.color2F {
+    color: #FF7300;
 }
+
 body #root .page-container .card-container {
     height: 430px;
     margin: 3px;
@@ -17,12 +20,15 @@ body #root .page-container .card-container {
     transform-style: preserve-3d;
     box-sizing: border-box;
 }
+
 body #root .page-container .card-container.flipped .front {
     transform: rotateY(180deg);
 }
+
 body #root .page-container .card-container.flipped .back {
     transform: rotateY(0deg);
 }
+
 body #root .page-container .card-container .front,
 body #root .page-container .card-container .back {
     box-sizing: border-box;
@@ -39,11 +45,13 @@ body #root .page-container .card-container .back {
     transition: -webkit-transform ease 500ms;
     transition: transform ease 500ms;
 }
+
 body #root .page-container .card-container .front {
     z-index: 2;
     transform: rotateY(0deg);
     /* front tile styles go here! */
 }
+
 body #root .page-container .card-container .back {
     background: #f8f6ea;
     transform: rotateY(-180deg);
@@ -51,13 +59,16 @@ body #root .page-container .card-container .back {
     font-size: 20px;
     /* back tile styles go here! */
 }
+
 body #root .page-container .card-container .image-container {
     position: relative;
 }
+
 body #root .page-container .card-container .image-container .card-image {
     width: 100%;
     border-radius: 10px;
 }
+
 body #root .page-container .card-container .image-container .title {
     font-size: 34px;
     position: absolute;
@@ -68,25 +79,30 @@ body #root .page-container .card-container .image-container .title {
     color: #f8f6ea;
     background-color: rgba(0, 0, 0, 0.3);
 }
+
 body #root .page-container .card-container .main-area {
     margin-left: 10px;
     margin-top: 10px;
     margin-right: 10px;
 }
+
 body #root .page-container .card-container .main-area .blog-post {
     height: 100%;
 }
+
 body #root .page-container .card-container .main-area .blog-post .date {
     margin-top: 10px;
     margin-bottom: 5px;
     font-size: 20px;
 }
+
 body #root .page-container .card-container .main-area .blog-post .read-more {
     font-size: 20px;
     position: relative;
     bottom: 0px;
     text-align: right;
 }
+
 body #root .page-container .card-container .main-area .blog-post .blog-content {
     height: 90%;
     display: block;
@@ -96,6 +112,7 @@ body #root .page-container .card-container .main-area .blog-post .blog-content {
     overflow: hidden;
     text-overflow: ellipsis;
 }
+
 body #root footer {
     position: fixed;
     bottom: 0;
@@ -104,18 +121,20 @@ body #root footer {
 }
 
 
-.horizontalContent{
+.horizontalContent {
     overflow-x: scroll;
     overflow-y: hidden;
     white-space: nowrap;
     height: 600px;
 }
-.searchResult{
+
+.searchResult {
     z-index: 1;
     position: relative;
     background-color: rgba(255, 255, 255, 0.5);
     width: 100%;
 }
-.searchResult:hover{
+
+.searchResult:hover {
     padding-bottom: 5em;
 }
