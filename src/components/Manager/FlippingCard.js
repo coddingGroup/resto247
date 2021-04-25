@@ -7,7 +7,7 @@ import {quantity} from "../../redux/Forms";
 import IncreaseProduct from "./Products/IncreaseProduct";
 
 const FlippingCard = ({increaseStock,oneProduct, showPriceField = true,
-                          opName,
+                          opName,handleSaving,
                           behaviors, changeFlippingCardSaveBehavior}) => {
 
     return (
@@ -16,6 +16,7 @@ const FlippingCard = ({increaseStock,oneProduct, showPriceField = true,
             <BlogCard oneProduct={oneProduct}
                       behaviors={behaviors}
                       opName={opName}
+                      handleSaving={handleSaving}
                       changeFlippingCardSaveBehavior={changeFlippingCardSaveBehavior}
                       increaseStock={increaseStock} />
         </div>
@@ -41,6 +42,7 @@ const BlogCard = (props) => {
             <Back oneProduct={props.oneProduct}
                   behaviors={props.behaviors}
                   opName={props.opName}
+                  handleSaving={props.handleSaving}
                   changeFlippingCardSaveBehavior={props.changeFlippingCardSaveBehavior}
                   increaseStock={props.increaseStock} />
         </div>
@@ -63,6 +65,7 @@ const Back = (props) => {
     const [qtyN, setQtyN] = useState('');
     const[unitPrice,setUnitPrice] = useState(0);
     const[behavior, setBehavior] = useState('enable');
+    const[errorM, setErrorM] = useState(null);
     const handleChange = (event) =>{
         event.preventDefault();
         let name = event.target.name;
@@ -75,11 +78,19 @@ const Back = (props) => {
         }
     }
     const handleSave = (event) =>{
+        event.preventDefault();
         setBehavior('loading');
         setTimeout(() =>{
             setBehavior('enable');
-        }, 2000)
-        props.increaseStock(props.oneProduct.id, unitPrice,qtyN,"suppler", props.oneProduct.name );
+        }, 2000);
+        props.handleSaving({
+            id: props.oneProduct.id,
+            unitPrice: unitPrice,
+            quantity: qtyN,
+            typeOfUser: 'suppler',
+            name:props.oneProduct.name
+        });
+        // props.increaseStock(props.oneProduct.id, unitPrice,qtyN,"suppler", props.oneProduct.name );
     }
     let additionalField= null;
     if(props.opName !== 'dailyUsage'){
@@ -97,9 +108,10 @@ const Back = (props) => {
     else if(behavior === 'enable'){
         button = <button type="button" onClick={handleSave} className="btn btn-warning"> Save</button>;
     }
-    let errorM = null;
+
     if(props.behaviors.flippingCardSaveButton === 'failed'){
-        errorM = "error occur while saving";
+        setErrorM('error occur while saving');
+        props.changeFlippingCardSaveBehavior('enable');
     }
 
     return (

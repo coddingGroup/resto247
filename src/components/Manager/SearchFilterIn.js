@@ -43,6 +43,7 @@ const SearchFilterInM = (props) => {
             cardT = (productT) => {
                 return <FlippingCard increaseStock={props.increaseStock}
                                      behaviors={props.behaviors}
+                                     handleSaving={props.handleSaving}
                                      opName={props.opName}
                                      changeFlippingCardSaveBehavior={props.changeFlippingCardSaveBehavior}
                                      oneProduct={productT}/>

@@ -7,7 +7,7 @@ import SearchOutputDisplay from "../SearchOutputDisplay";
 import Navigation from "../UIcomponents/SideNavigation";
 
 const IncreaseProduct = ({products, outOfStockProducts,
-                             opName,behaviors, changeFlippingCardSaveBehavior,
+                             opName,behaviors, changeFlippingCardSaveBehavior,handleSaving,
                              increaseStock}) => {
 
     const [text, setText] = useState('');
@@ -35,6 +35,7 @@ const IncreaseProduct = ({products, outOfStockProducts,
                               isLoading={outOfStockProducts.isLoading}
                               behaviors={behaviors}
                               opName={opName}
+                              handleSaving={handleSaving}
                               changeFlippingCardSaveBehavior={changeFlippingCardSaveBehavior}
                               errMess={outOfStockProducts.errMess}/>;
     } else {
@@ -61,6 +62,7 @@ const IncreaseProduct = ({products, outOfStockProducts,
                         <SearchFilterInM cardToRender={"FlippingCard"} allProducts={products.products}
                                          behaviors={behaviors}
                                          opName={opName}
+                                         handleSaving={handleSaving}
                                          changeFlippingCardSaveBehavior={changeFlippingCardSaveBehavior}
                                          increaseStock={increaseStock}
                                          isLoading={products.isLoading} errMess={products.errMess}/>

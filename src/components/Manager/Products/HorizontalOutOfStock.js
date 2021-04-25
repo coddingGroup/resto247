@@ -27,6 +27,7 @@ const OutOfStock = (props) => {
                     <FlippingCard oneProduct={product}
                                   opName={props.opName}
                                   behaviors={props.behaviors}
+                                  handleSaving={props.handleSaving}
                                   changeFlippingCardSaveBehavior={props.changeFlippingCardSaveBehavior}
                     />
                 )

@@ -8,6 +8,9 @@ import Navigation from "../UIcomponents/SideNavigation";
 
 
 let StockManagement = (props) => {
+    const handleSaving = (values) =>{
+        props.increaseStock(values.id, values.unitPrice,values.quantity,values.typeOfUser, values.name );
+    }
 
     return (
         <div className="row">
@@ -18,6 +21,7 @@ let StockManagement = (props) => {
                                                              searchingOutput={props.searchingOutput}
                                                              searchText={props.searchText}
                                                              opName="products"
+                                                             handleSaving={handleSaving}
                                                              behaviors={props.behaviors}
                                                              changeFlippingCardSaveBehavior={props.changeFlippingCardSaveBehavior}
                                                              increaseStock={props.increaseStock}
@@ -28,6 +32,7 @@ let StockManagement = (props) => {
                                                              searchText={props.searchText}
                                                              opName="resources"
                                                              behaviors={props.behaviors}
+                                                             handleSaving={handleSaving}
                                                              changeFlippingCardSaveBehavior={props.changeFlippingCardSaveBehavior}
                                                              increaseStock={props.increaseStock}
                                                              products={props.resources}/>}/> />}/>
@@ -37,6 +42,7 @@ let StockManagement = (props) => {
                                                              searchingOutput={props.searchingOutput}
                                                              searchText={props.searchText}
                                                              opName="dailyUsage"
+                                                             handleSaving={handleSaving}
                                                              behaviors={props.behaviors}
                                                              changeFlippingCardSaveBehavior={props.changeFlippingCardSaveBehavior}
                                                              increaseStock={props.increaseStock}
