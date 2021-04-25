@@ -21,7 +21,7 @@ import {
     loginUser,
     logoutUser,
     googleLogin,
-    increaseStock
+    increaseStock, signUp
 } from "../redux/ActionCreators";
 import {actions} from "react-redux-form";
 import {TransitionGroup, CSSTransition} from "react-transition-group";
@@ -52,6 +52,7 @@ const mapStateToProps = state => {
 }
 
 const mapDispatchToProps = (dispatch) => ({
+    signUp:(value, typeOfUser) => dispatch(signUp(value, typeOfUser)),
     increaseStock:(resourceId, unitPrice,quantity,from,name)=>dispatch(increaseStock(resourceId,unitPrice,quantity,from,name)),
     addToCart: (item) => dispatch(addToCart(item)),
     removeToCart: (removeId) => dispatch(removeToCart(removeId)),
@@ -215,7 +216,7 @@ class Main extends Component {
                                                                                     searchText={this.props.searchText}
                                                                                     outOfStockProducts={this.props.outOfStockProducts}/>}/>
 
-                            <Route path="/signup" component={() => <SignUp/>}/>
+                            <Route path="/signup" component={() => <SignUp signUp={this.props.signUp} />}/>
 
 
                             <Redirect to="/home"/>

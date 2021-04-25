@@ -66,18 +66,47 @@ export const signUp = (values, typeOfUser) => (dispatch) =>{
         .then((userCredential) => {
             // Signed in
             let user = userCredential.user;
-            firestore.collection('userCollection').add(
-                {
-                    firstName: values.firstName,
-                    secondName: values.secondName,
-                    tel: values.tel,
-                    typeOfUser: typeOfUser
+            // firestore.collection('userCollection').add(
+            //     {
+            //         firstName: values.firstName,
+            //         secondName: values.secondName,
+            //         tel: values.telNum,
+            //         typeOfUser: typeOfUser,
+            //         userId: user.uid
+            //
+            //     }
+            //
+            // ).then(docRef =>{
+            //     let userCollection = getUserCollection(user.uid);
+            //     setUser(user, userCollection);
+            // })
+            //
 
-                }
-
-            ).then(docRef =>{
-
+            firestore.collection("userCollection").add({
+                firstName: values.firstName,
+                secondName: values.secondName,
+                tel: values.telNum,
+                typeOfUser: typeOfUser,
+                userId: user.uid
             })
+                .then(docRef =>{
+                    firestore.collection("userCollection").doc(docRef.id).get()
+                        .then(doc =>{
+                            if (doc.exists) {
+                                const data = doc.data();
+                                // const id = doc.id;
+                                // let userCollection = {id, ...data};
+                                dispatch(setUser(user, data));
+                            } else {
+                                // doc.data() will be undefined in this case
+                                console.log("No such document!");
+                            }
+                        })
+                })
+                .catch(error => {
+                    console.log("signUp error  ", error.message);
+                    alert('Yerrro\nError: ' + error.message);
+                })
         })
         .catch((error) => {
             var errorCode = error.code;
@@ -280,6 +309,22 @@ export const setUser = (user="JSON.parse(localStorage.getItem('user'))", userCol
     userCollection: userCollection
 })
 
+export const getUserCollection =(userId) =>{
+     firestore.collection('userCollection').where('userId', '==', userId).get()
+        .then(snapshot => {
+            console.log(snapshot);
+            let userCollection ;
+            snapshot.forEach(doc => {
+
+                userCollection = doc.data();
+                localStorage.setItem('userCollection', JSON.stringify(userCollection));
+                return userCollection;
+            });
+
+
+        })
+        .catch(error => console.log(error.message));
+}
 export const loginUser = (creds) => (dispatch) => {
     // We dispatch requestLogin to kickoff the call to the API
     dispatch(requestLogin(creds))

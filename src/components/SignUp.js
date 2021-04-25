@@ -21,13 +21,13 @@ class SignUp extends Component {
 
 
     handleSubmit(values) {
-        this.props.signUp(values);
+        this.props.signUp(values, 'client');
 
-        this.props.postFeedback(values.firstname, values.lastname, values.email, values.contactType, values.telnum, values.agree);
+        // this.props.postFeedback(values.firstname, values.lastname, values.email, values.contactType, values.telnum, values.agree);
 
         console.log("Curent state is: " + JSON.stringify(values));
 
-        this.props.resetFeedbackForm();
+        // this.props.resetFeedbackForm();
     }
 
 
