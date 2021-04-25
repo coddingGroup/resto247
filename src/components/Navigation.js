@@ -65,6 +65,22 @@ let Navigation = (props) => {
     const handleChangeOfRemember = (event) =>{
         setRemember(event.target.value);
     }
+    const getLink = (typeOfUser) =>{
+        if(typeOfUser === 'receptionist'){
+            return  <NavItem><NavLink className="nav-link" to="/witer">
+                <span className="fa fa-list fa-lg"> Waiter </span>
+            </NavLink> </NavItem>
+
+        }
+        else if(typeOfUser === 'stockManager'){
+            return  <NavItem><NavLink className="nav-link" to="/management">
+                <span className="fa fa-list fa-lg"> Management </span>
+            </NavLink></NavItem>
+        }
+        else{
+            return  <NavLink to="/profile"> Profile </NavLink>
+        }
+    }
 
     return (
         <div className="container-fluid">
@@ -108,12 +124,16 @@ let Navigation = (props) => {
                     <span className="mr-5"> <Search searchbar="searchbar"/></span>
                 </Collapse>
 
-                <span className="navbar-text">
 
-          <AddedCart cart={props.cart}/>
+
+
 
           <Nav className="ml-auto" navbar>
                                 <NavItem>
+                                    <Button className="bg-light">
+                                        <AddedCart cart={props.cart}/>
+                                    </Button>
+                                </NavItem>
                                     { !(localStorage.getItem('user')!==null) ?
                                         <Button outline onClick={toggleModal}>
                                             <span className="fa fa-sign-in fa-lg"></span> Login
@@ -123,28 +143,31 @@ let Navigation = (props) => {
                                             }
                                         </Button>
                                         :
-                                        <div>
-                                            <NavLink to="/management">Management</NavLink>
-                                            <NavLink to="/witer"> waiter</NavLink>
-                                            <div className="navbar-text mr-3">{localStorage.getItem('user').email} </div>
-                                            <Button outline onClick={handleLogout}>
-                                                <span className="fa fa-sign-out fa-lg"></span> Logout
-                                                {props.auth.isFetching ?
-                                                    <span className="fa fa-spinner fa-pulse fa-fw"></span>
-                                                    : null
-                                                }
-                                            </Button>
-                                        </div>
+                                        <React.Fragment>
+                                            {getLink(props.userCollection.userCollection.typeOfUser)}
+                                            {/*<div className="navbar-text mr-3">*/}
+                                            {/*    {props.userCollection.userCollection.firstName === null? "no first" : props.userCollection.userCollection.firstName} */}
+                                            {/*</div>*/}
+                                            <NavItem>
+                                                <Button outline onClick={handleLogout}>
+                                                    <span className="fa fa-sign-out fa-lg"></span> Logout
+                                                    {props.auth.isFetching ?
+                                                        <span className="fa fa-spinner fa-pulse fa-fw"></span>
+                                                        : null
+                                                    }
+                                                </Button>
+                                            </NavItem>
+
+                                        </React.Fragment>
                                     }
 
-                                </NavItem>
+
                             </Nav>
 
 
                     {/* <a href="" data-toggle="modal" data-target= "#loginModal">
                         <span class="fa fa-sign-in"></span> Login
                     </a> */}
-        </span>
             </Navbar>
             <Modal isOpen={isModalOpen} toggle={toggleModal}>
                 <ModalHeader toggle={toggleModal}>Login</ModalHeader>

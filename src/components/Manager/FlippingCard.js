@@ -62,7 +62,7 @@ const Back = ({oneProduct, increaseStock}) => {
         }
     }
     const handleSave = (event) =>{
-        increaseStock(oneProduct.id, unitPrice,qtyN,"client" );
+        increaseStock(oneProduct.id, unitPrice,qtyN,"suppler", oneProduct.name );
     }
 
     return (

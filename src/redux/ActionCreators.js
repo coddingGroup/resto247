@@ -27,7 +27,7 @@ export const changeStock = (resourceId, quantity,unitPrice,from) =>({
         from:from
     }
 });
-export const increaseStock = (resourceId, unitPrice,quantity,from )=> (dispatch) =>{
+export const increaseStock = (resourceId, unitPrice,quantity,from,name )=> (dispatch) =>{
     if(!auth.currentUser){
         alert("login first");
         console.log("login first");
@@ -37,6 +37,7 @@ export const increaseStock = (resourceId, unitPrice,quantity,from )=> (dispatch)
         quantity:quantity,
         unitPrice:unitPrice,
         from:from,
+        resourceName:name,
         resourceId:resourceId,
         createdAt:firebasestore.FieldValue.serverTimestamp()
     })
@@ -58,6 +59,10 @@ export const increaseStock = (resourceId, unitPrice,quantity,from )=> (dispatch)
         console.log('Post comments ', error.message);
         alert('Your comment could not be posted\nError: ' + error.message);
     })
+}
+
+export const signUp = (...field) => (dispatch) =>{
+
 }
 export const postComment = (dishId, rating, comment) => (dispatch) => {
 
@@ -248,9 +253,10 @@ export const loginError = (message) => {
         message
     }
 }
-export const setUser = (user= JSON.parse(localStorage.getItem('user'))) =>({
+export const setUser = (user="JSON.parse(localStorage.getItem('user'))", userCollection="JSON.parse(localStorage.getItem('userCollection'))") =>({
     type: ActionTypes.SET_USER,
-    payload: user
+    user: user,
+    userCollection: userCollection
 })
 
 export const loginUser = (creds) => (dispatch) => {
@@ -260,11 +266,28 @@ export const loginUser = (creds) => (dispatch) => {
     return auth.signInWithEmailAndPassword(creds.username, creds.password)
         .then(() => {
             var user = auth.currentUser;
-            localStorage.setItem('user', JSON.stringify(user));
+
             // Dispatch the success action
             dispatch(fetchFavorites());
             dispatch(receiveLogin(user));
-            dispatch(setUser());
+
+
+
+            firestore.collection('userCollection').where('userId', '==', user.uid).get()
+                .then(snapshot => {
+                    console.log(snapshot);
+                    let userCollection ;
+                    snapshot.forEach(doc => {
+
+                        userCollection = doc.data();
+                        localStorage.setItem('user', JSON.stringify(user));
+                        localStorage.setItem('userCollection', JSON.stringify(userCollection));
+                        dispatch(setUser(user, userCollection));
+                    });
+
+
+                })
+                .catch(error => console.log(error.message));
         })
         .catch(error => dispatch(loginError(error.message)));
 
@@ -384,17 +407,45 @@ export const addFavorites = (favorites) => ({
     payload: favorites
 });
 
+// const combineUserInfo = (userId, user) =>{
+//     firestore.collection('userCollection').where('resourceId', '==', userId).get()
+//         .then(snapshot => {
+//             console.log(snapshot);
+//             let userC = snapshot[0];
+//             user = {...user, ...userC};
+//             return user;
+//         })
+//         .catch(error => console.log("fail to add user"));
+// }
+
 export const googleLogin = () => (dispatch) => {
     const provider = new fireauth.GoogleAuthProvider();
 
     auth.signInWithPopup(provider)
         .then((result) => {
             var user = result.user;
-            localStorage.setItem('user', JSON.stringify(user));
+
             // Dispatch the success action
             dispatch(fetchFavorites());
             dispatch(receiveLogin(user));
-            dispatch(setUser());
+            firestore.collection('userCollection').where('resourceId', '==', user.uid).get()
+                .then(snapshot => {
+                    console.log(snapshot);
+                    let userCollection ;
+                    snapshot.forEach(doc => {
+
+                        userCollection = doc.data();
+                        localStorage.setItem('user', JSON.stringify(user));
+                        localStorage.setItem('userCollection', JSON.stringify(userCollection));
+                        dispatch(setUser(user, userCollection));
+
+
+                    });
+
+
+                })
+                .catch(error => console.log("fail to add user"));
+            localStorage.setItem('user', JSON.stringify(user));
         })
         .catch((error) => {
             dispatch(loginError(error.message));

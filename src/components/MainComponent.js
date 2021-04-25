@@ -46,12 +46,13 @@ const mapStateToProps = state => {
         hotdeals: state.hotdeals,
         outOfStockProducts: state.outOfStockProducts,
         cart: state.cart,
-        auth: state.auth
+        auth: state.auth,
+        userCollection: state.userCollection
     }
 }
 
 const mapDispatchToProps = (dispatch) => ({
-    increaseStock:(resourceId, unitPrice,quantity,from)=>dispatch(increaseStock(resourceId,unitPrice,quantity,from)),
+    increaseStock:(resourceId, unitPrice,quantity,from,name)=>dispatch(increaseStock(resourceId,unitPrice,quantity,from,name)),
     addToCart: (item) => dispatch(addToCart(item)),
     removeToCart: (removeId) => dispatch(removeToCart(removeId)),
     postComment: (dishId, rating, author, comment) => dispatch(postComment(dishId, rating, author, comment)),
@@ -188,6 +189,7 @@ class Main extends Component {
                             loginUser={this.props.loginUser}
                             logoutUser={this.props.logoutUser}
                             googleLogin={this.props.googleLogin}
+                            userCollection={this.props.userCollection}
                             cart={this.props.cart}/>
                 <TransitionGroup>
                     <CSSTransition key={this.props.location.key} classNames="page" timeout={300}>
