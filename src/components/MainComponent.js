@@ -172,7 +172,8 @@ class Main extends Component {
         };
         const PrivateRoute = ({ component: Component, ...rest }) => (
             <Route {...rest} render={(props) => (
-                this.props.auth.isAuthenticated
+                // this.props.auth.isAuthenticated
+                localStorage.getItem('user') !=null
                     ? <Component {...props} />
                     : <Redirect to={{
                         pathname: '/home',
@@ -199,13 +200,13 @@ class Main extends Component {
                                                              postFeedback={this.props.postFeedback}/>}/>
                             <Route exact path="/aboutus" component={() => <About leaders={this.props.leaders}/>}/>
                             <Route exact path="/login" component={() => <Login loginUser={this.props.loginUser} googleLogin={this.props.googleLogin} />}/>
-                            <Route exact path="/witer" component={() => <WiterHome products={this.props.products}
+                            <PrivateRoute exact path="/witer" component={() => <WiterHome products={this.props.products}
                                                                                    addToCart={this.props.addToCart}
                                                                                    removeToCart={this.props.removeToCart}
                                                                                    cart={this.props.cart}
                             />}/>
 
-                            <Route path="/management" component={() => <MainManager products={this.props.products}
+                            <PrivateRoute path="/management" component={() => <MainManager products={this.props.products}
                                                                                     resources={this.props.resources}
                                                                                     increaseStock={this.props.increaseStock}
                                                                                     searchingOutput={this.props.searchingOutput}

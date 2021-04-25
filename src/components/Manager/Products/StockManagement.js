@@ -9,7 +9,6 @@ import Navigation from "../UIcomponents/SideNavigation";
 
 let StockManagement = (props) => {
 
-
     return (
         <div className="row">
             <div className="col-md-12">

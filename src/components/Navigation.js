@@ -114,7 +114,7 @@ let Navigation = (props) => {
 
           <Nav className="ml-auto" navbar>
                                 <NavItem>
-                                    { !props.auth.isAuthenticated ?
+                                    { !(localStorage.getItem('user')!==null) ?
                                         <Button outline onClick={toggleModal}>
                                             <span className="fa fa-sign-in fa-lg"></span> Login
                                             {props.auth.isFetching ?
@@ -126,7 +126,7 @@ let Navigation = (props) => {
                                         <div>
                                             <NavLink to="/management">Management</NavLink>
                                             <NavLink to="/witer"> waiter</NavLink>
-                                            <div className="navbar-text mr-3">{props.auth.user.displayName} </div>
+                                            <div className="navbar-text mr-3">{localStorage.getItem('user').email} </div>
                                             <Button outline onClick={handleLogout}>
                                                 <span className="fa fa-sign-out fa-lg"></span> Logout
                                                 {props.auth.isFetching ?
