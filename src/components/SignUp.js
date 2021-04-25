@@ -21,6 +21,7 @@ class SignUp extends Component {
 
 
     handleSubmit(values) {
+        this.props.signUp(values);
 
         this.props.postFeedback(values.firstname, values.lastname, values.email, values.contactType, values.telnum, values.agree);
 

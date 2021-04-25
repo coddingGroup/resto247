@@ -265,7 +265,7 @@ export const loginUser = (creds) => (dispatch) => {
 
     return auth.signInWithEmailAndPassword(creds.username, creds.password)
         .then(() => {
-            var user = auth.currentUser;
+            let user = auth.currentUser;
 
             // Dispatch the success action
             dispatch(fetchFavorites());
@@ -428,24 +428,22 @@ export const googleLogin = () => (dispatch) => {
             // Dispatch the success action
             dispatch(fetchFavorites());
             dispatch(receiveLogin(user));
-            firestore.collection('userCollection').where('resourceId', '==', user.uid).get()
+            localStorage.setItem('user', JSON.stringify(user));
+            firestore.collection('userCollection').where('userId', '==', user.uid).get()
                 .then(snapshot => {
                     console.log(snapshot);
                     let userCollection ;
                     snapshot.forEach(doc => {
 
                         userCollection = doc.data();
-                        localStorage.setItem('user', JSON.stringify(user));
+
                         localStorage.setItem('userCollection', JSON.stringify(userCollection));
                         dispatch(setUser(user, userCollection));
-
-
                     });
 
 
                 })
-                .catch(error => console.log("fail to add user"));
-            localStorage.setItem('user', JSON.stringify(user));
+                .catch(error => console.log(error.message));
         })
         .catch((error) => {
             dispatch(loginError(error.message));
