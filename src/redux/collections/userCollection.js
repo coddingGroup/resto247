@@ -3,16 +3,16 @@ import * as ActionTypes from '../ActionTypes';
 export const UserCollection = (state = {
     isLoading: true,
     errMess: null,
-    user: {}
+    user: JSON.parse(localStorage.getItem('user'))
 }, action) => {
     switch (action.type) {
-        case ActionTypes.ADD_RESOURCES:
+        case ActionTypes.SET_USER:
             return {...state, isLoading: false, errMess: null, user: action.payload}
 
-        case ActionTypes.RESOURCES_LOADING:
+        case ActionTypes.SET_USER_LOADING:
             return {...state, isLoading: true, errMess: null, user: {}}
 
-        case ActionTypes.RESOURCES_FAILED:
+        case ActionTypes.SET_USER_FAILED:
             return {...state, isLoading: false, errMess: action.payload, user: {}}
 
         default:

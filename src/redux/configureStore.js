@@ -8,6 +8,7 @@ import {Comments} from "./comments";
 import {Hotdeals} from "./hotdeals";
 import {Recommanded} from "./recommanded";
 import {OutOfStockProducts} from "./outOfStockProducts";
+import {UserCollection} from "./collections/userCollection";
 import {Cart} from "./Cart";
 import thunk from "redux-thunk";
 import logger from 'redux-logger';
@@ -16,6 +17,7 @@ import {InitialFeedback, quantity, login, signUp} from "./Forms";
 export const ConfigureStore = () => {
     const store = createStore(
         combineReducers({
+            userCollection:UserCollection,
             products: Products,
             resources: Resources,
             comments: Comments,

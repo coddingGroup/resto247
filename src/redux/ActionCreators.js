@@ -248,6 +248,10 @@ export const loginError = (message) => {
         message
     }
 }
+export const setUser = (user= JSON.parse(localStorage.getItem('user'))) =>({
+    type: ActionTypes.SET_USER,
+    payload: user
+})
 
 export const loginUser = (creds) => (dispatch) => {
     // We dispatch requestLogin to kickoff the call to the API
@@ -260,8 +264,11 @@ export const loginUser = (creds) => (dispatch) => {
             // Dispatch the success action
             dispatch(fetchFavorites());
             dispatch(receiveLogin(user));
+            dispatch(setUser());
         })
-        .catch(error => dispatch(loginError(error.message)))
+        .catch(error => dispatch(loginError(error.message)));
+
+
 };
 
 export const requestLogout = () => {
@@ -287,6 +294,7 @@ export const logoutUser = () => (dispatch) => {
     localStorage.removeItem('user');
     dispatch(favoritesFailed("Error 401: Unauthorized"));
     dispatch(receiveLogout())
+    dispatch(setUser());
 }
 
 export const postFavorite = (dishId) => (dispatch) => {
@@ -386,6 +394,7 @@ export const googleLogin = () => (dispatch) => {
             // Dispatch the success action
             dispatch(fetchFavorites());
             dispatch(receiveLogin(user));
+            dispatch(setUser());
         })
         .catch((error) => {
             dispatch(loginError(error.message));
