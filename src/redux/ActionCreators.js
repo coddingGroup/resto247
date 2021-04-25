@@ -61,8 +61,29 @@ export const increaseStock = (resourceId, unitPrice,quantity,from,name )=> (disp
     })
 }
 
-export const signUp = (...field) => (dispatch) =>{
+export const signUp = (values, typeOfUser) => (dispatch) =>{
+    auth.createUserWithEmailAndPassword(values.email, values.password)
+        .then((userCredential) => {
+            // Signed in
+            let user = userCredential.user;
+            firestore.collection('userCollection').add(
+                {
+                    firstName: values.firstName,
+                    secondName: values.secondName,
+                    tel: values.tel,
+                    typeOfUser: typeOfUser
 
+                }
+
+            ).then(docRef =>{
+
+            })
+        })
+        .catch((error) => {
+            var errorCode = error.code;
+            var errorMessage = error.message;
+
+        });
 }
 export const postComment = (dishId, rating, comment) => (dispatch) => {
 
