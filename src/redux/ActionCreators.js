@@ -48,6 +48,31 @@ export const increaseStock = (resourceId, unitPrice,quantity,from,name )=> (disp
                         const data = doc.data();
                         const id = doc.id;
                         let newStock = {id, ...data};
+                        firestore.collection('resources').doc(resourceId).get()
+                            .then(doc => {
+                                if(doc.exists){
+                                    const data = doc.data();
+                                    let stockQuantity =parseInt(data.stockQuantity);
+                                    let totalCost = parseInt(data.totalCost);
+
+                                    totalCost += (parseInt(quantity) * parseInt(unitPrice));
+                                    stockQuantity += parseInt(quantity);
+
+
+                                    firestore.collection('resources').doc(resourceId).update({
+                                        stockQuantity: stockQuantity,
+                                        totalCost: totalCost
+                                    })
+                                        .catch( error =>{
+                                            console.log(  error.message);
+                                        });
+
+                                }
+                            }).catch(error =>{
+                                console.log(error.message);
+                        })
+
+
                         dispatch(changeStock(newStock));
                     } else {
                         // doc.data() will be undefined in this case
