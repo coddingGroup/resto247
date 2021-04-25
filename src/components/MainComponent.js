@@ -21,7 +21,7 @@ import {
     loginUser,
     logoutUser,
     googleLogin,
-    increaseStock, signUp
+    increaseStock, signUp,changeFlippingCardSaveBehavior
 } from "../redux/ActionCreators";
 import {actions} from "react-redux-form";
 import {TransitionGroup, CSSTransition} from "react-transition-group";
@@ -47,11 +47,13 @@ const mapStateToProps = state => {
         outOfStockProducts: state.outOfStockProducts,
         cart: state.cart,
         auth: state.auth,
-        userCollection: state.userCollection
+        userCollection: state.userCollection,
+        behaviors: state.behaviors
     }
 }
 
 const mapDispatchToProps = (dispatch) => ({
+    changeFlippingCardSaveBehavior:(behavior) => dispatch(changeFlippingCardSaveBehavior(behavior)),
     signUp:(value, typeOfUser) => dispatch(signUp(value, typeOfUser)),
     increaseStock:(resourceId, unitPrice,quantity,from,name)=>dispatch(increaseStock(resourceId,unitPrice,quantity,from,name)),
     addToCart: (item) => dispatch(addToCart(item)),
@@ -214,6 +216,8 @@ class Main extends Component {
                                                                                     increaseStock={this.props.increaseStock}
                                                                                     searchingOutput={this.props.searchingOutput}
                                                                                     searchText={this.props.searchText}
+                                                                                           changeFlippingCardSaveBehavior={this.props.changeFlippingCardSaveBehavior}
+                                                                                           behaviors={this.props.behaviors}
                                                                                     outOfStockProducts={this.props.outOfStockProducts}/>}/>
 
                             <Route path="/signup" component={() => <SignUp signUp={this.props.signUp} />}/>

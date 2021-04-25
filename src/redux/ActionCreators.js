@@ -58,17 +58,20 @@ export const increaseStock = (resourceId, unitPrice,quantity,from,name )=> (disp
                                     totalCost += (parseInt(quantity) * parseInt(unitPrice));
                                     stockQuantity += parseInt(quantity);
 
+                                    dispatch(enableFlippingCardSaveButton());
 
                                     firestore.collection('resources').doc(resourceId).update({
                                         stockQuantity: stockQuantity,
                                         totalCost: totalCost
                                     })
                                         .catch( error =>{
+                                            dispatch(failedToSaveFlippingCardSaveButton());
                                             console.log(  error.message);
                                         });
 
                                 }
                             }).catch(error =>{
+                            dispatch(failedToSaveFlippingCardSaveButton());
                                 console.log(error.message);
                         })
 
@@ -872,3 +875,42 @@ export const addOutOfStockProducts = (outOfStockProducts) => ({
 });
 
 
+
+export const changeFlippingCardSaveBehavior = (behavior) => (dispatch) =>{
+    if(behavior === 'disable'){
+        dispatch(disableFlippingCardSaveButton())
+    }
+    else if(behavior === 'loading'){
+        dispatch(loadingFlippingCardSaveButton())
+    }
+    else if(behavior === 'failed'){
+        dispatch(failedToSaveFlippingCardSaveButton())
+    }
+    else if(behavior==='enable'){
+        dispatch(enableFlippingCardSaveButton())
+    }
+}
+export const enableFlippingCardSaveButton = ()=> (
+{
+    type: ActionTypes.FLIPPING_CARD_SAVE_DISABLE,
+        payload: 'enable'
+}
+);
+export const disableFlippingCardSaveButton = ()=> (
+    {
+        type: ActionTypes.FLIPPING_CARD_SAVE_DISABLE,
+        payload: 'disable'
+    }
+);
+export const loadingFlippingCardSaveButton = ()=> (
+    {
+        type: ActionTypes.FLIPPING_CARD_SAVE_DISABLE,
+        payload: 'loading'
+    }
+);
+export const failedToSaveFlippingCardSaveButton = ()=> (
+    {
+        type: ActionTypes.FLIPPING_CARD_SAVE_DISABLE,
+        payload: 'failed'
+    }
+);

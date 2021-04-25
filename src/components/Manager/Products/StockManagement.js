@@ -18,6 +18,8 @@ let StockManagement = (props) => {
                                                              searchingOutput={props.searchingOutput}
                                                              searchText={props.searchText}
                                                              opName="products"
+                                                             behaviors={props.behaviors}
+                                                             changeFlippingCardSaveBehavior={props.changeFlippingCardSaveBehavior}
                                                              increaseStock={props.increaseStock}
                                                              products={props.products}/>}/>
                     <Route exact path="/management/stock/Resources"
@@ -25,6 +27,8 @@ let StockManagement = (props) => {
                                                              searchingOutput={props.searchingOutput}
                                                              searchText={props.searchText}
                                                              opName="resources"
+                                                             behaviors={props.behaviors}
+                                                             changeFlippingCardSaveBehavior={props.changeFlippingCardSaveBehavior}
                                                              increaseStock={props.increaseStock}
                                                              products={props.resources}/>}/> />}/>
 
@@ -33,6 +37,8 @@ let StockManagement = (props) => {
                                                              searchingOutput={props.searchingOutput}
                                                              searchText={props.searchText}
                                                              opName="dailyUsage"
+                                                             behaviors={props.behaviors}
+                                                             changeFlippingCardSaveBehavior={props.changeFlippingCardSaveBehavior}
                                                              increaseStock={props.increaseStock}
                                                              products={props.resources}/>}/> />}/>
                     <Route exact path="/management/stock/marchProductToResources"

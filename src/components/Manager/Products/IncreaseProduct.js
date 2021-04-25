@@ -6,7 +6,9 @@ import SearchFilterInM from "../SearchFilterIn";
 import SearchOutputDisplay from "../SearchOutputDisplay";
 import Navigation from "../UIcomponents/SideNavigation";
 
-const IncreaseProduct = ({products, outOfStockProducts, opName, increaseStock}) => {
+const IncreaseProduct = ({products, outOfStockProducts,
+                             opName,behaviors, changeFlippingCardSaveBehavior,
+                             increaseStock}) => {
 
     const [text, setText] = useState('');
     const [searchOutput, setSearchOutput] = useState([]);
@@ -28,9 +30,12 @@ const IncreaseProduct = ({products, outOfStockProducts, opName, increaseStock}) 
 
     }
     let outOfSt;
-    if (opName !== "dailyUsage") {
+    if (opName !== "dailyUsagee") {
         outOfSt = <OutOfStock allProducts={outOfStockProducts.outOfStockProducts}
                               isLoading={outOfStockProducts.isLoading}
+                              behaviors={behaviors}
+                              opName={opName}
+                              changeFlippingCardSaveBehavior={changeFlippingCardSaveBehavior}
                               errMess={outOfStockProducts.errMess}/>;
     } else {
         outOfSt = <div></div>;
@@ -54,6 +59,9 @@ const IncreaseProduct = ({products, outOfStockProducts, opName, increaseStock}) 
                     <div className="w-100">
 
                         <SearchFilterInM cardToRender={"FlippingCard"} allProducts={products.products}
+                                         behaviors={behaviors}
+                                         opName={opName}
+                                         changeFlippingCardSaveBehavior={changeFlippingCardSaveBehavior}
                                          increaseStock={increaseStock}
                                          isLoading={products.isLoading} errMess={products.errMess}/>
                     </div>

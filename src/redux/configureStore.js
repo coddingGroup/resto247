@@ -9,6 +9,7 @@ import {Hotdeals} from "./hotdeals";
 import {Recommanded} from "./recommanded";
 import {OutOfStockProducts} from "./outOfStockProducts";
 import {UserCollection} from "./collections/userCollection";
+import {Behaviors} from "./behaviors";
 import {Cart} from "./Cart";
 import thunk from "redux-thunk";
 import logger from 'redux-logger';
@@ -24,6 +25,7 @@ export const ConfigureStore = () => {
             recommanded: Recommanded,
             hotdeals: Hotdeals,
             auth:Auth,
+            behaviors:Behaviors,
             outOfStockProducts: OutOfStockProducts,
             cart: Cart,
             ...createForms({

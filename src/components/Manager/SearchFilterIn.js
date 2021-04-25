@@ -5,6 +5,7 @@ import {ITEMS} from '../../shared/ProductsCategories'
 import FlippingCard from "./FlippingCard";
 import {Loading} from "../LoadingComponent";
 import RenderCard3 from "../homepagecomponents/RenderCard3";
+import IncreaseProduct from "./Products/IncreaseProduct";
 
 
 const SearchFilterInM = (props) => {
@@ -40,7 +41,11 @@ const SearchFilterInM = (props) => {
         let cardT = undefined;
         if (props.cardToRender === "FlippingCard") {
             cardT = (productT) => {
-                return <FlippingCard increaseStock={props.increaseStock} oneProduct={productT}/>
+                return <FlippingCard increaseStock={props.increaseStock}
+                                     behaviors={props.behaviors}
+                                     opName={props.opName}
+                                     changeFlippingCardSaveBehavior={props.changeFlippingCardSaveBehavior}
+                                     oneProduct={productT}/>
             }
         } else {
             cardT = (productT) => {

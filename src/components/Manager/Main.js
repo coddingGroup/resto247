@@ -50,6 +50,8 @@ const MainManager = (props) => {
                                                                  searchText={props.searchText}
                                                                  resources={props.resources}
                                                                  increaseStock={props.increaseStock}
+                                                                 behaviors={props.behaviors}
+                                                                 changeFlippingCardSaveBehavior={props.changeFlippingCardSaveBehavior}
                                                                  products={props.products}/>}/>
                         <Route exact path="/management/dashboard" component={() => <Dashboard/>}/>
 

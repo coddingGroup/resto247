@@ -3,9 +3,9 @@ import '../../../css/Manager.css';
 import {Loading} from "../../LoadingComponent";
 import React from "react";
 
-const OutOfStock = ({allProducts, isLoading, errMess}) => {
+const OutOfStock = (props) => {
 
-    if (isLoading) {
+    if (props.isLoading) {
         return (
             <div className="horizontalContent">
                 <h2>Out Of Stock Product</h2>
@@ -15,16 +15,20 @@ const OutOfStock = ({allProducts, isLoading, errMess}) => {
             </div>
 
         );
-    } else if (errMess) {
+    } else if (props.errMess) {
         return (
-            <h4> {errMess} </h4>
+            <h4> {props.errMess} </h4>
         );
     } else {
-        let allOutOfStock = allProducts.map(
+        let allOutOfStock = props.allProducts.map(
             (product) => {
                 return (
 
-                    <FlippingCard oneProduct={product}/>
+                    <FlippingCard oneProduct={product}
+                                  opName={props.opName}
+                                  behaviors={props.behaviors}
+                                  changeFlippingCardSaveBehavior={props.changeFlippingCardSaveBehavior}
+                    />
                 )
             }
         )
