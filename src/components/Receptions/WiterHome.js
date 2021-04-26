@@ -14,6 +14,7 @@ const WiterHome = (props) => {
                 <div className="col-12 col-md m-2">
                     {/* <HotDeal hotdeals={props.hotdeals} />         */}
                     <TabsMenu cart={props.cart} addToCart={props.addToCart} removeToCart={props.removeToCart}
+                              pushInvoice={props.pushInvoice}
                               products={props.products}/>
                 </div>
 

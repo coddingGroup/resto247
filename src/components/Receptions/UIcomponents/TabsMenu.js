@@ -226,7 +226,7 @@ const TabsMenu = (props) => {
                                         <span class="fa fa-print mt-2 float-right"> </span>
                                     </h3>
                                 </CardTitle>
-                                <CardBody> <TableAddedCarts removeToCart={props.removeToCart} cart={props.cart}/>
+                                <CardBody> <TableAddedCarts pushInvoice={props.pushInvoice} removeToCart={props.removeToCart} cart={props.cart}/>
                                 </CardBody>
                             </Card>
 

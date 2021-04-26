@@ -143,13 +143,37 @@ const TableItems = React.forwardRef(
         }
     }
 );
-let TableAddedCarts = ({cart, removeToCart}) => {
+let TableAddedCarts = ({cart, removeToCart, pushInvoice}) => {
     const [date, setDate] = useState('');
+    const [totalQuantity, setTotalQuantity] = useState(0);
+    const [totalPrice, setTotalPrice] = useState(0);
+    //const [order,setOrder] = useState(null);
+    const [waiterName, setWaiterName] = useState('');
+    const [clientName, setClientName] = useState('client');
+    const [paymentStatus, setPaymentStatus] = useState('paid');
+    const [receptionistName, setReceptionistName] = useState('');
     const componentRef = useRef();
     const handlePrint = useReactToPrint({
         content: () => componentRef.current,
     });
+
+
     let handleClick = (event) => {
+        let keys = Object.keys(cart.items);
+        let order=[];
+        let totalPrice = 0;
+        let totalQuantity=0;
+        keys.forEach(key => {
+            order = [...order, {
+                price: cart.items[key].price
+                , productName: cart.items[key].name
+                , quantity: cart.items[key].quantity,
+            }];
+            totalQuantity = totalQuantity + parseInt(cart.items[key].quantity);
+            totalPrice = totalPrice + (cart.items[key].price * cart.items[key].quantity);
+        })
+        pushInvoice(receptionistName, waiterName,clientName,paymentStatus,totalPrice,order);
+
         let orderDate = new Date();
         let hour = String(orderDate.getHours()).padStart(2, '0');
         let min = String(orderDate.getMinutes()).padStart(2, '0');
@@ -164,7 +188,12 @@ let TableAddedCarts = ({cart, removeToCart}) => {
 
     return (
         <div>
-            <TableItems date={date} cart={cart} removeToCart={removeToCart} ref={componentRef}/>
+            <TableItems date={date} cart={cart}
+                        totalPrice={totalPrice} totalQuantity={totalQuantity} receptionistName={receptionistName}
+                        waiterName={waiterName} setWaiterName={setWaiterName}
+                        clientName={clientName} setClientName={setClientName}
+                        paymentStatus={paymentStatus} setPaymentStatus={setPaymentStatus}
+                        removeToCart={removeToCart} ref={componentRef}/>
             <div className="d-flex justify-content-center">
                 <Button onClick={handleClick} color="light"> <i className="d-flex add-to-cart-icon2"> Print {' '} </i><i
                     className="fa fa-3x fa-arrow-circle-right add-to-cart-icon2"></i> </Button>

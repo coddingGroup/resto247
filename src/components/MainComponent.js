@@ -22,7 +22,7 @@ import {
     logoutUser,
     googleLogin, fetchWaiters,
     addResourcesReport,updateProduct,
-    increaseStock, signUp,changeFlippingCardSaveBehavior
+    increaseStock, signUp,changeFlippingCardSaveBehavior,pushInvoice
 } from "../redux/ActionCreators";
 import {actions} from "react-redux-form";
 import {TransitionGroup, CSSTransition} from "react-transition-group";
@@ -55,6 +55,7 @@ const mapStateToProps = state => {
 }
 
 const mapDispatchToProps = (dispatch) => ({
+    pushInvoice: (receptionistName, waiterName,clientName,paymentStatus,totalPrice,orders) =>dispatch(pushInvoice(receptionistName, waiterName,clientName,paymentStatus,totalPrice,orders)),
     fetchWaiters: () => dispatch(fetchWaiters()),
     addResourcesReport: (resourceId, unitPrice,quantity,from,name) => dispatch(addResourcesReport(resourceId, unitPrice,quantity,from,name)),
     changeFlippingCardSaveBehavior:(behavior) => dispatch(changeFlippingCardSaveBehavior(behavior)),
@@ -217,6 +218,7 @@ class Main extends Component {
                                                                                    addToCart={this.props.addToCart}
                                                                                    removeToCart={this.props.removeToCart}
                                                                                    cart={this.props.cart}
+                                                                                          pushInvoice={this.props.pushInvoice}
                             />}/>
 
                             <PrivateRoute path="/management" component={() => <MainManager products={this.props.products}

@@ -91,6 +91,84 @@ export const increaseStock = (resourceId, unitPrice,quantity,from,name )=> (disp
     })
 }
 
+
+export const pushInvoice = (receptionistName, waiterName,clientName,paymentStatus,totalPrice,orders )=> (dispatch) =>{
+    if(!auth.currentUser){
+        alert("login first");
+        console.log("login first");
+        return;
+    }
+    dispatch(invoiceLoading(true));
+    return firestore.collection('invoices').add({
+        receptionistName:receptionistName
+        , waiterName:waiterName
+        ,clientName:clientName
+        ,paymentStatus:paymentStatus,
+        totalPrice:totalPrice,
+        featured:true,
+        status:"active",
+        createdAt: firebasestore.FieldValue.serverTimestamp(),
+        updatedAt:firebasestore.FieldValue.serverTimestamp()
+    })
+        .then(docRef =>{
+            firestore.collection('invoices').doc(docRef.id).get()
+                .then(doc =>{
+                    if (doc.exists) {
+                        const data = doc.data();
+                        const id = doc.id;
+                        let newInvoice = {id, ...data};
+                            dispatch(addInvoice(newInvoice));
+                            dispatch(invoiceDetailsLoading(true));
+                        orders.forEach(order => {
+                            firestore.collection('invoiceDetails').add({
+                                invoiceId: id
+                                , price: order.price
+                                , productName: order.productName
+                                , quantity: order.quantity,
+                                createdAt: firebasestore.FieldValue.serverTimestamp()
+                            })
+                                .then(docRef => {
+                                    firestore.collection('invoiceDetails').doc(docRef.id).get()
+                                        .then(doc => {
+                                            if (doc.exists) {
+                                                const data = doc.data();
+                                                const id = doc.id;
+                                                let newInvoiceDetails = {id, ...data};
+                                                dispatch(addInvoiceDetails(data.invoiceId,newInvoiceDetails));
+                                            }
+                                            else {
+                                                // doc.data() will be undefined in this case
+                                                console.log("No such document!");
+                                            }
+
+                                        })
+                                        .catch(error =>{
+                                            console.log(error.message);
+                                            dispatch(invoiceDetailsFailed(error));
+                                        });
+                                });
+                        });
+                            }
+                     else {
+                        // doc.data() will be undefined in this case
+                        console.log("No such document!");
+                    }
+                })
+        })
+        .catch(error => {
+            dispatch(invoiceFailed(error));
+            console.log('Post comments ', error.message);
+            alert('Your comment could not be posted\nError: ' + error.message);
+        });
+}
+
+export const addInvoice =(newInvoice)=>({type: ActionTypes.ADD_INVOICE, payload:newInvoice});
+export const invoiceLoading=()=>({type:ActionTypes.INVOICE_LOADING,payload:true});
+export const invoiceFailed=(error)=>({type:ActionTypes.INVOICE_FAILED,payload:error});
+export const addInvoiceDetails=(invoiceId,newInvoiceDetails)=>({type:ActionTypes.ADD_INVOICE_DETAILS,payload:newInvoiceDetails,invoiceId:invoiceId});
+export const invoiceDetailsLoading=()=>({type:ActionTypes.INVOICE_DETAILS_LOADING,payload:true});
+export const invoiceDetailsFailed=(error)=>({type:ActionTypes.INVOICE_DETAILS_FAILED, payload:error});
+
 export const fetchWaiters = () =>(dispatch) =>{
     dispatch(waitersLoading(true));
     return firestore.collection('waiters').get()
