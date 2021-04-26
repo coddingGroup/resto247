@@ -206,22 +206,31 @@ const Back = (props) => {
 
 let ImageArea = ({oneProduct}) => {
     const [image, setImage] = useState('');
-    let gsReference = firebaseStorage.refFromURL(oneProduct.image);
-    gsReference.getDownloadURL()
-        .then((url) => {
-            setImage(url);
-        })
-        .catch((error) => {
-            setImage('https://firebasestorage.googleapis.com/v0/b/resto247-2c1f2.appspot.com/o/images%2Flogo.jpg?alt=media&token=6296ddb1-0cda-4a2a-8956-50209dc3a992');
-        });
+    try{
+        let gsReference = firebaseStorage.refFromURL(oneProduct.image);
+        gsReference.getDownloadURL()
+            .then((url) => {
+                setImage(url);
+            })
+            .catch((error) => {
+                console.log(error.message);
+                setImage('https://firebasestorage.googleapis.com/v0/b/resto247-2c1f2.appspot.com/o/images%2Flogo.jpg?alt=media&token=6296ddb1-0cda-4a2a-8956-50209dc3a992');
+            });
+    }catch (error) {
+        console.log(error.message());
+        console.log(error.message);
+    }
+    finally {
+        return (
+            <div className="image-container">
+                <img className="card-image" src={image}></img>
+                <h1 className="title">{oneProduct.name}</h1>
+            </div>
+        )
+    }
 
 
-    return (
-        <div className="image-container">
-            <img className="card-image" src={image}></img>
-            <h1 className="title">{oneProduct.name}</h1>
-        </div>
-    )
+
 }
 
 
