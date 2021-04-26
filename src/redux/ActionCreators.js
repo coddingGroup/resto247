@@ -1,7 +1,7 @@
 import * as ActionTypes from './ActionTypes';
 import {DISHES} from "../shared/dishes";
 import {baseUrl} from "../shared/baseUrl";
-import {auth, firestore, fireauth, firebasestore} from '../firebase/firebase';
+import {auth, firestore, fireauth, firebasestore, firebaseStorage} from '../firebase/firebase';
 
 
 
@@ -39,6 +39,8 @@ export const increaseStock = (resourceId, unitPrice,quantity,from,name )=> (disp
         from:from,
         resourceName:name,
         resourceId:resourceId,
+        remainingQuantity:quantity,
+        updatedAt:firebasestore.FieldValue.serverTimestamp(),
         createdAt:firebasestore.FieldValue.serverTimestamp()
     })
         .then(docRef =>{
@@ -88,6 +90,77 @@ export const increaseStock = (resourceId, unitPrice,quantity,from,name )=> (disp
         alert('Your comment could not be posted\nError: ' + error.message);
     })
 }
+
+
+
+
+
+export const addResourcesReport = (resourceId, unitPrice,quantity,to,name )=> (dispatch) =>{
+    if(!auth.currentUser){
+        alert("login first");
+        console.log("login first");
+        return;
+    }
+    return firestore.collection('resourcesReports').add({
+        quantity:quantity,
+        unitPrice:unitPrice,
+        to:to,
+        resourceName:name,
+        resourceId:resourceId,
+        createdAt:firebasestore.FieldValue.serverTimestamp()
+    })
+        .then(docRef =>{
+            firestore.collection('resourcesReports').doc(docRef.id).get()
+                .then(doc =>{
+                    if (doc.exists) {
+                        const data = doc.data();
+                        const id = doc.id;
+                        let newStock = {id, ...data};
+                        firestore.collection('resources').doc(resourceId).get()
+                            .then(doc => {
+                                if(doc.exists){
+                                    const data = doc.data();
+                                    let stockQuantity =parseInt(data.stockQuantity);
+                                    let totalCost = parseInt(data.totalCost);
+
+                                    totalCost -= (parseInt(quantity) * parseInt(unitPrice));
+                                    stockQuantity -= parseInt(quantity);
+
+                                    dispatch(enableFlippingCardSaveButton());
+
+                                    firestore.collection('resources').doc(resourceId).update({
+                                        stockQuantity: stockQuantity,
+                                        totalCost: totalCost
+                                    })
+                                        .catch( error =>{
+                                            dispatch(failedToSaveFlippingCardSaveButton());
+                                            console.log(  error.message);
+                                        });
+
+                                }
+                            }).catch(error =>{
+                            dispatch(failedToSaveFlippingCardSaveButton());
+                            console.log(error.message);
+                        })
+
+
+                        dispatch(changeStock(newStock));
+                    } else {
+                        // doc.data() will be undefined in this case
+                        console.log("No such document!");
+                    }
+                })
+        })
+        .catch(error => {
+            console.log('Post comments ', error.message);
+            alert('Your comment could not be posted\nError: ' + error.message);
+        })
+}
+
+
+
+
+
 
 export const signUp = (values, typeOfUser) => (dispatch) =>{
     auth.createUserWithEmailAndPassword(values.email, values.password)
@@ -183,12 +256,12 @@ export const postComment = (dishId, rating, comment) => (dispatch) => {
 export const fetchDishes = () => (dispatch) => {
     dispatch(dishesLoading(true));
 
-    return firestore.collection('dishes').get()
+    return firestore.collection('products').get()
         .then(snapshot => {
             let products = [];
             snapshot.forEach(doc => {
-                const data = doc.data()
-                const id = doc.id
+                let data = doc.data()
+                let id = doc.id;
                 products.push({id, ...data});
             });
             return products;

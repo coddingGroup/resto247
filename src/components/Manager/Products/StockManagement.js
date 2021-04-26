@@ -8,8 +8,14 @@ import Navigation from "../UIcomponents/SideNavigation";
 
 
 let StockManagement = (props) => {
-    const handleSaving = (values) =>{
-        props.increaseStock(values.id, values.unitPrice,values.quantity,values.typeOfUser, values.name );
+    const handleSavingForResources = (values) =>{
+        props.increaseStock(values.id, values.unitPrice,values.quantity,values.from, values.name );
+    };
+    const handleSavingForProducts = (values) =>{
+        //props.increaseStock(values.id, values.unitPrice,values.quantity,values.from, values.name );
+    };
+    const handleSavingForDailyUsage = (values) =>{
+        props.addResourcesReport(values.id, values.unitPrice,values.quantity,values.to, values.name );
     }
 
     return (
@@ -21,7 +27,7 @@ let StockManagement = (props) => {
                                                              searchingOutput={props.searchingOutput}
                                                              searchText={props.searchText}
                                                              opName="products"
-                                                             handleSaving={handleSaving}
+                                                             handleSaving={handleSavingForProducts}
                                                              behaviors={props.behaviors}
                                                              changeFlippingCardSaveBehavior={props.changeFlippingCardSaveBehavior}
                                                              increaseStock={props.increaseStock}
@@ -32,7 +38,7 @@ let StockManagement = (props) => {
                                                              searchText={props.searchText}
                                                              opName="resources"
                                                              behaviors={props.behaviors}
-                                                             handleSaving={handleSaving}
+                                                             handleSaving={handleSavingForResources}
                                                              changeFlippingCardSaveBehavior={props.changeFlippingCardSaveBehavior}
                                                              increaseStock={props.increaseStock}
                                                              products={props.resources}/>}/> />}/>
@@ -42,7 +48,7 @@ let StockManagement = (props) => {
                                                              searchingOutput={props.searchingOutput}
                                                              searchText={props.searchText}
                                                              opName="dailyUsage"
-                                                             handleSaving={handleSaving}
+                                                             handleSaving={handleSavingForDailyUsage}
                                                              behaviors={props.behaviors}
                                                              changeFlippingCardSaveBehavior={props.changeFlippingCardSaveBehavior}
                                                              increaseStock={props.increaseStock}

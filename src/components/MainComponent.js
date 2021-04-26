@@ -21,6 +21,7 @@ import {
     loginUser,
     logoutUser,
     googleLogin,
+    addResourcesReport,
     increaseStock, signUp,changeFlippingCardSaveBehavior
 } from "../redux/ActionCreators";
 import {actions} from "react-redux-form";
@@ -53,6 +54,7 @@ const mapStateToProps = state => {
 }
 
 const mapDispatchToProps = (dispatch) => ({
+    addResourcesReport: (resourceId, unitPrice,quantity,from,name) => dispatch(addResourcesReport(resourceId, unitPrice,quantity,from,name)),
     changeFlippingCardSaveBehavior:(behavior) => dispatch(changeFlippingCardSaveBehavior(behavior)),
     signUp:(value, typeOfUser) => dispatch(signUp(value, typeOfUser)),
     increaseStock:(resourceId, unitPrice,quantity,from,name)=>dispatch(increaseStock(resourceId,unitPrice,quantity,from,name)),
@@ -216,6 +218,7 @@ class Main extends Component {
                                                                                     increaseStock={this.props.increaseStock}
                                                                                     searchingOutput={this.props.searchingOutput}
                                                                                     searchText={this.props.searchText}
+                                                                                           addResourcesReport = {this.props.addResourcesReport}
                                                                                            changeFlippingCardSaveBehavior={this.props.changeFlippingCardSaveBehavior}
                                                                                            behaviors={this.props.behaviors}
                                                                                     outOfStockProducts={this.props.outOfStockProducts}/>}/>

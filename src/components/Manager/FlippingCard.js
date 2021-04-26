@@ -5,6 +5,8 @@ import {baseUrl} from "../../shared/baseUrl";
 import {useState} from 'react';
 import {quantity} from "../../redux/Forms";
 import IncreaseProduct from "./Products/IncreaseProduct";
+import RenderCard3 from "../homepagecomponents/RenderCard3";
+import {firebaseStorage} from "../../firebase/firebase";
 
 const FlippingCard = ({increaseStock,oneProduct, showPriceField = true,
                           opName,handleSaving,
@@ -66,6 +68,13 @@ const Back = (props) => {
     const[unitPrice,setUnitPrice] = useState(0);
     const[behavior, setBehavior] = useState('enable');
     const[errorM, setErrorM] = useState(null);
+    const[comesFrom,setComesFrom] = useState('suppler');
+    const[goesTo, setGoesTo] = useState('kitchen');
+    const[disabled, setDisabled] = useState(true);
+    const[soldPrice, setSoldPrice] = useState(0);
+
+
+
     const handleChange = (event) =>{
         event.preventDefault();
         let name = event.target.name;
@@ -76,6 +85,12 @@ const Back = (props) => {
         else if(name==='unitPrice'){
             setUnitPrice(value);
         }
+        else if(name==='goesTo'){
+            setGoesTo(value);
+        }
+        else if(name === 'comesFrom'){
+            setComesFrom(value);
+        }
     }
     const handleSave = (event) =>{
         event.preventDefault();
@@ -83,23 +98,76 @@ const Back = (props) => {
         setTimeout(() =>{
             setBehavior('enable');
         }, 2000);
-        props.handleSaving({
-            id: props.oneProduct.id,
-            unitPrice: unitPrice,
-            quantity: qtyN,
-            typeOfUser: 'suppler',
-            name:props.oneProduct.name
-        });
-        // props.increaseStock(props.oneProduct.id, unitPrice,qtyN,"suppler", props.oneProduct.name );
+        if(props.opName ==='dailyUsage'){
+            props.handleSaving({
+                id: props.oneProduct.id,
+                unitPrice: unitPrice,
+                quantity: qtyN,
+                to: goesTo,
+                name:props.oneProduct.name
+            });
+        }
+        else {
+            props.handleSaving({
+                id: props.oneProduct.id,
+                unitPrice: unitPrice,
+                quantity: qtyN,
+                from: comesFrom,
+                name: props.oneProduct.name
+            });
+            // props.increaseStock(props.oneProduct.id, unitPrice,qtyN,"suppler", props.oneProduct.name );
+        }
     }
     let additionalField= null;
-    if(props.opName !== 'dailyUsage'){
-        additionalField = <div className="form-group">
+    let otherField;
+    if(props.opName == 'products'){
+        additionalField =<FormGroup className="">
 
-            <Label className=""> unit price </Label>
-            <Input onChange={handleChange} value={unitPrice} name="unitPrice" className="" type={"number"}/>
-        </div>;
+            <Label className=""> Sold Price </Label>
+            <Input onChange={handleChange} value={soldPrice} name="goesTo" className="" type={"number"}/>
+        </FormGroup>
+       otherField = <React.Fragment>
+           <FormGroup className="">
+
+               <Label className=""> unit price </Label>
+               <Input disabled = {(disabled)? "disabled" : ""} onChange={handleChange} value={unitPrice} name="unitPrice" className="" type={"number"}/>
+           </FormGroup>
+           <FormGroup>
+               <Label className="">quantity</Label>
+               <Input disabled = {(disabled)? "disabled" : ""}  onChange={handleChange} value={qtyN} name="qtyN" className="" type="number"/>
+           </FormGroup>
+       </React.Fragment>
     }
+    else{
+        otherField = <React.Fragment>
+
+            <FormGroup className="">
+
+                <Label className=""> unit price </Label>
+                <Input onChange={handleChange} value={unitPrice} name="unitPrice" className="" type={"number"}/>
+            </FormGroup>
+            <FormGroup>
+                <Label className="">quantity</Label>
+                <Input onChange={handleChange} value={qtyN} name="qtyN" className="" type="number"/>
+            </FormGroup>
+        </React.Fragment>
+
+        if(props.opName === 'dailyUsage'){
+            additionalField =<FormGroup className="">
+
+                <Label className=""> goes To </Label>
+                <Input onChange={handleChange} value={goesTo} name="goesTo" className="" type={"text"}/>
+            </FormGroup> ;
+        }
+        else if(props.opName==='resources'){
+            additionalField =<FormGroup className="">
+
+                <Label className=""> comes From </Label>
+                <Input onChange={handleChange} value={comesFrom} name="comesFrom" className="" type={"text"}/>
+            </FormGroup> ;
+        }
+    }
+
     let button = null;
 
     if(behavior === 'loading'){
@@ -114,18 +182,19 @@ const Back = (props) => {
         props.changeFlippingCardSaveBehavior('enable');
     }
 
+
+
+
     return (
         <div className="back">
             <h2 className="bg-warning d-flex justify-content-center pb-2"> {props.oneProduct.name} </h2>
             <span className="text-danger"> {errorM}</span>
             <Form>
 
-                {additionalField}
 
-                <FormGroup>
-                    <Label className="">quantity</Label>
-                    <Input onChange={handleChange} value={qtyN} name="qtyN" className="" type="number"/>
-                </FormGroup>
+
+                {otherField}
+                {additionalField}
                 <FormGroup>
                     {button}
                 </FormGroup>
@@ -135,11 +204,21 @@ const Back = (props) => {
 }
 
 
-var ImageArea = ({oneProduct}) => {
+let ImageArea = ({oneProduct}) => {
+    const [image, setImage] = useState('');
+    let gsReference = firebaseStorage.refFromURL(oneProduct.image);
+    gsReference.getDownloadURL()
+        .then((url) => {
+            setImage(url);
+        })
+        .catch((error) => {
+            setImage('https://firebasestorage.googleapis.com/v0/b/resto247-2c1f2.appspot.com/o/images%2Flogo.jpg?alt=media&token=6296ddb1-0cda-4a2a-8956-50209dc3a992');
+        });
+
 
     return (
         <div className="image-container">
-            <img className="card-image" src={oneProduct.image}></img>
+            <img className="card-image" src={image}></img>
             <h1 className="title">{oneProduct.name}</h1>
         </div>
     )
