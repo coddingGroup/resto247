@@ -35,7 +35,7 @@ import MainManager from './Manager/Main';
 import IncreaseProduct from "./Manager/Products/IncreaseProduct";
 import * as ActionTypes from "../redux/ActionTypes";
 import {quantity} from "../redux/Forms";
-
+import '../css/styles.css';
 
 const mapStateToProps = state => {
     return {
@@ -198,7 +198,9 @@ class Main extends Component {
                             userCollection={this.props.userCollection}
                             cart={this.props.cart}/>
                 <TransitionGroup>
-                    <CSSTransition key={this.props.location.key} classNames="page" timeout={300}>
+                    <CSSTransition  key={this.props.location.key}
+                                   appear
+                                   classNames="fade" timeout={{enter: 300, exit: 200}}>
                         <Switch>
                             <Route path="/Home" component={HomePage}/>
                             <Route exact path="/menu" component={() => <Menu products={this.props.products}/>}/>

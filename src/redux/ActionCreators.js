@@ -95,7 +95,6 @@ export const increaseStock = (resourceId, unitPrice,quantity,from,name )=> (disp
 
 
 export const updateProduct = (values)=> (dispatch) => {
-    alert(JSON.stringify(values));
      firestore.collection('products').doc((values.id)).update({
         buyUnitPrice: values.buyUnitPrice,
         category: values.category,

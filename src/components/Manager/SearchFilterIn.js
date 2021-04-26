@@ -10,7 +10,7 @@ import IncreaseProduct from "./Products/IncreaseProduct";
 
 const SearchFilterInM = (props) => {
 
-    const [activeTab, setActiveTab] = useState('mains');
+    const [activeTab, setActiveTab] = useState('food');
     // const[cathegories,setCAthegories] = useState(ITEMS);
     if (props.isLoading) {
         return (
