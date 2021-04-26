@@ -91,6 +91,9 @@ const Back = (props) => {
         else if(name === 'comesFrom'){
             setComesFrom(value);
         }
+        else if(name==='soldPrice'){
+            setSoldPrice(value);
+        }
     }
     const handleSave = (event) =>{
         event.preventDefault();
@@ -107,7 +110,7 @@ const Back = (props) => {
                 name:props.oneProduct.name
             });
         }
-        else {
+        else if(props.opName==='resources') {
             props.handleSaving({
                 id: props.oneProduct.id,
                 unitPrice: unitPrice,
@@ -117,14 +120,32 @@ const Back = (props) => {
             });
             // props.increaseStock(props.oneProduct.id, unitPrice,qtyN,"suppler", props.oneProduct.name );
         }
+        else if(props.opName==='products'){
+            props.handleSaving({
+                id: props.oneProduct.id,
+                buyUnitPrice: unitPrice,
+                category: props.oneProduct.category,
+                description: props.oneProduct.description,
+                featured: true,
+                image: props.oneProduct.image,
+                marched: props.oneProduct.marched,
+                name: props.oneProduct.name,
+                price: soldPrice,
+                quantity: qtyN
+            });
+        }
     }
     let additionalField= null;
     let otherField;
-    if(props.opName == 'products'){
+    if(props.opName === 'products'){
+        // setQtyN(props.oneProduct.quantity);
+        // setSoldPrice(props.oneProduct.price);
+        // setUnitPrice(props.oneProduct.buyUnitPrice);
+
         additionalField =<FormGroup className="">
 
             <Label className=""> Sold Price </Label>
-            <Input onChange={handleChange} value={soldPrice} name="goesTo" className="" type={"number"}/>
+            <Input onChange={handleChange} value={soldPrice} name="soldPrice" className="" type={"number"}/>
         </FormGroup>
        otherField = <React.Fragment>
            <FormGroup className="">
@@ -177,10 +198,10 @@ const Back = (props) => {
         button = <button type="button" onClick={handleSave} className="btn btn-warning"> Save</button>;
     }
 
-    if(props.behaviors.flippingCardSaveButton === 'failed'){
-        setErrorM('error occur while saving');
-        props.changeFlippingCardSaveBehavior('enable');
-    }
+    // if(props.behaviors.flippingCardSaveButton === 'failed'){
+    //     setErrorM('error occur while saving');
+    //     props.changeFlippingCardSaveBehavior('enable');
+    // }
 
 
 
@@ -205,29 +226,14 @@ const Back = (props) => {
 
 
 let ImageArea = ({oneProduct}) => {
-    const [image, setImage] = useState('');
-    try{
-        let gsReference = firebaseStorage.refFromURL(oneProduct.image);
-        gsReference.getDownloadURL()
-            .then((url) => {
-                setImage(url);
-            })
-            .catch((error) => {
-                console.log(error.message);
-                setImage('https://firebasestorage.googleapis.com/v0/b/resto247-2c1f2.appspot.com/o/images%2Flogo.jpg?alt=media&token=6296ddb1-0cda-4a2a-8956-50209dc3a992');
-            });
-    }catch (error) {
-        console.log(error.message());
-        console.log(error.message);
-    }
-    finally {
+
         return (
             <div className="image-container">
-                <img className="card-image" src={image}></img>
+                <img className="card-image" src={oneProduct.image}></img>
                 <h1 className="title">{oneProduct.name}</h1>
             </div>
         )
-    }
+
 
 
 

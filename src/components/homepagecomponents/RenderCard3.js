@@ -20,15 +20,6 @@ function RenderCard3({item, addToCart, cart}) {
     const [quantity, setQuantity] = useState('qty:1');
     const [displayD, setDisplayD] = useState("descriptionPartOfCartD_none");
 
-    const [image, setImage] = useState('');
-    let gsReference = firebaseStorage.refFromURL(item.image);
-    gsReference.getDownloadURL()
-        .then((url) => {
-            setImage(url);
-        })
-        .catch((error) => {
-            setImage('https://firebasestorage.googleapis.com/v0/b/resto247-2c1f2.appspot.com/o/images%2Flogo.jpg?alt=media&token=6296ddb1-0cda-4a2a-8956-50209dc3a992');
-        });
     let changeValue = (event) => {
         setQuantity(event.target.value);
     }
@@ -70,7 +61,7 @@ function RenderCard3({item, addToCart, cart}) {
             <div key={item.id} className="m-2">
                 <Card onMouseEnter={showDescription} onMouseLeave={hideDescription}
                       className="bottom-shadow cardInWaiter">
-                    <CardImg width="100%" src={image} alt={item.name}/>
+                    <CardImg width="100%" src={item.image} alt={item.name}/>
                     <CardTitle className="" tag="h6">
                         <div className="p-1 nameInCardForWaiter">
                             {item.name}

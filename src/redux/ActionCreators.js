@@ -94,7 +94,28 @@ export const increaseStock = (resourceId, unitPrice,quantity,from,name )=> (disp
 
 
 
-
+export const updateProduct = (values)=> (dispatch) => {
+    alert(JSON.stringify(values));
+     firestore.collection('products').doc((values.id)).update({
+        buyUnitPrice: values.buyUnitPrice,
+        category: values.category,
+        description: values.description,
+        featured: values.featured,
+        image: values.image,
+        marched: values.marched,
+        name: values.name,
+        price: values.price,
+        quantity: values.quantity,
+        updatedAt: firebasestore.FieldValue.serverTimestamp()
+    }).then(() => {
+        console.log("updateComplete");
+        //dispatch(updateComplete);
+    })
+        .catch(error => {
+            dispatch(failedToSaveFlippingCardSaveButton());
+            console.log(error.message);
+        });
+}
 export const addResourcesReport = (resourceId, unitPrice,quantity,to,name )=> (dispatch) =>{
     if(!auth.currentUser){
         alert("login first");

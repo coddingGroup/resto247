@@ -21,7 +21,7 @@ import {
     loginUser,
     logoutUser,
     googleLogin,
-    addResourcesReport,
+    addResourcesReport,updateProduct,
     increaseStock, signUp,changeFlippingCardSaveBehavior
 } from "../redux/ActionCreators";
 import {actions} from "react-redux-form";
@@ -61,6 +61,7 @@ const mapDispatchToProps = (dispatch) => ({
     addToCart: (item) => dispatch(addToCart(item)),
     removeToCart: (removeId) => dispatch(removeToCart(removeId)),
     postComment: (dishId, rating, author, comment) => dispatch(postComment(dishId, rating, author, comment)),
+    updateProduct: (values) => dispatch(updateProduct(values)),
     resetFeedbackForm: () => {
         dispatch(actions.reset('feedback'))
     },
@@ -218,6 +219,7 @@ class Main extends Component {
                                                                                     increaseStock={this.props.increaseStock}
                                                                                     searchingOutput={this.props.searchingOutput}
                                                                                     searchText={this.props.searchText}
+                                                                                           updateProduct={this.props.updateProduct}
                                                                                            addResourcesReport = {this.props.addResourcesReport}
                                                                                            changeFlippingCardSaveBehavior={this.props.changeFlippingCardSaveBehavior}
                                                                                            behaviors={this.props.behaviors}

@@ -13,6 +13,7 @@ let StockManagement = (props) => {
     };
     const handleSavingForProducts = (values) =>{
         //props.increaseStock(values.id, values.unitPrice,values.quantity,values.from, values.name );
+        props.updateProduct(values);
     };
     const handleSavingForDailyUsage = (values) =>{
         props.addResourcesReport(values.id, values.unitPrice,values.quantity,values.to, values.name );

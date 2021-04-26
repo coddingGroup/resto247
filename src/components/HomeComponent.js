@@ -7,7 +7,6 @@ import Header from "./HeaderComponent";
 import RenderCard3 from './homepagecomponents/RenderCard3'
 import RenderCard from './homepagecomponents/RenderCard'
 import SearchFilterInM from "./Manager/SearchFilterIn";
-import GoogleMapExample from "./homepagecomponents/GoogleMap";
 
 
 function Home(props) {
