@@ -1,7 +1,7 @@
 import {createStore, combineReducers, applyMiddleware} from "redux";
 import {createForms} from "react-redux-form";
 import {Products} from "./products";
-import {Dishes} from "./dishes";
+import { Waiters} from "./collections/waiters";
 import {Resources} from "./resources";
 import {Auth} from "./auth";
 import {Comments} from "./comments";
@@ -18,6 +18,7 @@ import {InitialFeedback, quantity, login, signUp} from "./Forms";
 export const ConfigureStore = () => {
     const store = createStore(
         combineReducers({
+            waiters:Waiters,
             userCollection:UserCollection,
             products: Products,
             resources: Resources,

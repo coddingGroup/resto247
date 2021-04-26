@@ -91,8 +91,39 @@ export const increaseStock = (resourceId, unitPrice,quantity,from,name )=> (disp
     })
 }
 
-
-
+export const fetchWaiters = () =>(dispatch) =>{
+    dispatch(waitersLoading(true));
+    return firestore.collection('waiters').get()
+        .then(snapshot =>{
+            let waiters=[];
+            snapshot.forEach(doc =>{
+                let id = doc.id;
+                let data = doc.data();
+                waiters.push({id, ...data});
+            });
+            alert(JSON.stringify(waiters));
+            return waiters;
+        })
+        .then(
+            waiters =>{dispatch(addWaiters(waiters))}
+        )
+        .catch(error => {
+            dispatch(waitersFailed(error.message));
+            console.log(error.message);
+        });
+}
+export const addWaiters = (waiters) =>({
+    type:ActionTypes.ADD_WAITERS,
+    payload:waiters
+});
+export const waitersFailed = (error) =>({
+    type:ActionTypes.WAITERS_FAILURE,
+    payload: error
+});
+export const waitersLoading = () =>({
+    type:ActionTypes.WAITERS_LOADING,
+    payload: true
+})
 
 export const updateProduct = (values)=> (dispatch) => {
      firestore.collection('products').doc((values.id)).update({

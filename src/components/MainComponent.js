@@ -20,7 +20,7 @@ import {
     removeToCart,
     loginUser,
     logoutUser,
-    googleLogin,
+    googleLogin, fetchWaiters,
     addResourcesReport,updateProduct,
     increaseStock, signUp,changeFlippingCardSaveBehavior
 } from "../redux/ActionCreators";
@@ -49,11 +49,13 @@ const mapStateToProps = state => {
         cart: state.cart,
         auth: state.auth,
         userCollection: state.userCollection,
-        behaviors: state.behaviors
+        behaviors: state.behaviors,
+        waiters: state.waiters
     }
 }
 
 const mapDispatchToProps = (dispatch) => ({
+    fetchWaiters: () => dispatch(fetchWaiters()),
     addResourcesReport: (resourceId, unitPrice,quantity,from,name) => dispatch(addResourcesReport(resourceId, unitPrice,quantity,from,name)),
     changeFlippingCardSaveBehavior:(behavior) => dispatch(changeFlippingCardSaveBehavior(behavior)),
     signUp:(value, typeOfUser) => dispatch(signUp(value, typeOfUser)),
@@ -132,6 +134,7 @@ class Main extends Component {
         this.props.fetchHotdeals();
         this.props.fetchOutOfStockProducts();
         this.props.fetchResources();
+        this.props.fetchWaiters();
 
 
     }
