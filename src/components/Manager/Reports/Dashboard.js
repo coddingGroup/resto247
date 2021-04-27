@@ -5,6 +5,7 @@ import ItemsSold from '../UIcomponents/ItemsSold';
 import DairyEarning from './DairyEarning';
 import ReactDatePicker from '../UIcomponents/ReactDatePicker';
 import {Table} from "reactstrap";
+import {ProductSold} from "./ProductSold";
 
 const Dashboard = (props) => {
 
@@ -42,29 +43,8 @@ const Dashboard = (props) => {
             <div className="row">
 
                 <div className="col">
-                    <h2>
-                        Product sold
-                    </h2>
-                    <Table responsive hover>
-                        <thead>
-                        <tr>
-                            <th> Id</th>
-                            <th> Name</th>
-                            <th> Quantity</th>
-                            <th> Unity Price</th>
-                            <th> Total Price</th>
-                            <th> Day profit/product</th>
+                    <ProductSold/>
 
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr>
-
-                        </tr>
-                        </tbody>
-
-
-                    </Table>
                 </div>
                 <div className="col">
                     <h2>
