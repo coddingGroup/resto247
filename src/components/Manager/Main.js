@@ -32,7 +32,9 @@ const MainManager = (props) => {
 
                 <div className="col-12 col-md-11 offset-md-1">
 
-                    <CircleMenu uploadResource={props.uploadResource} uploadProduct={props.uploadProduct} items={items}/>
+                    <CircleMenu uploadResource={props.uploadResource}
+                                uploadMiscellaneous={props.uploadMiscellaneous}
+                                uploadProduct={props.uploadProduct} items={items}/>
                 </div>
             </div>
             <div className="row">
@@ -51,6 +53,8 @@ const MainManager = (props) => {
                                                                  resources={props.resources}
                                                                  increaseStock={props.increaseStock}
                                                                  behaviors={props.behaviors}
+                                                                 miscellaneous={props.miscellaneous}
+                                                                 uploadMiscellaneous={props.uploadMiscellaneous}
                                                                  updateProduct={props.updateProduct}
                                                                  addResourcesReport={props.addResourcesReport}
                                                                  changeFlippingCardSaveBehavior={props.changeFlippingCardSaveBehavior}

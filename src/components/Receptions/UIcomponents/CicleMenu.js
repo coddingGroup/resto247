@@ -33,7 +33,7 @@ let items = [
         color: 'btn-warning'
     }
 ];
-const CircleMenu = ({items,uploadProduct,uploadResource}) => {
+const CircleMenu = ({items,uploadProduct,uploadResource, uploadMiscellaneous}) => {
     //const [image, setImage] = useState('');
 
 
@@ -61,6 +61,9 @@ const CircleMenu = ({items,uploadProduct,uploadResource}) => {
 
     const [isModalOpen, setIsModalOpen] = useState(false);
     const togglerModal = () => setIsModalOpen(!isModalOpen);
+
+    const [isModalOpenM, setIsModalOpenM] = useState(false);
+    const togglerModalM = () => setIsModalOpenM(!isModalOpenM);
 
     const [isModalOpenR, setIsModalOpenR] = useState(false);
     const togglerModalR = () => setIsModalOpenR(!isModalOpenR);
@@ -100,12 +103,27 @@ const CircleMenu = ({items,uploadProduct,uploadResource}) => {
 
         });
     };
+    let handleMiscellaneousSubmit=(values,event)=>{
+        const file = values.proof[0];
+
+        const fileName = file.name;
+        const fileExtension = fileName.split('.').pop();
+        alert(fileExtension);
+        const name =values.reason + '-' +  (+new Date()) ;
+        let ref = firebaseStorage.ref();
+        let imagePath =  "images/miscellaneous/"+name+'.'+fileExtension;
+        let fullRef = ref.child(imagePath);
+        const task = fullRef.put(file);
+        task.then((snapshot) => {
+            uploadMiscellaneous(values, imagePath);
+
+        });
+    };
 
     let length = items.length;
 
     return (
         <div class="panel panel-default ">
-            <img src='' id="myimg" alt="messgeddfaffdgdfgdg"/>
             <Modal isOpen={isModalOpen} toggle={togglerModal}>
                 <ModalHeader toggle={togglerModal}>Add New Product</ModalHeader>
                 <ModalBody>
@@ -212,6 +230,7 @@ const CircleMenu = ({items,uploadProduct,uploadResource}) => {
                                 <Control.file model=".image" id="image" name="image"
                                               placeholder="image"
                                               className="form-control"
+                                              accept=".png,.jpg,.webp,.jpeg,.gif,.dat"
                                     // validators={{
                                     //     required, minLength: minLength(4), maxLength: maxLength(30)
                                     // }}
@@ -422,6 +441,142 @@ const CircleMenu = ({items,uploadProduct,uploadResource}) => {
                     </Form>
                 </ModalBody>
             </Modal>
+
+
+            <Modal isOpen={isModalOpenM} toggle={togglerModalM}>
+                <ModalHeader toggle={togglerModalM}>Add Miscellaneous</ModalHeader>
+                <ModalBody>
+                    <Form model="addMiscellaneous" onSubmit={handleMiscellaneousSubmit} encType="multipart/form-data">
+                        <Row className="form-group">
+                            <Label htmlFor="reason" md={2}> Reason</Label>
+
+
+                            <Col md={10}>
+                                <Control.text model=".reason" id="reason" name="reason"
+                                              placeholder="reason"
+                                              className="form-control"
+                                              validators={{
+                                                  required, minLength: minLength(3), maxLength: maxLength(15)
+                                              }}
+                                />
+                                <Errors
+                                    className="text-danger"
+                                    model=".reason"
+                                    show="touched"
+                                    messages={{
+                                        required: 'Required',
+                                        minLength: 'Must be greater than 2 characters',
+                                        maxLength: 'Must be 15 characters or less'
+                                    }}
+                                />
+                            </Col>
+                        </Row>
+                        <Row className="form-group">
+                            <Label htmlFor="by" md={2}> Category</Label>
+                            <Col md={10}>
+                                <Control.text model=".by" id="by" name="by"
+                                              placeholder="by"
+                                              className="form-control"
+                                              validators={{
+                                                  required, minLength: minLength(3), maxLength: maxLength(15)
+                                              }}
+                                />
+                                <Errors
+                                    className="text-danger"
+                                    model=".by"
+                                    show="touched"
+                                    messages={{
+                                        required: 'Required',
+                                        minLength: 'Must be greater than 2 characters',
+                                        maxLength: 'Must be 15 chatacters or less'
+                                    }}
+                                />
+
+                            </Col>
+                        </Row>
+                        <Row className="form-group">
+                            <Label htmlFor="description" md={2}> Description</Label>
+                            <Col md={10}>
+                                <Control.text model=".description" id="description" name="description"
+                                              placeholder="description"
+                                              className="form-control"
+                                              validators={{
+                                                  required, minLength: minLength(4), maxLength: maxLength(30)
+                                              }}
+                                />
+                                <Errors
+                                    className="text-danger"
+                                    model=".description"
+                                    show="touched"
+                                    messages={{
+                                        required: 'Required',
+                                        minLength: 'Must be greater than 4 characters',
+                                        maxLength: 'Must be 30 chatacters or less'
+                                    }}
+                                />
+
+                            </Col>
+                        </Row>
+                        <Row className="form-group">
+                            <Label htmlFor="price" md={2}> Price</Label>
+                            <Col md={10}>
+                                <Control.text type="number" model=".price" id="price" name="price" placeholder="how much?"
+                                              className="form-control"
+                                              validators={{
+                                                  required,
+                                                  minLength: minLength(2),
+                                                  maxLength: maxLength(5),
+                                                  isNumber
+                                              }}
+                                />
+                                <Errors
+                                    className="text-danger"
+                                    model=".price"
+                                    show="touched"
+                                    messages={{
+                                        required: 'Required',
+                                        minLength: 'Must be greater than 2 numbers',
+                                        maxLength: 'Must be 5 numbers or less',
+                                        isNumber: 'Must be a number'
+                                    }}
+                                />
+
+                            </Col>
+                        </Row>
+                        <Row className="form-group">
+                            <Label htmlFor="proof" md={2}> proof</Label>
+                            <Col md={10}>
+                                <Control.file model=".proof" id="proof" name="proof"
+                                              placeholder="proof"
+                                              className="form-control"
+                                    // validators={{
+                                    //     required, minLength: minLength(4), maxLength: maxLength(30)
+                                    // }}
+                                />
+                                {/*<Errors*/}
+                                {/*    className="text-danger"*/}
+                                {/*    model=".description"*/}
+                                {/*    show="touched"*/}
+                                {/*    messages={{*/}
+                                {/*        required: 'Required',*/}
+                                {/*        minLength: 'Must be greater than 4 characters',*/}
+                                {/*        maxLength: 'Must be 30 chatacters or less'*/}
+                                {/*    }}*/}
+                                {/*/>*/}
+
+                            </Col>
+                        </Row>
+
+                        <Row className="form-group">
+                            <Col md={{size: 10, offset: 2}}>
+                                <Button type="submit" color="primary">
+                                    Save
+                                </Button>
+                            </Col>
+                        </Row>
+                    </Form>
+                </ModalBody>
+            </Modal>
             <div class="panel-heading">
 
             </div>
@@ -442,6 +597,15 @@ const CircleMenu = ({items,uploadProduct,uploadResource}) => {
                         className="fa fa-plus"></i>
                     </button>
                     <span className="row"> Add new Resources </span>
+                    </div>
+                </div>
+
+                <div className="col ">
+                    <div className="">
+                        <button onClick={togglerModalM} type="button" className="btn-primary btn btn-circle btn-xl "><i
+                            className="fa fa-money"></i>
+                        </button>
+                        <span className="row"> Add other expenses </span>
                     </div>
                 </div>
 

@@ -10,11 +10,12 @@ import {Recommanded} from "./recommanded";
 import {OutOfStockProducts} from "./outOfStockProducts";
 import {UserCollection} from "./collections/userCollection";
 import {Behaviors} from "./behaviors";
+import {Miscellaneous} from "./collections/miscellaneous";
 import {Invoices} from "./collections/invoices";
 import {Cart} from "./Cart";
 import thunk from "redux-thunk";
 import logger from 'redux-logger';
-import {InitialFeedback, quantity, login, signUp,addNewProduct,addNewResource} from "./Forms";
+import {InitialFeedback, quantity, login, signUp, addNewProduct, addNewResource, addMiscellaneous} from "./Forms";
 
 export const ConfigureStore = () => {
     const store = createStore(
@@ -27,6 +28,7 @@ export const ConfigureStore = () => {
             recommanded: Recommanded,
             hotdeals: Hotdeals,
             auth:Auth,
+            miscellaneous:Miscellaneous,
             invoices:Invoices,
             behaviors:Behaviors,
             outOfStockProducts: OutOfStockProducts,
@@ -36,6 +38,7 @@ export const ConfigureStore = () => {
                 quantity: quantity,
                 login: login,
                 signUp: signUp,
+                addMiscellaneous:addMiscellaneous,
                 addNewProduct:addNewProduct,
                 addNewResource:addNewResource
             })

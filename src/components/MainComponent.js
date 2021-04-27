@@ -21,7 +21,7 @@ import {
     loginUser,
     logoutUser,uploadProduct,uploadResource,
     googleLogin, fetchWaiters,
-    addResourcesReport,updateProduct,
+    addResourcesReport,updateProduct,uploadMiscellaneous,
     increaseStock, signUp,changeFlippingCardSaveBehavior,pushInvoice
 } from "../redux/ActionCreators";
 import {actions} from "react-redux-form";
@@ -50,11 +50,13 @@ const mapStateToProps = state => {
         auth: state.auth,
         userCollection: state.userCollection,
         behaviors: state.behaviors,
-        waiters: state.waiters
+        waiters: state.waiters,
+        miscellaneous: state.miscellaneous
     }
 }
 
 const mapDispatchToProps = (dispatch) => ({
+    uploadMiscellaneous: (values,proof)=>dispatch(uploadMiscellaneous(values,proof)),
     uploadResource: (values,image) =>dispatch(uploadResource(values,image)),
     uploadProduct: (values,image) =>dispatch(uploadProduct(values,image)),
     pushInvoice: (receptionistName, waiterName,clientName,paymentStatus,totalPrice,orders) =>dispatch(pushInvoice(receptionistName, waiterName,clientName,paymentStatus,totalPrice,orders)),
@@ -221,6 +223,7 @@ class Main extends Component {
                                                                                    removeToCart={this.props.removeToCart}
                                                                                           waiters={this.props.waiters}
                                                                                    cart={this.props.cart}
+                                                                                          uploadMiscellaneous={this.props.uploadMiscellaneous}
                                                                                           pushInvoice={this.props.pushInvoice}
                             />}/>
 
@@ -231,6 +234,8 @@ class Main extends Component {
                                                                                     increaseStock={this.props.increaseStock}
                                                                                     searchingOutput={this.props.searchingOutput}
                                                                                     searchText={this.props.searchText}
+                                                                                           miscellaneous={this.props.miscellaneous}
+                                                                                           uploadMiscellaneous={this.props.uploadMiscellaneous}
                                                                                            updateProduct={this.props.updateProduct}
                                                                                            addResourcesReport = {this.props.addResourcesReport}
                                                                                            changeFlippingCardSaveBehavior={this.props.changeFlippingCardSaveBehavior}

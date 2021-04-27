@@ -199,6 +199,63 @@ export const addOneResource=(newResource) => ({
     payload: newResource
 });
 
+export const miscellaneousLoading = () =>({
+    type:ActionTypes.MISCELLANEOUS_LOADING,
+    payload:true
+});
+export const miscellaneousFailed = (error) =>({
+   type:ActionTypes.MISCELLANEOUS_FAILED,
+   payload: error
+});
+export const addMiscellaneous = (miscellaneous) =>({
+   type:ActionTypes.ADD_MISCELLANEOUS,
+   payload: miscellaneous
+});
+export const addOneMiscellaneous = (newMiscellaneous) =>({
+    type:ActionTypes.ADD_ONE_MISCELLANEOUS,
+    payload: newMiscellaneous
+});
+
+export const uploadMiscellaneous = (values, proof )=> (dispatch) =>{
+    if(!auth.currentUser){
+        console.log("login first");
+        console.log("login first");
+        return;
+    }
+    dispatch(miscellaneousLoading(true));
+    return firestore.collection('miscellaneous').add({
+        price:values.price,
+        reason:values.reason,
+        isExpanse:values.isExpanse,
+        proof:proof,
+        by:values.by,
+        description:values.description,
+        createdAt: firebasestore.FieldValue.serverTimestamp()
+    })
+        .then(docRef =>{
+            firestore.collection('miscellaneous').doc(docRef.id).get()
+                .then(doc =>{
+                    if (doc.exists) {
+                        const data = doc.data();
+                        const id = doc.id;
+                        let newMiscellaneous = {id, ...data};
+                        dispatch(addOneMiscellaneous(newMiscellaneous));
+
+                    }
+                    else {
+                        // doc.data() will be undefined in this case
+                        console.log("No such document!");
+                    }
+                })
+        })
+        .catch(error => {
+            dispatch(miscellaneousFailed(error));
+            console.log('Post comments ', error.message);
+            console.log('Your comment could not be posted\nError: ' + error.message);
+        });
+}
+
+
 
 
 export const pushInvoice = (receptionistName, waiterName,clientName,paymentStatus,totalPrice,orders )=> (dispatch) =>{

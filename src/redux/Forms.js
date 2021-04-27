@@ -41,3 +41,11 @@ export const addNewResource ={
     unit:'kg'
 
 }
+export const addMiscellaneous = {
+    price:'',
+    reason:'',
+    isExpanse:true,
+    proof:'',
+    by:'',
+    description:'no more info'
+}
