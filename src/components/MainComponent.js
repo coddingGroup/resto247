@@ -217,6 +217,7 @@ class Main extends Component {
                             <PrivateRoute exact path="/witer" component={() => <WiterHome products={this.props.products}
                                                                                    addToCart={this.props.addToCart}
                                                                                    removeToCart={this.props.removeToCart}
+                                                                                          waiters={this.props.waiters}
                                                                                    cart={this.props.cart}
                                                                                           pushInvoice={this.props.pushInvoice}
                             />}/>

@@ -15,6 +15,7 @@ const WiterHome = (props) => {
                     {/* <HotDeal hotdeals={props.hotdeals} />         */}
                     <TabsMenu cart={props.cart} addToCart={props.addToCart} removeToCart={props.removeToCart}
                               pushInvoice={props.pushInvoice}
+                              waiters={props.waiters}
                               products={props.products}/>
                 </div>
 

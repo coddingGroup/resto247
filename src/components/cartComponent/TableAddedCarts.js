@@ -96,14 +96,14 @@ const TableItems = React.forwardRef(
                                     <Row className="form-group">
                                         <Col><Label>Client Name</Label></Col>
                                         <Col>
-                                            <Input type="text"/>
+                                            <Input name='clientName' value={props.clientName} type="text"/>
 
                                         </Col>
                                     </Row>
                                     <Row>
                                         <Col>Order Paid</Col>
                                         <Col>
-                                            <Input type="checkBox"/>
+                                            <Input name="paymentStatus" value={props.paymentStatus} type="checkBox"/>
                                         </Col>
 
                                     </Row>
