@@ -29,7 +29,7 @@ export const changeStock = (resourceId, quantity,unitPrice,from) =>({
 });
 export const increaseStock = (resourceId, unitPrice,quantity,from,name )=> (dispatch) =>{
     if(!auth.currentUser){
-        alert("login first");
+        console.log("login first");
         console.log("login first");
         return;
     }
@@ -87,14 +87,65 @@ export const increaseStock = (resourceId, unitPrice,quantity,from,name )=> (disp
         })
         .catch(error => {
         console.log('Post comments ', error.message);
-        alert('Your comment could not be posted\nError: ' + error.message);
+        console.log('Your comment could not be posted\nError: ' + error.message);
     })
 }
 
 
+export const uploadProduct = (values,image) => (dispatch) =>{
+    if(!auth.currentUser){
+        console.log("login first");
+        console.log("login first");
+        return;
+    }
+    firestore.collection('products').add({
+        category:values.category,
+        description:values.description,
+        image:image,
+        name:values.productName,
+        marched:false,
+        price:values.soldPrice,
+        quantity:0,
+        featured:true,
+        buyUnitPrice:0,
+        createdAt: firebasestore.FieldValue.serverTimestamp(),
+        updatedAt: firebasestore.FieldValue.serverTimestamp()
+    })
+        .then(docRef => {
+            firestore.collection('products').doc(docRef.id).get()
+                .then(doc => {
+                    if (doc.exists) {
+                        const data = doc.data();
+                        const id = doc.id;
+                        let newProduct = {id, ...data};
+                        dispatch(addOneProduct(newProduct));
+                    }
+                    else {
+                        // doc.data() will be undefined in this case
+                        console.log("No such document!");
+                    }
+
+                })
+                .catch(error =>{
+                    console.log(error.message);
+                });
+        }).catch(error =>{
+        console.log(error.message);
+        dispatch(uploadProductFailed(error));
+    });
+}
+export const uploadProductFailed=(error) => ({
+    type:ActionTypes.UPLOAD_PRODUCT_FAILED,
+    payload:error
+});
+export const addOneProduct=(newProduct) => ({
+    type:ActionTypes.ADD_ONE_PRODUCT,
+    payload: newProduct
+});
+
 export const pushInvoice = (receptionistName, waiterName,clientName,paymentStatus,totalPrice,orders )=> (dispatch) =>{
     if(!auth.currentUser){
-        alert("login first");
+        console.log("login first");
         console.log("login first");
         return;
     }
@@ -158,7 +209,7 @@ export const pushInvoice = (receptionistName, waiterName,clientName,paymentStatu
         .catch(error => {
             dispatch(invoiceFailed(error));
             console.log('Post comments ', error.message);
-            alert('Your comment could not be posted\nError: ' + error.message);
+            console.log('Your comment could not be posted\nError: ' + error.message);
         });
 }
 
@@ -179,7 +230,6 @@ export const fetchWaiters = () =>(dispatch) =>{
                 let data = doc.data();
                 waiters.push({id, ...data});
             });
-            alert(JSON.stringify(waiters));
             return waiters;
         })
         .then(
@@ -205,15 +255,15 @@ export const waitersLoading = () =>({
 
 export const updateProduct = (values)=> (dispatch) => {
      firestore.collection('products').doc((values.id)).update({
-        buyUnitPrice: values.buyUnitPrice,
+        buyUnitPrice: parseInt(values.buyUnitPrice),
         category: values.category,
         description: values.description,
         featured: values.featured,
         image: values.image,
         marched: values.marched,
         name: values.name,
-        price: values.price,
-        quantity: values.quantity,
+        price: parseInt(values.price),
+        quantity: parseInt(values.quantity),
         updatedAt: firebasestore.FieldValue.serverTimestamp()
     }).then(() => {
         console.log("updateComplete");
@@ -226,7 +276,7 @@ export const updateProduct = (values)=> (dispatch) => {
 }
 export const addResourcesReport = (resourceId, unitPrice,quantity,to,name )=> (dispatch) =>{
     if(!auth.currentUser){
-        alert("login first");
+        console.log("login first");
         console.log("login first");
         return;
     }
@@ -282,7 +332,7 @@ export const addResourcesReport = (resourceId, unitPrice,quantity,to,name )=> (d
         })
         .catch(error => {
             console.log('Post comments ', error.message);
-            alert('Your comment could not be posted\nError: ' + error.message);
+            console.log('Your comment could not be posted\nError: ' + error.message);
         })
 }
 
@@ -335,7 +385,7 @@ export const signUp = (values, typeOfUser) => (dispatch) =>{
                 })
                 .catch(error => {
                     console.log("signUp error  ", error.message);
-                    alert('Yerrro\nError: ' + error.message);
+                    console.log('Yerrro\nError: ' + error.message);
                 })
         })
         .catch((error) => {
@@ -378,7 +428,7 @@ export const postComment = (dishId, rating, comment) => (dispatch) => {
         })
         .catch(error => {
             console.log('Post comments ', error.message);
-            alert('Your comment could not be posted\nError: ' + error.message);
+            console.log('Your comment could not be posted\nError: ' + error.message);
         })
 }
 
@@ -506,11 +556,11 @@ export const postFeedback = (feedback) => (dispatch) => {
     return firestore.collection('feedback').add(feedback)
         .then(response => {
             console.log('Feedback', response);
-            alert('Thank you for your feedback!');
+            console.log('Thank you for your feedback!');
         })
         .catch(error => {
             console.log('Feedback', error.message);
-            alert('Your feedback could not be posted\nError: ' + error.message);
+            console.log('Your feedback could not be posted\nError: ' + error.message);
         });
 };
 
@@ -787,7 +837,7 @@ export const googleLogin = () => (dispatch) => {
 //     .then(response => response.json())
 //     .then(response => dispatch(addComment(response)))
 //     .catch(error => {console.log('Post comments ', error.message)
-//         alert('Your comment could be posted\nError:'+error.message)})
+//         console.log('Your comment could be posted\nError:'+error.message)})
 //
 // }
 
@@ -1036,9 +1086,9 @@ export const addFeedback = (feedback) => ({
 //     })
 //     .then(response => response.json())
 //     .then(response => dispatch(addFeedback(response)))
-//     .then(response => alert('Thank you for you feedback!\n'+JSON.stringify(response.payload)))
+//     .then(response => console.log('Thank you for you feedback!\n'+JSON.stringify(response.payload)))
 //     .catch(error => {console.log('Post Feedback ', error.message)
-//         alert('Your feedback could be posted\nError:'+error.message)})
+//         console.log('Your feedback could be posted\nError:'+error.message)})
 //
 // }
 

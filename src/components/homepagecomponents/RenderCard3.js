@@ -14,8 +14,12 @@ import {FadeTransform} from "react-animation-components";
 import React, {useState} from "react";
 import '../../css/Some.css';
 import {firebaseStorage} from "../../firebase/firebase";
+import {setImage} from "../../functions/setImage";
 
 function RenderCard3({item, addToCart, cart}) {
+
+
+    setImage(item.image);
     //categorized cards
     const [quantity, setQuantity] = useState('qty:1');
     const [displayD, setDisplayD] = useState("descriptionPartOfCartD_none");
@@ -61,7 +65,7 @@ function RenderCard3({item, addToCart, cart}) {
             <div key={item.id} className="m-2">
                 <Card onMouseEnter={showDescription} onMouseLeave={hideDescription}
                       className="bottom-shadow cardInWaiter">
-                    <CardImg width="100%" src={item.image} alt={item.name}/>
+                    <CardImg width="100%" src='' className={item.image} id={item.image} alt={item.image}/>
                     <CardTitle className="" tag="h6">
                         <div className="p-1 nameInCardForWaiter">
                             {item.name}

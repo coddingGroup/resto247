@@ -7,6 +7,7 @@ import {quantity} from "../../redux/Forms";
 import IncreaseProduct from "./Products/IncreaseProduct";
 import RenderCard3 from "../homepagecomponents/RenderCard3";
 import {firebaseStorage} from "../../firebase/firebase";
+import {setImage} from "../../functions/setImage";
 
 const FlippingCard = ({increaseStock,oneProduct, showPriceField = true,
                           opName,handleSaving,
@@ -226,10 +227,11 @@ const Back = (props) => {
 
 
 let ImageArea = ({oneProduct}) => {
+    setImage(oneProduct.image);
 
         return (
             <div className="image-container">
-                <img className="card-image" src={oneProduct.image}></img>
+                <img className={"card-image " + oneProduct.image } src=''></img>
                 <h1 className="title">{oneProduct.name}</h1>
             </div>
         )

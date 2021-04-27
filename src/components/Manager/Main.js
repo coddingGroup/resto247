@@ -32,7 +32,7 @@ const MainManager = (props) => {
 
                 <div className="col-12 col-md-11 offset-md-1">
 
-                    <CircleMenu items={items}/>
+                    <CircleMenu uploadProduct={props.uploadProduct} items={items}/>
                 </div>
             </div>
             <div className="row">

@@ -14,7 +14,7 @@ import {Invoices} from "./collections/invoices";
 import {Cart} from "./Cart";
 import thunk from "redux-thunk";
 import logger from 'redux-logger';
-import {InitialFeedback, quantity, login, signUp} from "./Forms";
+import {InitialFeedback, quantity, login, signUp,addNewProduct,addNewResource} from "./Forms";
 
 export const ConfigureStore = () => {
     const store = createStore(
@@ -35,7 +35,9 @@ export const ConfigureStore = () => {
                 feedback: InitialFeedback,
                 quantity: quantity,
                 login: login,
-                signUp: signUp
+                signUp: signUp,
+                addNewProduct:addNewProduct,
+                addNewResource:addNewResource
             })
 
         }),

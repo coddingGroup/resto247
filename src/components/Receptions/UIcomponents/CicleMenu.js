@@ -1,7 +1,9 @@
 import React, {useState} from "react";
 import '../../../css/home.css';
 import {NavLink} from "react-router-dom";
-import {Button, Form, FormGroup, Input, Label, Modal, ModalBody, ModalHeader} from "reactstrap";
+import {Button, Col, FormGroup, Input, Label, Modal, ModalBody, ModalHeader, Row} from "reactstrap";
+import {Control, Errors, Form} from "react-redux-form";
+import {firebaseStorage} from "../../../firebase/firebase";
 
 let items = [
     {
@@ -30,50 +32,410 @@ let items = [
         color: 'btn-warning'
     }
 ];
-const CircleMenu = ({items}) => {
+const CircleMenu = ({items,uploadProduct}) => {
+    //const [image, setImage] = useState('');
+
+
+    // const [category] = useState('food');
+    // const [description] = useState('food');
+    // const [image] = useState('food');
+    // const [productName] = useState('food');
+    // const [soldPrice] = useState('food');
+    // const [categoryR] = useState('food');
+    // const [descriptionR] = useState('food');
+    // const [imageR] = useState('food');
+    // const [resourceName] = useState('food');
+    // const [initialQuantity] = useState('food');
+    // const [unitPrice] = useState('food');
+    // const [unit] = useState('food');
+
+
+
+
+    const required = (val) => val && val.length;
+    const maxLength = (len) => (val) => !(val) || (val.length <= len);
+    const minLength = (len) => (val) => (val) && (val.length >= len);
+    const isNumber = (val) => !isNaN(Number(val));
+    const validEmail = (val) => /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(val);  //regular expression
 
     const [isModalOpen, setIsModalOpen] = useState(false);
     const togglerModal = () => setIsModalOpen(!isModalOpen);
 
+    const [isModalOpenR, setIsModalOpenR] = useState(false);
+    const togglerModalR = () => setIsModalOpenR(!isModalOpenR);
+
+
+
+
+    let handleProductSubmit=(values,event)=>{
+        const file = values.image[0];
+
+        const fileName = file.name;
+        const fileExtension = fileName.split('.').pop();
+        alert(fileExtension);
+        const name =values.productName + '-' +  (+new Date()) ;
+        let ref = firebaseStorage.ref();
+        let imagePath =  "images/products/"+name+'.'+fileExtension;
+        let fullRef = ref.child(imagePath);
+        const task = fullRef.put(file);
+        task.then((snapshot) => {
+                uploadProduct(values, imagePath);
+
+             });
+
+
+
+        //alert(JSON.stringify( url));
+
+        // const formData = new FormData(event.target);
+        //
+        // const request = new XMLHttpRequest();
+        // request.open('POST', 'http://localhost:3001/images', true);
+        // request.onload = function(oEvent) {
+        //     if (request.status == 200) {
+        //         console.log('Uploaded!');
+        //     } else {
+        //         console.log('Error uploading.');
+        //     }
+        // };
+        //
+        // request.send(formData);
+        // event.preventDefault();
+        //
+        // console.log(JSON.stringify(values));
+    };
+
     let length = items.length;
 
-    let allButton = items.map(item => {
-        return (
-            <div className="col ">
-                <NavLink to={item.to}>
-                    <button type="button" className={item.color + " btn btn-circle btn-xl"}><i
-                        className={item.icon}></i>
-                    </button>
-                    <span className="row"> {item.name} </span>
-                </NavLink>
-            </div>
-        )
-    })
+    // let allButton = items.map(item => {
+    //     return (
+    //         <div className="col ">
+    //             <NavLink to={item.to}>
+    //                 <button type="button" className={item.color + " btn btn-circle btn-xl"}><i
+    //                     className={item.icon}></i>
+    //                 </button>
+    //                 <span className="row"> {item.name} </span>
+    //             </NavLink>
+    //         </div>
+    //     )
+    // })
 
     return (
         <div class="panel panel-default ">
+            <img src='' id="myimg" alt="messgeddfaffdgdfgdg"/>
             <Modal isOpen={isModalOpen} toggle={togglerModal}>
                 <ModalHeader toggle={togglerModal}>Add New Product</ModalHeader>
                 <ModalBody>
-                    <Form onSubmit="">
-                        <FormGroup>
-                            <Label htmlFor="productName">Product Name</Label>
-                            <Input type="text" id="productName" name="productName"/>
-                        </FormGroup>
-                        <FormGroup>
-                            <Label htmlFor="quantity">Quantity</Label>
-                            <Input type="number" id="quantity" name="quantity"/>
-                        </FormGroup>
-                        <FormGroup>
-                            <Label htmlFor="price">Price</Label>
-                            <Input type="number" id="price" name="price"/>
-                        </FormGroup>
-                        <FormGroup>
-                            <Label className="" htmlFor="customFile">Product Image</Label>
-                            <Input type="file" className="form-control" id="customFile"/>
-                        </FormGroup>
+                    <Form model="addNewProduct" onSubmit={handleProductSubmit} encType="multipart/form-data">
+                        <Row className="form-group">
+                            <Label htmlFor="productName" md={2}> Product Name</Label>
 
-                        <Button type="submit" value="submit" color="primary">Save</Button>
+
+                            <Col md={10}>
+                                <Control.text model=".productName" id="productName" name="productName"
+                                              placeholder="Product Name"
+                                              className="form-control"
+                                              validators={{
+                                                  required, minLength: minLength(3), maxLength: maxLength(15)
+                                              }}
+                                />
+                                <Errors
+                                    className="text-danger"
+                                    model=".productName"
+                                    show="touched"
+                                    messages={{
+                                        required: 'Required',
+                                        minLength: 'Must be greater than 2 characters',
+                                        maxLength: 'Must be 15 characters or less'
+                                    }}
+                                />
+                            </Col>
+                        </Row>
+                        <Row className="form-group">
+                            <Label htmlFor="category" md={2}> Category</Label>
+                            <Col md={10}>
+                                <Control.text model=".category" id="category" name="category"
+                                              placeholder="Category"
+                                              className="form-control"
+                                              validators={{
+                                                  required, minLength: minLength(3), maxLength: maxLength(15)
+                                              }}
+                                />
+                                <Errors
+                                    className="text-danger"
+                                    model=".category"
+                                    show="touched"
+                                    messages={{
+                                        required: 'Required',
+                                        minLength: 'Must be greater than 2 characters',
+                                        maxLength: 'Must be 15 chatacters or less'
+                                    }}
+                                />
+
+                            </Col>
+                        </Row>
+                        <Row className="form-group">
+                            <Label htmlFor="description" md={2}> Description</Label>
+                            <Col md={10}>
+                                <Control.text model=".description" id="description" name="description"
+                                              placeholder="description"
+                                              className="form-control"
+                                              validators={{
+                                                  required, minLength: minLength(4), maxLength: maxLength(30)
+                                              }}
+                                />
+                                <Errors
+                                    className="text-danger"
+                                    model=".description"
+                                    show="touched"
+                                    messages={{
+                                        required: 'Required',
+                                        minLength: 'Must be greater than 4 characters',
+                                        maxLength: 'Must be 30 chatacters or less'
+                                    }}
+                                />
+
+                            </Col>
+                        </Row>
+                        <Row className="form-group">
+                            <Label htmlFor="soldPrice" md={2}> soldPrice</Label>
+                            <Col md={10}>
+                                <Control.text type="number" model=".soldPrice" id="soldPrice" name="soldPrice" placeholder="Sold Price"
+                                              className="form-control"
+                                              validators={{
+                                                  required,
+                                                  minLength: minLength(3),
+                                                  maxLength: maxLength(5),
+                                                  isNumber
+                                              }}
+                                />
+                                <Errors
+                                    className="text-danger"
+                                    model=".soldPrice"
+                                    show="touched"
+                                    messages={{
+                                        required: 'Required',
+                                        minLength: 'Must be greater than 2 numbers',
+                                        maxLength: 'Must be 5 numbers or less',
+                                        isNumber: 'Must be a number'
+                                    }}
+                                />
+
+                            </Col>
+                        </Row>
+                        <Row className="form-group">
+                            <Label htmlFor="image" md={2}> Image</Label>
+                            <Col md={10}>
+                                <Control.file model=".image" id="image" name="image"
+                                              placeholder="image"
+                                              className="form-control"
+                                    // validators={{
+                                    //     required, minLength: minLength(4), maxLength: maxLength(30)
+                                    // }}
+                                />
+                                {/*<Errors*/}
+                                {/*    className="text-danger"*/}
+                                {/*    model=".description"*/}
+                                {/*    show="touched"*/}
+                                {/*    messages={{*/}
+                                {/*        required: 'Required',*/}
+                                {/*        minLength: 'Must be greater than 4 characters',*/}
+                                {/*        maxLength: 'Must be 30 chatacters or less'*/}
+                                {/*    }}*/}
+                                {/*/>*/}
+
+                            </Col>
+                        </Row>
+
+                        <Row className="form-group">
+                            <Col md={{size: 10, offset: 2}}>
+                                <Button type="submit" color="primary">
+                                    Save
+                                </Button>
+                            </Col>
+                        </Row>
+                    </Form>
+                </ModalBody>
+            </Modal>
+
+            <Modal isOpen={isModalOpenR} toggle={togglerModalR}>
+                <ModalHeader toggle={togglerModalR}>Add New resources</ModalHeader>
+                <ModalBody>
+                    <Form model="addNewResource" onSubmit={handleProductSubmit} encType="multipart/form-data">
+                        <Row className="form-group">
+                            <Label htmlFor="resourceName" md={2}> Resource Name</Label>
+                            <Col md={10}>
+                                <Control.text model=".resourceName" id="resourceName" name="resourceName"
+                                              placeholder="Resource Name"
+                                              className="form-control"
+                                              validators={{
+                                                  required, minLength: minLength(3), maxLength: maxLength(15)
+                                              }}
+                                />
+                                <Errors
+                                    className="text-danger"
+                                    model=".resourceName"
+                                    show="touched"
+                                    messages={{
+                                        required: 'Required',
+                                        minLength: 'Must be greater than 2 characters',
+                                        maxLength: 'Must be 15 characters or less'
+                                    }}
+                                />
+                            </Col>
+                        </Row>
+                        <Row className="form-group">
+                            <Label htmlFor="category" md={2}> Category</Label>
+                            <Col md={10}>
+                                <Control.text model=".category" id="category" name="category"
+                                              placeholder="Category"
+                                              className="form-control"
+                                              validators={{
+                                                  required, minLength: minLength(3), maxLength: maxLength(15)
+                                              }}
+                                />
+                                <Errors
+                                    className="text-danger"
+                                    model=".category"
+                                    show="touched"
+                                    messages={{
+                                        required: 'Required',
+                                        minLength: 'Must be greater than 2 characters',
+                                        maxLength: 'Must be 15 chatacters or less'
+                                    }}
+                                />
+
+                            </Col>
+                        </Row>
+                        <Row className="form-group">
+                            <Label htmlFor="unit" md={2}> Unit</Label>
+                            <Col md={10}>
+                                <Control.text model=".unit" id="unit" name="unit"
+                                              placeholder="Unit"
+                                              className="form-control"
+                                              validators={{
+                                                  required, minLength: minLength(4), maxLength: maxLength(30)
+                                              }}
+                                />
+                                <Errors
+                                    className="text-danger"
+                                    model=".unit"
+                                    show="touched"
+                                    messages={{
+                                        required: 'Required',
+                                        minLength: 'Must be greater than 1 characters',
+                                        maxLength: 'Must be 5 chatacters or less'
+                                    }}
+                                />
+
+                            </Col>
+                        </Row>
+                        <Row className="form-group">
+                            <Label htmlFor="description" md={2}> Description</Label>
+                            <Col md={10}>
+                                <Control.text model=".description" id="description" name="description"
+                                              placeholder="description"
+                                              className="form-control"
+                                              validators={{
+                                                  required, minLength: minLength(4), maxLength: maxLength(30)
+                                              }}
+                                />
+                                <Errors
+                                    className="text-danger"
+                                    model=".description"
+                                    show="touched"
+                                    messages={{
+                                        required: 'Required',
+                                        minLength: 'Must be greater than 4 characters',
+                                        maxLength: 'Must be 30 chatacters or less'
+                                    }}
+                                />
+
+                            </Col>
+                        </Row>
+                        <Row className="form-group">
+                            <Label htmlFor="initialQuantity" md={2}> Initial Quantity</Label>
+                            <Col md={10}>
+                                <Control.text type="number" model=".initialQuantity" id="initialQuantity" name="initialQuantity" placeholder="Initial Quantity"
+                                              className="form-control"
+                                              validators={{
+                                                  required,
+                                                  minLength: minLength(1),
+                                                  maxLength: maxLength(3),
+                                                  isNumber
+                                              }}
+                                />
+                                <Errors
+                                    className="text-danger"
+                                    model=".initialQuantity"
+                                    show="touched"
+                                    messages={{
+                                        required: 'Required',
+                                        minLength: 'Must be greater than 1 numbers',
+                                        maxLength: 'Must be 3 numbers or less',
+                                        isNumber: 'Must be a number'
+                                    }}
+                                />
+
+                            </Col>
+                        </Row>
+                        <Row className="form-group">
+                            <Label htmlFor="unitPrice" md={2}> Unit Price</Label>
+                            <Col md={10}>
+                                <Control.text type="number" model=".unitPrice" id="unitPrice" name="unitPrice" placeholder="Unit Price"
+                                              className="form-control"
+                                              validators={{
+                                                  required,
+                                                  minLength: minLength(3),
+                                                  maxLength: maxLength(5),
+                                                  isNumber
+                                              }}
+                                />
+                                <Errors
+                                    className="text-danger"
+                                    model=".unitPrice"
+                                    show="touched"
+                                    messages={{
+                                        required: 'Required',
+                                        minLength: 'Must be greater than 2 numbers',
+                                        maxLength: 'Must be 5 numbers or less',
+                                        isNumber: 'Must be a number'
+                                    }}
+                                />
+
+                            </Col>
+                        </Row>
+                        <Row className="form-group">
+                            <Label htmlFor="image" md={2}> Image</Label>
+                            <Col md={10}>
+                                <Control.file model=".image" id="image" name="image"
+                                              placeholder="image"
+                                              className="form-control"
+                                              // validators={{
+                                              //     required, minLength: minLength(4), maxLength: maxLength(30)
+                                              // }}
+                                />
+                                {/*<Errors*/}
+                                {/*    className="text-danger"*/}
+                                {/*    model=".image"*/}
+                                {/*    show="touched"*/}
+                                {/*    messages={{*/}
+                                {/*        required: 'Required',*/}
+                                {/*        minLength: 'Must be greater than 4 characters',*/}
+                                {/*        maxLength: 'Must be 30 chatacters or less'*/}
+                                {/*    }}*/}
+                                {/*/>*/}
+
+                            </Col>
+                        </Row>
+
+                        <Row className="form-group">
+                            <Col md={{size: 10, offset: 2}}>
+                                <Button type="submit" color="primary">
+                                    Save
+                                </Button>
+                            </Col>
+                        </Row>
                     </Form>
                 </ModalBody>
             </Modal>
@@ -84,16 +446,20 @@ const CircleMenu = ({items}) => {
             <div class="row panel-body ">
 
                 <div className="col ">
-                    <button onClick={togglerModal} type="button" className="btn-warning btn btn-circle btn-xl"><i
+                    <div className="">
+                    <button onClick={togglerModal} type="button" className="btn-warning btn btn-circle btn-xl "><i
                         className="fa fa-plus"></i>
                     </button>
                     <span className="row"> Add new Product </span>
+                    </div>
                 </div>
                 <div className="col ">
-                    <button onClick={togglerModal} type="button" className="btn-primary btn btn-circle btn-xl"><i
+                    <div className="">
+                    <button onClick={togglerModalR} type="button" className="btn-primary btn btn-circle btn-xl "><i
                         className="fa fa-plus"></i>
                     </button>
                     <span className="row"> Add new Resources </span>
+                    </div>
                 </div>
 
 

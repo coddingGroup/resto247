@@ -14,6 +14,9 @@ export const Products = (state = {
 
         case ActionTypes.DISHES_FAILED:
             return {...state, isLoading: false, errMess: action.payload, products: []};
+        case ActionTypes.ADD_ONE_PRODUCT:
+            let prev = state.products;
+            return {...state, isLoading: false, errMess: null, products: [...prev,action.payload]};
 
         default:
             return state;
