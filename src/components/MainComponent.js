@@ -19,7 +19,7 @@ import {
     addToCart,
     removeToCart,
     loginUser,
-    logoutUser,uploadProduct,
+    logoutUser,uploadProduct,uploadResource,
     googleLogin, fetchWaiters,
     addResourcesReport,updateProduct,
     increaseStock, signUp,changeFlippingCardSaveBehavior,pushInvoice
@@ -55,6 +55,7 @@ const mapStateToProps = state => {
 }
 
 const mapDispatchToProps = (dispatch) => ({
+    uploadResource: (values,image) =>dispatch(uploadResource(values,image)),
     uploadProduct: (values,image) =>dispatch(uploadProduct(values,image)),
     pushInvoice: (receptionistName, waiterName,clientName,paymentStatus,totalPrice,orders) =>dispatch(pushInvoice(receptionistName, waiterName,clientName,paymentStatus,totalPrice,orders)),
     fetchWaiters: () => dispatch(fetchWaiters()),
@@ -226,6 +227,7 @@ class Main extends Component {
                             <PrivateRoute path="/management" component={() => <MainManager products={this.props.products}
                                                                                            uploadProduct={this.props.uploadProduct}
                                                                                     resources={this.props.resources}
+                                                                                           uploadResource={this.props.uploadResource}
                                                                                     increaseStock={this.props.increaseStock}
                                                                                     searchingOutput={this.props.searchingOutput}
                                                                                     searchText={this.props.searchText}

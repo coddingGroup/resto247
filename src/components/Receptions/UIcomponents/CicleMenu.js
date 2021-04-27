@@ -4,6 +4,7 @@ import {NavLink} from "react-router-dom";
 import {Button, Col, FormGroup, Input, Label, Modal, ModalBody, ModalHeader, Row} from "reactstrap";
 import {Control, Errors, Form} from "react-redux-form";
 import {firebaseStorage} from "../../../firebase/firebase";
+import {uploadResource} from "../../../redux/ActionCreators";
 
 let items = [
     {
@@ -32,7 +33,7 @@ let items = [
         color: 'btn-warning'
     }
 ];
-const CircleMenu = ({items,uploadProduct}) => {
+const CircleMenu = ({items,uploadProduct,uploadResource}) => {
     //const [image, setImage] = useState('');
 
 
@@ -82,43 +83,25 @@ const CircleMenu = ({items,uploadProduct}) => {
                 uploadProduct(values, imagePath);
 
              });
+    };
 
+    let handleResourceSubmit=(values,event)=>{
+        const file = values.image[0];
 
+        const fileName = file.name;
+        const fileExtension = fileName.split('.').pop();
+        const name =values.resourceName + '-' +  (+new Date()) ;
+        let ref = firebaseStorage.ref();
+        let imagePath =  "images/resources/"+name+'.'+fileExtension;
+        let fullRef = ref.child(imagePath);
+        const task = fullRef.put(file);
+        task.then((snapshot) => {
+            uploadResource(values, imagePath);
 
-        //alert(JSON.stringify( url));
-
-        // const formData = new FormData(event.target);
-        //
-        // const request = new XMLHttpRequest();
-        // request.open('POST', 'http://localhost:3001/images', true);
-        // request.onload = function(oEvent) {
-        //     if (request.status == 200) {
-        //         console.log('Uploaded!');
-        //     } else {
-        //         console.log('Error uploading.');
-        //     }
-        // };
-        //
-        // request.send(formData);
-        // event.preventDefault();
-        //
-        // console.log(JSON.stringify(values));
+        });
     };
 
     let length = items.length;
-
-    // let allButton = items.map(item => {
-    //     return (
-    //         <div className="col ">
-    //             <NavLink to={item.to}>
-    //                 <button type="button" className={item.color + " btn btn-circle btn-xl"}><i
-    //                     className={item.icon}></i>
-    //                 </button>
-    //                 <span className="row"> {item.name} </span>
-    //             </NavLink>
-    //         </div>
-    //     )
-    // })
 
     return (
         <div class="panel panel-default ">
@@ -261,7 +244,7 @@ const CircleMenu = ({items,uploadProduct}) => {
             <Modal isOpen={isModalOpenR} toggle={togglerModalR}>
                 <ModalHeader toggle={togglerModalR}>Add New resources</ModalHeader>
                 <ModalBody>
-                    <Form model="addNewResource" onSubmit={handleProductSubmit} encType="multipart/form-data">
+                    <Form model="addNewResource" onSubmit={handleResourceSubmit} encType="multipart/form-data">
                         <Row className="form-group">
                             <Label htmlFor="resourceName" md={2}> Resource Name</Label>
                             <Col md={10}>
@@ -314,7 +297,7 @@ const CircleMenu = ({items,uploadProduct}) => {
                                               placeholder="Unit"
                                               className="form-control"
                                               validators={{
-                                                  required, minLength: minLength(4), maxLength: maxLength(30)
+                                                  required, minLength: minLength(1), maxLength: maxLength(4)
                                               }}
                                 />
                                 <Errors

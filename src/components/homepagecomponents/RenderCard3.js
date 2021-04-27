@@ -65,7 +65,7 @@ function RenderCard3({item, addToCart, cart}) {
             <div key={item.id} className="m-2">
                 <Card onMouseEnter={showDescription} onMouseLeave={hideDescription}
                       className="bottom-shadow cardInWaiter">
-                    <CardImg width="100%" src='' className={item.image} id={item.image} alt={item.image}/>
+                    <CardImg width="100%" src='' className={item.image} alt={item.image}/>
                     <CardTitle className="" tag="h6">
                         <div className="p-1 nameInCardForWaiter">
                             {item.name}

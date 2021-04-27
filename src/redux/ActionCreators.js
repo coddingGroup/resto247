@@ -64,7 +64,8 @@ export const increaseStock = (resourceId, unitPrice,quantity,from,name )=> (disp
 
                                     firestore.collection('resources').doc(resourceId).update({
                                         stockQuantity: stockQuantity,
-                                        totalCost: totalCost
+                                        totalCost: totalCost,
+                                        updatedAt:firebasestore.FieldValue.serverTimestamp()
                                     })
                                         .catch( error =>{
                                             dispatch(failedToSaveFlippingCardSaveButton());
@@ -142,6 +143,63 @@ export const addOneProduct=(newProduct) => ({
     type:ActionTypes.ADD_ONE_PRODUCT,
     payload: newProduct
 });
+
+
+export const uploadResource = (values,image) => (dispatch) =>{
+    if(!auth.currentUser){
+        console.log("login first");
+        return;
+    }
+    console.log("here");
+    firestore.collection('resources').add({
+        category:values.category,
+        description:values.description,
+        image:image,
+        name:values.resourceName,
+        stockQuantity: 0,
+        totalCost: 0,
+        unit:values.unit,
+        featured:true,
+        createdAt: firebasestore.FieldValue.serverTimestamp(),
+        updatedAt: firebasestore.FieldValue.serverTimestamp()
+    })
+        .then(docRef => {
+            firestore.collection('resources').doc(docRef.id).get()
+                .then(doc => {
+                    if (doc.exists) {
+                        const data = doc.data();
+                        const id = doc.id;
+                        let newResource = {id, ...data};
+                        dispatch(addOneResource(newResource));
+                    }
+                    else {
+                        // doc.data() will be undefined in this case
+                        console.log("No such document!");
+                    }
+
+                })
+                .catch(error =>{
+                    console.log(error.message);
+                });
+            return docRef.id;
+        }).then(id=>{
+            dispatch(increaseStock(id,values.unitPrice,values.initialQuantity,"initialSet",values.resourceName));
+    })
+        .catch(error =>{
+        console.log(error.message);
+        dispatch(uploadResourceFailed(error));
+    });
+}
+export const uploadResourceFailed=(error) => ({
+    type:ActionTypes.UPLOAD_RESOURCE_FAILED,
+    payload:error
+});
+export const addOneResource=(newResource) => ({
+    type:ActionTypes.ADD_ONE_RESOURCE,
+    payload: newResource
+});
+
+
 
 export const pushInvoice = (receptionistName, waiterName,clientName,paymentStatus,totalPrice,orders )=> (dispatch) =>{
     if(!auth.currentUser){
