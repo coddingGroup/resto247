@@ -13,6 +13,7 @@ import {Behaviors} from "./behaviors";
 import {Miscellaneous} from "./collections/miscellaneous";
 import {Invoices} from "./collections/invoices";
 import {Cart} from "./Cart";
+import {DailyInvoices} from "./others/dailyInvoices";
 import thunk from "redux-thunk";
 import logger from 'redux-logger';
 import {InitialFeedback, quantity, login, signUp, addNewProduct, addNewResource, addMiscellaneous} from "./Forms";
@@ -31,6 +32,7 @@ export const ConfigureStore = () => {
             miscellaneous:Miscellaneous,
             invoices:Invoices,
             behaviors:Behaviors,
+            dailyInvoices:DailyInvoices,
             outOfStockProducts: OutOfStockProducts,
             cart: Cart,
             ...createForms({

@@ -1,7 +1,19 @@
 import {Table} from "reactstrap";
 import React from "react";
+import InfiniteScroll from "react-infinite-scroll-component";
 
-export const ProductSold = () => {
+export const ProductSold = (props) => {
+
+            let allTr = props.dailyInvoices.map((invoice, index) =>{
+                return(
+                    <tr>
+                        <td>{index+1}</td>
+                        <td>{invoice.clientName}</td>
+                        <td>{invoice.id}</td>
+                    </tr>
+                )
+            })
+
     return (
         <div>
             <h2>
@@ -20,9 +32,7 @@ export const ProductSold = () => {
                 </tr>
                 </thead>
                 <tbody>
-                <tr>
-
-                </tr>
+                {allTr}
                 </tbody>
 
 
@@ -31,11 +41,35 @@ export const ProductSold = () => {
 
 
 
-            <div id="scrollableDiv" className="card fixedDiv square scrollbar-cyan bordered-cyan">
-                <div className="card-body">
+            {/*<div id="scrollableDiv" className="card fixedDiv square scrollbar-cyan bordered-cyan">*/}
+            {/*    <div className="card-body">*/}
+            {/*        <InfiniteScroll*/}
+            {/*            scrollableTarget={this.props.scrollableDiv}*/}
+            {/*            dataLength={this.props.items2.length}*/}
+            {/*            next={this.fetchMoreData}*/}
+            {/*            hasMore={this.props.hasMoreS}*/}
+            {/*            loader={<h4>Loading...</h4>}*/}
+            {/*            endMessage={*/}
+            {/*                <p> no more results </p>*/}
+            {/*            }*/}
 
-                </div>
-            </div>
+            {/*        >*/}
+            {/*            <div className="row">*/}
+            {/*                {*/}
+            {/*                    this.props.items2.map(*/}
+            {/*                        (item, i) => {*/}
+            {/*                            return (*/}
+            {/*                                <span>{item}*/}
+            {/*                    */}
+            {/*                    </span>*/}
+            {/*                            )*/}
+            {/*                        }*/}
+            {/*                    )*/}
+            {/*                }*/}
+            {/*            </div>*/}
+            {/*        </InfiniteScroll>*/}
+            {/*    </div>*/}
+            {/*</div>*/}
         </div>
     )
 }

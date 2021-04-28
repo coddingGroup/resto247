@@ -7,6 +7,7 @@ import SignUp from "../SignUp";
 import CircleMenu from "../Receptions/UIcomponents/CicleMenu";
 import {CSSTransition, TransitionGroup} from "react-transition-group";
 import StockManagement from "./Products/StockManagement";
+import {changeDailyInvoice} from "../../redux/ActionCreator2";
 
 
 const MainManager = (props) => {
@@ -59,7 +60,7 @@ const MainManager = (props) => {
                                                                  addResourcesReport={props.addResourcesReport}
                                                                  changeFlippingCardSaveBehavior={props.changeFlippingCardSaveBehavior}
                                                                  products={props.products}/>}/>
-                        <Route exact path="/management/dashboard" component={() => <Dashboard/>}/>
+                        <Route exact path="/management/dashboard" component={() => <Dashboard changeDailyInvoices={props.changeDailyInvoices} dailyInvoices={props.dailyInvoices}/>}/>
 
                         <Redirect to="/management/dashboard"/>
                     </Switch>

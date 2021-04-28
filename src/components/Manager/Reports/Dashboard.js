@@ -17,7 +17,7 @@ const Dashboard = (props) => {
                     <h3>Choose Date</h3>
                 </div>
                 <div className="col-12 col-md-8 ">
-                    <ReactDatePicker/>
+                    <ReactDatePicker changeDailyInvoices={props.changeDailyInvoices}/>
                 </div>
             </div>
             <div className="row">
@@ -43,7 +43,7 @@ const Dashboard = (props) => {
             <div className="row">
 
                 <div className="col">
-                    <ProductSold/>
+                    <ProductSold dailyInvoices={props.dailyInvoices.dailyInvoices} />
 
                 </div>
                 <div className="col">

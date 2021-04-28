@@ -24,6 +24,7 @@ import {
     addResourcesReport,updateProduct,uploadMiscellaneous,
     increaseStock, signUp,changeFlippingCardSaveBehavior,pushInvoice
 } from "../redux/ActionCreators";
+import {changeDailyInvoices} from "../redux/ActionCreator2";
 import {actions} from "react-redux-form";
 import {TransitionGroup, CSSTransition} from "react-transition-group";
 import Login from "./Login";
@@ -51,11 +52,13 @@ const mapStateToProps = state => {
         userCollection: state.userCollection,
         behaviors: state.behaviors,
         waiters: state.waiters,
-        miscellaneous: state.miscellaneous
+        miscellaneous: state.miscellaneous,
+        dailyInvoices: state.dailyInvoices
     }
 }
 
 const mapDispatchToProps = (dispatch) => ({
+    changeDailyInvoices:(startDate, endDate) => dispatch(changeDailyInvoices(startDate,endDate)),
     uploadMiscellaneous: (values,proof)=>dispatch(uploadMiscellaneous(values,proof)),
     uploadResource: (values,image) =>dispatch(uploadResource(values,image)),
     uploadProduct: (values,image) =>dispatch(uploadProduct(values,image)),
@@ -234,6 +237,8 @@ class Main extends Component {
                                                                                     increaseStock={this.props.increaseStock}
                                                                                     searchingOutput={this.props.searchingOutput}
                                                                                     searchText={this.props.searchText}
+                                                                                           dailyInvoices={this.props.dailyInvoices}
+                                                                                           changeDailyInvoices={this.props.changeDailyInvoices}
                                                                                            miscellaneous={this.props.miscellaneous}
                                                                                            uploadMiscellaneous={this.props.uploadMiscellaneous}
                                                                                            updateProduct={this.props.updateProduct}
