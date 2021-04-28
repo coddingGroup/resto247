@@ -35,6 +35,7 @@ class ReactDatePicker extends Component {
         endDate.setHours(23,59,59,0);
         console.log("dkfdf;lkaj;ljidklfjkgjkld;fj;ldkfj;lkdjfa;lkdjfa;lkjf;lakjf;lajf;jka;fja;lkjdf;ajf;akjf;ljf;l");
         this.props.changeDailyInvoices(startDate,endDate);
+        this.props.changeDailyDetailsInvoices(startDate,endDate);
     }
 
     render() {

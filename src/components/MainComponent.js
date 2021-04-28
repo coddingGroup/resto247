@@ -24,7 +24,9 @@ import {
     addResourcesReport,updateProduct,uploadMiscellaneous,
     increaseStock, signUp,changeFlippingCardSaveBehavior,pushInvoice
 } from "../redux/ActionCreators";
-import {changeDailyInvoices} from "../redux/ActionCreator2";
+import {changeDailyInvoices,
+
+    changeDailyDetailsInvoices} from "../redux/ActionCreator2";
 import {actions} from "react-redux-form";
 import {TransitionGroup, CSSTransition} from "react-transition-group";
 import Login from "./Login";
@@ -37,6 +39,7 @@ import IncreaseProduct from "./Manager/Products/IncreaseProduct";
 import * as ActionTypes from "../redux/ActionTypes";
 import {quantity} from "../redux/Forms";
 import '../css/styles.css';
+import {DailyInvoiceDetails} from "../redux/others/dailyInvoiceDetails";
 
 const mapStateToProps = state => {
     return {
@@ -53,11 +56,13 @@ const mapStateToProps = state => {
         behaviors: state.behaviors,
         waiters: state.waiters,
         miscellaneous: state.miscellaneous,
-        dailyInvoices: state.dailyInvoices
+        dailyInvoices: state.dailyInvoices,
+        dailyInvoiceDetails:state.dailyInvoiceDetails
     }
 }
 
 const mapDispatchToProps = (dispatch) => ({
+    changeDailyDetailsInvoices:(stateDate,endDate) =>dispatch(changeDailyDetailsInvoices(stateDate,endDate)),
     changeDailyInvoices:(startDate, endDate) => dispatch(changeDailyInvoices(startDate,endDate)),
     uploadMiscellaneous: (values,proof)=>dispatch(uploadMiscellaneous(values,proof)),
     uploadResource: (values,image) =>dispatch(uploadResource(values,image)),
@@ -257,6 +262,8 @@ class Main extends Component {
                                                                                     searchingOutput={this.props.searchingOutput}
                                                                                     searchText={this.props.searchText}
                                                                                            dailyInvoices={this.props.dailyInvoices}
+                                                                                           dailyInvoiceDetails={this.props.dailyInvoiceDetails}
+                                                                                           changeDailyDetailsInvoices={this.props.changeDailyDetailsInvoices}
                                                                                            changeDailyInvoices={this.props.changeDailyInvoices}
                                                                                            miscellaneous={this.props.miscellaneous}
                                                                                            uploadMiscellaneous={this.props.uploadMiscellaneous}

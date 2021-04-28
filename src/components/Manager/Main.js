@@ -62,9 +62,11 @@ const MainManager = (props) => {
                                                                  changeFlippingCardSaveBehavior={props.changeFlippingCardSaveBehavior}
                                                                  products={props.products}/>}/>
                         <Route exact path="/management/dashboard" component={() => <Dashboard
+                            changeDailyDetailsInvoices={props.changeDailyDetailsInvoices}
                             addToCart={props.addToCart}
                             removeToCart={props.removeToCart}
                             waiters={props.waiters}
+                            dailyInvoiceDetails={props.dailyInvoiceDetails}
                             cart={props.cart}
                             uploadMiscellaneous={props.uploadMiscellaneous}
                             pushInvoice={props.pushInvoice}

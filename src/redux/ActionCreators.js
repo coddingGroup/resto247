@@ -287,6 +287,7 @@ export const pushInvoice = (receptionistName, waiterName,clientName,paymentStatu
                             dispatch(invoiceDetailsLoading(true));
                         orders.forEach(order => {
                             firestore.collection('invoiceDetails').add({
+                                receptionistName:receptionistName,
                                 invoiceId: id
                                 , price: order.price
                                 , productName: order.productName

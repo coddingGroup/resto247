@@ -14,8 +14,6 @@ export const DailyInvoices = (state = {
 
         case ActionTypes.DAILY_INVOICE_FAILED:
             return {...state, isLoading: false, errMess: action.payload, dailyInvoices: []};
-        case ActionTypes.ADD_ONE_PRODUCT:
-            let prev = state.products;
 
         default:
             return state;

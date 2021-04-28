@@ -5,8 +5,8 @@ import ItemsSold from '../UIcomponents/ItemsSold';
 import DairyEarning from './DairyEarning';
 import ReactDatePicker from '../UIcomponents/ReactDatePicker';
 import {Table} from "reactstrap";
-import {ProductSold} from "./ProductSold";
-import ScrollingItems from "./ScrollingItems";
+import ProductSold from "./ProductSold";
+import DailyInvoicesComponent from "./DailyInvoicesComponent";
 const Dashboard = (props) => {
 
 
@@ -17,7 +17,7 @@ const Dashboard = (props) => {
                     <h3>Choose Date</h3>
                 </div>
                 <div className="col-12 col-md-8 ">
-                    <ReactDatePicker changeDailyInvoices={props.changeDailyInvoices}/>
+                    <ReactDatePicker changeDailyDetailsInvoices={props.changeDailyDetailsInvoices} changeDailyInvoices={props.changeDailyInvoices}/>
                 </div>
             </div>
             <div className="row">
@@ -43,7 +43,16 @@ const Dashboard = (props) => {
             <div className="row">
 
                 <div className="col">
-                    <ProductSold dailyInvoices={props.dailyInvoices.dailyInvoices} />
+                    <ProductSold dailyInvoices={props.dailyInvoices}
+                                 addToCart={props.addToCart}
+                                 removeToCart={props.removeToCart}
+                                 waiters={props.waiters}
+                                 cart={props.cart}
+                                 dailyInvoiceDetails={props.dailyInvoiceDetails}
+                                 uploadMiscellaneous={props.uploadMiscellaneous}
+                                 pushInvoice={props.pushInvoice}
+                                 products={props.products}
+                                 changeDailyInvoices={props.changeDailyInvoices} dailyInvoices={props.dailyInvoices} />
 
                 </div>
                 <div className="col">
@@ -91,7 +100,8 @@ const Dashboard = (props) => {
 
             </div>
 
-            <ScrollingItems
+            <DailyInvoicesComponent
+                dailyInvoices={props.dailyInvoices}
                 addToCart={props.addToCart}
                 removeToCart={props.removeToCart}
                 waiters={props.waiters}

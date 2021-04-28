@@ -1,75 +1,232 @@
-import {Table} from "reactstrap";
-import React from "react";
+
+import {
+    Col,
+    Row, Table,
+} from "reactstrap";
+import {Sticky, StickyContainer} from "react-sticky";
+import {useState} from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
 
-export const ProductSold = (props) => {
+let numberOfItem = 12;
+const ProductSold  = (props) => {
+    const [productToDisplay, setProductToDisplay] = useState(props.dailyInvoiceDetails.dailyInvoiceDetails);
+    const [products,setProducts] =useState(props.dailyInvoiceDetails.products);
+    let initial_values = (start=0,last=numberOfItem,indexing=0) =>{
+        let indexing1;
+        let opElement = products.slice(start,last);
+        let menu1New = opElement.map((product, index) =>{
+            let receptionist = Object.keys(productToDisplay[product]);
+            let details ="";
+            let totalPrice=0;
+            let totalQuantity = 0;
+            receptionist.forEach((rec) =>{
+                totalPrice +=parseInt( productToDisplay[product][rec].totalPrice);
+                totalQuantity +=parseInt( productToDisplay[product][rec].totalQuantity);
+                details += rec + ":"+productToDisplay[product][rec].totalQuantity+", ";
+            });
 
-            let allTr = props.dailyInvoices.map((invoice, index) =>{
-                return(
-                    <tr>
-                        <td>{index+1}</td>
-                        <td>{invoice.clientName}</td>
-                        <td>{invoice.id}</td>
-                    </tr>
-                )
-            })
+            return(
+
+                <tr>
+                    <th> {indexing===0?(index + 1): (++indexing1) }</th>
+                    <td>{product}</td>
+                    <td>{totalQuantity}</td>
+                    <td>{totalPrice}</td>
+                    <td>{details}</td>
+                </tr>
+            )
+        });
+
+
+        const arrNew = [...menu1New];
+        return arrNew;
+    }
+
+
+
+    const [activeTab, setActiveTab] = useState('1');
+
+    const [category, setCategory] = useState('All');
+
+
+
+    const [hasMoreS, setHasMoreS] = useState(true);
+    const [itemToFetch, setItemToFetch] = useState(numberOfItem);
+    const [itemToStartOn, setItemToStartOn] = useState(numberOfItem);
+    const [items2, setItems2] = useState(initial_values());
+
+    let funMenuNew = (dailyUsange = productToDisplay, reset = false) => {
+        let start;
+        if (!reset) {
+            start = itemToStartOn;
+        } else {
+            start = 0;
+        }
+
+        let last = start + itemToFetch;
+
+
+        let lastIndex = (dailyUsange.length < last) ? dailyUsange.length : last;
+        if (dailyUsange.length >= lastIndex) {
+            alert("in "+  lastIndex);
+            let indexing = start;
+            let menuNew = initial_values(start,lastIndex,indexing);
+
+            setItemToStartOn(lastIndex);
+            if (dailyUsange.length === lastIndex) {
+                // this.setState({hasMoreS: false});
+                setHasMoreS(false);
+            }
+            return menuNew;
+        } else {
+            // this.setState({hasMores:false});
+            alert("out, last In  "+  lastIndex + "dailyUsange.length" +dailyUsange.length);
+            setHasMoreS(false);
+            return [];
+
+        }
+
+    }
+
+
+    const toggle = tab => {
+        if (activeTab !== tab) setActiveTab(tab);
+    }
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    let fetchMoreData = () => {
+
+        // a fake async api call like which sends
+        // 20 more records in 1.5 secs
+        setTimeout(() => {
+
+            let item2 = [...items2, ...funMenuNew()];
+
+            setItems2(item2);
+        }, 1500);
+    };
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 
     return (
         <div>
-            <h2>
-                Product sold
-            </h2>
-            <Table responsive hover>
-                <thead>
-                <tr>
-                    <th> Id</th>
-                    <th> Name</th>
-                    <th> Quantity</th>
-                    <th> Unity Price</th>
-                    <th> Total Price</th>
-                    <th> Day profit/product</th>
-
-                </tr>
-                </thead>
-                <tbody>
-                {allTr}
-                </tbody>
 
 
-            </Table>
+            <Row>
+
+                <Col sm="8">
+                    <Table responsive hover>
+
+                        <StickyContainer>
+
+                            <Sticky>
+                                {({
+                                      style,
+
+
+                                      isSticky,
+                                      wasSticky,
+                                      distanceFromTop,
+                                      distanceFromBottom,
+                                      calculatedHeight
+                                  }) => (
+                                    // <header style={style}>
+                                    //     {<FilterMenu categories={keysToUse}
+                                    //                  category={category}
+                                    //                  changeProductToDisplay={changeProductToDisplay}
+                                    //                  setCategory={setCategory}/>
+                                    //
+                                    //     }
+                                    // </header>
+
+                                    <thead>
+                                    <tr>
+                                        <th>Id</th>
+                                        <th>Product Name</th>
+                                        <th>Total Quantity</th>
+                                        <th>Total Price</th>
+                                        <th>Details</th>
+
+                                    </tr>
+                                    </thead>
+
+                                )}
+
+
+                            </Sticky>
+
+                            <div>
+
+                                <div id="scrollableDivForProductSold" className="card fixedDiv square scrollbar-cyan bordered-cyan">
+                                    <div className="card-body">
+                                        <div className="mt-2">
+                                            <InfiniteScroll
+                                                scrollableTarget={"scrollableDivForProductSold"}
+                                                dataLength={items2.length}
+                                                next={fetchMoreData}
+                                                hasMore={hasMoreS}
+                                                loader={<h4>Loading...</h4>}
+                                                endMessage={
+                                                    <p> no more results </p>
+                                                }
+
+                                            >
+                                                <div className="row">
+                                                    <Table>
+                                                        <thead>
+                                                        <tr>
+                                                            <tr>
+                                                                <th>Id</th>
+                                                                <th>Product Name</th>
+                                                                <th>Total Quantity</th>
+                                                                <th>Total Price</th>
+                                                                <th>Details</th>
+
+                                                            </tr>
+
+                                                        </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                        {
+
+                                                            items2.map(
+                                                                (item, i) => {
+                                                                    return (
+                                                                        item
+
+                                                                    )
+                                                                }
+                                                            )
+                                                        }
+                                                        </tbody>
+                                                    </Table>
+                                                </div>
+                                            </InfiniteScroll>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </StickyContainer>
+                    </Table>
+
+                </Col>
+
+                <Col sm="4">
 
 
 
+                </Col>
+            </Row>
+            <Row>
+                <Col>
 
-            {/*<div id="scrollableDiv" className="card fixedDiv square scrollbar-cyan bordered-cyan">*/}
-            {/*    <div className="card-body">*/}
-            {/*        <InfiniteScroll*/}
-            {/*            scrollableTarget={this.props.scrollableDiv}*/}
-            {/*            dataLength={this.props.items2.length}*/}
-            {/*            next={this.fetchMoreData}*/}
-            {/*            hasMore={this.props.hasMoreS}*/}
-            {/*            loader={<h4>Loading...</h4>}*/}
-            {/*            endMessage={*/}
-            {/*                <p> no more results </p>*/}
-            {/*            }*/}
+                </Col>
+            </Row>
 
-            {/*        >*/}
-            {/*            <div className="row">*/}
-            {/*                {*/}
-            {/*                    this.props.items2.map(*/}
-            {/*                        (item, i) => {*/}
-            {/*                            return (*/}
-            {/*                                <span>{item}*/}
-            {/*                    */}
-            {/*                    </span>*/}
-            {/*                            )*/}
-            {/*                        }*/}
-            {/*                    )*/}
-            {/*                }*/}
-            {/*            </div>*/}
-            {/*        </InfiniteScroll>*/}
-            {/*    </div>*/}
-            {/*</div>*/}
         </div>
-    )
+    );
 }
+
+export default ProductSold;
