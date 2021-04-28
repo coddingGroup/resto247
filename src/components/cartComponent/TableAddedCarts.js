@@ -148,10 +148,10 @@ let TableAddedCarts = ({cart, removeToCart, pushInvoice}) => {
     const [totalQuantity, setTotalQuantity] = useState(0);
     const [totalPrice, setTotalPrice] = useState(0);
     //const [order,setOrder] = useState(null);
-    const [waiterName, setWaiterName] = useState('');
+    const [waiterName, setWaiterName] = useState('paterne');
     const [clientName, setClientName] = useState('client');
     const [paymentStatus, setPaymentStatus] = useState('paid');
-    const [receptionistName, setReceptionistName] = useState('');
+    const [receptionistName, setReceptionistName] = useState('aime');
     const componentRef = useRef();
     const handlePrint = useReactToPrint({
         content: () => componentRef.current,

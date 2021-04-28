@@ -165,7 +165,7 @@ const DailyInvoicesComponent = (props) => {
 
                     <Row>
 
-                        <Col sm="8">
+                        <Col sm="12">
                             <Table responsive hover>
 
                             <StickyContainer>
@@ -225,7 +225,7 @@ const DailyInvoicesComponent = (props) => {
                                                     }
 
                                                 >
-                                                    <div className="row">
+                                                    <div className="">
                                                         <Table>
                                                         <thead>
                                                         <tr>
@@ -266,16 +266,6 @@ const DailyInvoicesComponent = (props) => {
 
                         </Col>
 
-                        <Col sm="4">
-
-
-
-                        </Col>
-                    </Row>
-                    <Row>
-                        <Col>
-
-                        </Col>
                     </Row>
 
         </div>

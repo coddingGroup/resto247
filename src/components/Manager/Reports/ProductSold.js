@@ -11,30 +11,46 @@ let numberOfItem = 12;
 const ProductSold  = (props) => {
     const [productToDisplay, setProductToDisplay] = useState(props.dailyInvoiceDetails.dailyInvoiceDetails);
     const [products,setProducts] =useState(props.dailyInvoiceDetails.products);
+
     let initial_values = (start=0,last=numberOfItem,indexing=0) =>{
+        //alert(JSON.stringify(productToDisplay));
+        if(productToDisplay === null || productToDisplay===undefined){
+            return [];
+        }
         let indexing1;
         let opElement = products.slice(start,last);
         let menu1New = opElement.map((product, index) =>{
-            let receptionist = Object.keys(productToDisplay[product]);
-            let details ="";
-            let totalPrice=0;
-            let totalQuantity = 0;
-            receptionist.forEach((rec) =>{
-                totalPrice +=parseInt( productToDisplay[product][rec].totalPrice);
-                totalQuantity +=parseInt( productToDisplay[product][rec].totalQuantity);
-                details += rec + ":"+productToDisplay[product][rec].totalQuantity+", ";
-            });
+            if(product in productToDisplay){
+                let receptionist = Object.keys(productToDisplay[product]);
+                let details ="";
+                let totalPrice=0;
+                let totalQuantity = 0;
+                receptionist.forEach((rec) =>{
+                    if(rec in productToDisplay[product]){
+                        totalPrice +=parseInt( productToDisplay[product][rec].totalPrice);
+                        totalQuantity +=parseInt( productToDisplay[product][rec].totalQuantity);
+                        details += rec + ":"+productToDisplay[product][rec].totalQuantity+", ";
+                    }
 
-            return(
+                });
+                return(
 
-                <tr>
-                    <th> {indexing===0?(index + 1): (++indexing1) }</th>
-                    <td>{product}</td>
-                    <td>{totalQuantity}</td>
-                    <td>{totalPrice}</td>
-                    <td>{details}</td>
-                </tr>
-            )
+                    <tr>
+                        <th> {indexing===0?(index + 1): (++indexing1) }</th>
+                        <td>{product}</td>
+                        <td>{totalQuantity}</td>
+                        <td>{totalPrice}</td>
+                        <td>{details}</td>
+                    </tr>
+                )
+            }
+            else{
+                alert(product);
+                return <div></div>;
+            }
+
+
+
         });
 
 
@@ -56,6 +72,9 @@ const ProductSold  = (props) => {
     const [items2, setItems2] = useState(initial_values());
 
     let funMenuNew = (dailyUsange = productToDisplay, reset = false) => {
+        if(dailyUsange === null || dailyUsange ===undefined ){
+            return [];
+        }
         let start;
         if (!reset) {
             start = itemToStartOn;
@@ -115,7 +134,7 @@ const ProductSold  = (props) => {
 
             <Row>
 
-                <Col sm="8">
+                <Col sm="12">
                     <Table responsive hover>
 
                         <StickyContainer>
@@ -172,10 +191,9 @@ const ProductSold  = (props) => {
                                                 }
 
                                             >
-                                                <div className="row">
+                                                <div className="">
                                                     <Table>
                                                         <thead>
-                                                        <tr>
                                                             <tr>
                                                                 <th>Id</th>
                                                                 <th>Product Name</th>
@@ -185,7 +203,6 @@ const ProductSold  = (props) => {
 
                                                             </tr>
 
-                                                        </tr>
                                                         </thead>
                                                         <tbody>
                                                         {
@@ -210,12 +227,6 @@ const ProductSold  = (props) => {
 
                         </StickyContainer>
                     </Table>
-
-                </Col>
-
-                <Col sm="4">
-
-
 
                 </Col>
             </Row>

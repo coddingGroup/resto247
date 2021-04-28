@@ -33,33 +33,53 @@ export const changeDailyInvoices = (startDate, endDate) => dispatch =>{
 
 
 export const changeDailyDetailsInvoices = (startDate, endDate) => dispatch =>{
+    console.log("fist step");
     firestore.collection('invoiceDetails').where('createdAt','>=',startDate).where('createdAt','<=',endDate).get()
         .then(snapshot =>{
+            console.log("sec step");
             let dailyInvoicesDetails ={};
             snapshot.forEach(doc =>{
+                console.log("third step");
                 let id = doc.id;
                 let data = doc.data();
-               let productName = data.productName;
-               let ReceptionistName = data.ReceptionistName;
-               let R_existing = dailyInvoicesDetails[productName][ReceptionistName];
+               let productName = (data.productName).replaceAll(' ','_');
+               let receptionistName = (data.receptionistName).replaceAll(' ','_');
+               let R_existing = dailyInvoicesDetails[productName];
                if(R_existing === null || R_existing === undefined){
-                   dailyInvoicesDetails[productName][ReceptionistName] = {totalPrice:data.price,totalQuantity:data.quantity}
+                   console.log("4 step of if");
+                   dailyInvoicesDetails[productName] = {};
+                   dailyInvoicesDetails[productName][receptionistName]={};
+                   dailyInvoicesDetails[productName][receptionistName] = {totalPrice:parseInt(data.price),totalQuantity:parseInt(data.quantity)};
+               }
+               else if(dailyInvoicesDetails[productName][receptionistName]=== null || dailyInvoicesDetails[productName][receptionistName]=== undefined){
+                   dailyInvoicesDetails[productName][receptionistName]={};
+                   dailyInvoicesDetails[productName][receptionistName] = {totalPrice:parseInt(data.price),totalQuantity:parseInt(data.quantity)};
+               }
+               else{
+                   console.log("4 step of else");
+
+                   let price = dailyInvoicesDetails[productName][receptionistName].totalPrice;
+                   let quantity = dailyInvoicesDetails[productName][receptionistName].totalQuantity;
+                   price+= (parseInt(data.price)* parseInt(data.quantity)) ;
+                   quantity+= parseInt(data.quantity);
+                   dailyInvoicesDetails[productName][receptionistName] = {totalPrice:price,totalQuantity:quantity}
                }
 
-                       let price = dailyInvoicesDetails[productName][ReceptionistName].totalPrice;
-                       let quantity = dailyInvoicesDetails[productName][ReceptionistName].totalQuantity;
-                       price+= (data.price* data.quantity) ;
-                       quantity+= data.quantity;
-                       dailyInvoicesDetails[productName][ReceptionistName] = {totalPrice:price,totalQuantity:quantity}
+
 
 
 
             });
-            let products = Object.keys(dailyInvoicesDetails);
-            dispatch(setProductsInDailyInvoiceDetails(products));
+
+
             return dailyInvoicesDetails;
         }).then((dailyInvoicesDetails) =>{
-        dispatch( setDailyInvoicesDetails(dailyInvoicesDetails));
+        alert(JSON.stringify(dailyInvoicesDetails));
+        let products = Object.keys(dailyInvoicesDetails);
+        alert(JSON.stringify(products));
+        //dispatch(setProductsInDailyInvoiceDetails(products));
+        console.log("5 step of if");
+        dispatch( setDailyInvoicesDetails(dailyInvoicesDetails,products));
     })
         .catch(error =>{
 
@@ -68,9 +88,10 @@ export const changeDailyDetailsInvoices = (startDate, endDate) => dispatch =>{
         })
 
 };
-export const setDailyInvoicesDetails = (dailyInvoicesDetails) =>({
+export const setDailyInvoicesDetails = (dailyInvoicesDetails,products) =>({
     type: ActionTypes.CHANGE_DAILY_DETAILS_INVOICE,
-    payload: dailyInvoicesDetails
+    payload: dailyInvoicesDetails,
+    products:products
 });
 export const setProductsInDailyInvoiceDetails = (products) =>({
    type:ActionTypes.SET_PRODUCTS_IN_DAILY_INVOICE_DETAILS,
