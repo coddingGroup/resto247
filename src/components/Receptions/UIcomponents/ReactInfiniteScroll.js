@@ -41,44 +41,6 @@ class ReactInfiniteScroll extends Component {
         //     itemsToFetch: lastIndex,
         //     itemToStartOn: lastIndex
         // };
-        this.funMenu = this.funMenu.bind(this);
-
-    }
-
-    funMenu = () => {
-        let products = this.props.products;
-        let last = this.props.itemToStartOn + this.props.itemToFetch;
-        let lastIndex = (products.length > this.props.itemToStartOn && products.length < last) ? products.length : last;
-        if (products.length >= lastIndex) {
-
-            let opElement = products.slice(this.props.itemToStartOn, lastIndex);
-            // this.setState({
-            //     itemToStartOn:lastIndex
-            // }
-            //
-            //
-            // )
-            this.props.setItemToStartOn(lastIndex);
-            let menu = opElement.map((product) => {
-                return (
-                    <div className="">
-                        <RenderCard3 key={product.id + "op"} cart={this.props.cart} addToCart={this.props.addToCart}
-                                     removeToCart={this.props.removeToCart} item={product}/>
-                    </div>
-                );
-            });
-            if (products.length === lastIndex) {
-                // this.setState({hasMoreS: false});
-                this.props.setHasMoreS(false);
-            }
-            return menu;
-        } else {
-            // this.setState({hasMores:false});
-            this.props.setHasMoreS(false);
-
-            return null;
-
-        }
 
     }
 

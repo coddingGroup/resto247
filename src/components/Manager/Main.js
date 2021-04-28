@@ -8,6 +8,7 @@ import CircleMenu from "../Receptions/UIcomponents/CicleMenu";
 import {CSSTransition, TransitionGroup} from "react-transition-group";
 import StockManagement from "./Products/StockManagement";
 import {changeDailyInvoice} from "../../redux/ActionCreator2";
+import WiterHome from "../Receptions/WiterHome";
 
 
 const MainManager = (props) => {
@@ -60,7 +61,15 @@ const MainManager = (props) => {
                                                                  addResourcesReport={props.addResourcesReport}
                                                                  changeFlippingCardSaveBehavior={props.changeFlippingCardSaveBehavior}
                                                                  products={props.products}/>}/>
-                        <Route exact path="/management/dashboard" component={() => <Dashboard changeDailyInvoices={props.changeDailyInvoices} dailyInvoices={props.dailyInvoices}/>}/>
+                        <Route exact path="/management/dashboard" component={() => <Dashboard
+                            addToCart={props.addToCart}
+                            removeToCart={props.removeToCart}
+                            waiters={props.waiters}
+                            cart={props.cart}
+                            uploadMiscellaneous={props.uploadMiscellaneous}
+                            pushInvoice={props.pushInvoice}
+                            products={props.products}
+                            changeDailyInvoices={props.changeDailyInvoices} dailyInvoices={props.dailyInvoices}/>}/>
 
                         <Redirect to="/management/dashboard"/>
                     </Switch>

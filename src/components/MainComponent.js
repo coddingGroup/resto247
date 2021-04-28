@@ -231,6 +231,25 @@ class Main extends Component {
                             />}/>
 
                             <PrivateRoute path="/management" component={() => <MainManager products={this.props.products}
+
+
+
+
+
+
+                                                                                           addToCart={this.props.addToCart}
+                                                                                           removeToCart={this.props.removeToCart}
+                                                                                           waiters={this.props.waiters}
+                                                                                           cart={this.props.cart}
+                                                                                           uploadMiscellaneous={this.props.uploadMiscellaneous}
+                                                                                           pushInvoice={this.props.pushInvoice}
+
+
+
+
+
+
+
                                                                                            uploadProduct={this.props.uploadProduct}
                                                                                     resources={this.props.resources}
                                                                                            uploadResource={this.props.uploadResource}
@@ -245,7 +264,13 @@ class Main extends Component {
                                                                                            addResourcesReport = {this.props.addResourcesReport}
                                                                                            changeFlippingCardSaveBehavior={this.props.changeFlippingCardSaveBehavior}
                                                                                            behaviors={this.props.behaviors}
-                                                                                    outOfStockProducts={this.props.outOfStockProducts}/>}/>
+                                                                                    outOfStockProducts={this.props.outOfStockProducts}/>}
+
+
+
+
+
+                            />
 
                             <Route path="/signup" component={() => <SignUp signUp={this.props.signUp} />}/>
 

@@ -6,7 +6,7 @@ import DairyEarning from './DairyEarning';
 import ReactDatePicker from '../UIcomponents/ReactDatePicker';
 import {Table} from "reactstrap";
 import {ProductSold} from "./ProductSold";
-
+import ScrollingItems from "./ScrollingItems";
 const Dashboard = (props) => {
 
 
@@ -91,6 +91,16 @@ const Dashboard = (props) => {
 
             </div>
 
+            <ScrollingItems
+                addToCart={props.addToCart}
+                removeToCart={props.removeToCart}
+                waiters={props.waiters}
+                cart={props.cart}
+                uploadMiscellaneous={props.uploadMiscellaneous}
+                pushInvoice={props.pushInvoice}
+                products={props.products}
+                changeDailyInvoices={props.changeDailyInvoices} dailyInvoices={props.dailyInvoices}
+            />
         </div>
 
 
