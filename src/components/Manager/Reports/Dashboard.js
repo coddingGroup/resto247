@@ -83,34 +83,32 @@ const Dashboard = (props) => {
 
             <div className="row">
                 <div className="col-12 col-md-6">
-
+                    <DairyUsage/>
                 </div>
                 <div className="col-12 col-md-6">
                     <DairyUsage/>
                 </div>
 
             </div>
+
+
             <div className="row">
-                <div className="col-12 col-md-6">
-                    <DairyUsage/>
-                </div>
-                <div className="col-12 col-md-6">
+                <div className="col-12">
 
-                </div>
 
+                <DailyInvoicesComponent
+                    dailyInvoices={props.dailyInvoices}
+                    addToCart={props.addToCart}
+                    removeToCart={props.removeToCart}
+                    waiters={props.waiters}
+                    cart={props.cart}
+                    uploadMiscellaneous={props.uploadMiscellaneous}
+                    pushInvoice={props.pushInvoice}
+                    products={props.products}
+                    changeDailyInvoices={props.changeDailyInvoices} dailyInvoices={props.dailyInvoices}
+                />
+                </div>
             </div>
-
-            <DailyInvoicesComponent
-                dailyInvoices={props.dailyInvoices}
-                addToCart={props.addToCart}
-                removeToCart={props.removeToCart}
-                waiters={props.waiters}
-                cart={props.cart}
-                uploadMiscellaneous={props.uploadMiscellaneous}
-                pushInvoice={props.pushInvoice}
-                products={props.products}
-                changeDailyInvoices={props.changeDailyInvoices} dailyInvoices={props.dailyInvoices}
-            />
         </div>
 
 

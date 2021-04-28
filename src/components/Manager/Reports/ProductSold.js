@@ -11,26 +11,28 @@ let numberOfItem = 12;
 const ProductSold  = (props) => {
     const [productToDisplay, setProductToDisplay] = useState(props.dailyInvoiceDetails.dailyInvoiceDetails);
     const [products,setProducts] =useState(props.dailyInvoiceDetails.products);
+    const [hasMoreS, setHasMoreS] = useState(true);
 
-    let initial_values = (start=0,last=numberOfItem,indexing=0) =>{
+    let initial_values = (start=0,lastIndex=numberOfItem,indexing=0) =>{
+
         //alert(JSON.stringify(productToDisplay));
         if(productToDisplay === null || productToDisplay===undefined){
+            setHasMoreS(false);
             return [];
         }
         let indexing1;
-        let opElement = products.slice(start,last);
+        let opElement = products.slice(start,lastIndex);
         let menu1New = opElement.map((product, index) =>{
-            if(product in productToDisplay){
+
                 let receptionist = Object.keys(productToDisplay[product]);
                 let details ="";
                 let totalPrice=0;
                 let totalQuantity = 0;
                 receptionist.forEach((rec) =>{
-                    if(rec in productToDisplay[product]){
                         totalPrice +=parseInt( productToDisplay[product][rec].totalPrice);
                         totalQuantity +=parseInt( productToDisplay[product][rec].totalQuantity);
                         details += rec + ":"+productToDisplay[product][rec].totalQuantity+", ";
-                    }
+
 
                 });
                 return(
@@ -43,16 +45,12 @@ const ProductSold  = (props) => {
                         <td>{details}</td>
                     </tr>
                 )
-            }
-            else{
-                alert(product);
-                return <div></div>;
-            }
-
 
 
         });
-
+        if(productToDisplay.length <= (lastIndex+1)){
+            setHasMoreS(false);
+        }
 
         const arrNew = [...menu1New];
         return arrNew;
@@ -66,13 +64,14 @@ const ProductSold  = (props) => {
 
 
 
-    const [hasMoreS, setHasMoreS] = useState(true);
+
     const [itemToFetch, setItemToFetch] = useState(numberOfItem);
     const [itemToStartOn, setItemToStartOn] = useState(numberOfItem);
     const [items2, setItems2] = useState(initial_values());
 
     let funMenuNew = (dailyUsange = productToDisplay, reset = false) => {
         if(dailyUsange === null || dailyUsange ===undefined ){
+            setHasMoreS(false);
             return [];
         }
         let start;
@@ -87,7 +86,6 @@ const ProductSold  = (props) => {
 
         let lastIndex = (dailyUsange.length < last) ? dailyUsange.length : last;
         if (dailyUsange.length >= lastIndex) {
-            alert("in "+  lastIndex);
             let indexing = start;
             let menuNew = initial_values(start,lastIndex,indexing);
 
@@ -99,7 +97,6 @@ const ProductSold  = (props) => {
             return menuNew;
         } else {
             // this.setState({hasMores:false});
-            alert("out, last In  "+  lastIndex + "dailyUsange.length" +dailyUsange.length);
             setHasMoreS(false);
             return [];
 
@@ -135,6 +132,10 @@ const ProductSold  = (props) => {
             <Row>
 
                 <Col sm="12">
+                    <div className="d-flex justify-content-center color3 mt-4">
+                        <h3 >Daily sold product </h3>
+                    </div>
+
                     <Table responsive hover>
 
                         <StickyContainer>
@@ -177,6 +178,7 @@ const ProductSold  = (props) => {
 
                             <div>
 
+
                                 <div id="scrollableDivForProductSold" className="card fixedDiv square scrollbar-cyan bordered-cyan">
                                     <div className="card-body">
                                         <div className="mt-2">
@@ -185,7 +187,7 @@ const ProductSold  = (props) => {
                                                 dataLength={items2.length}
                                                 next={fetchMoreData}
                                                 hasMore={hasMoreS}
-                                                loader={<h4>Loading...</h4>}
+                                                loader={<span className="fa fa-lg fa-spinner text-warning"><b>loading..</b></span>}
                                                 endMessage={
                                                     <p> no more results </p>
                                                 }

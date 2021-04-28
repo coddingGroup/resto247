@@ -166,6 +166,9 @@ const DailyInvoicesComponent = (props) => {
                     <Row>
 
                         <Col sm="12">
+                            <div className="d-flex justify-content-center bg-warning mt-4">
+                                <h3 >Daily Invoices </h3>
+                            </div>
                             <Table responsive hover>
 
                             <StickyContainer>
@@ -211,15 +214,15 @@ const DailyInvoicesComponent = (props) => {
 
                                 <div>
 
-                                    <div id="scrollableDiv" className="card fixedDiv square scrollbar-cyan bordered-cyan">
+                                    <div id="scrollableDivInDailyInvoice" className="card fixedDiv square scrollbar-cyan bordered-cyan">
                                         <div className="card-body">
                                             <div className="mt-2">
                                                 <InfiniteScroll
-                                                    scrollableTarget={"scrollableDiv"}
+                                                    scrollableTarget={"scrollableDivInDailyInvoice"}
                                                     dataLength={items2.length}
                                                     next={fetchMoreData}
                                                     hasMore={hasMoreS}
-                                                    loader={<h4>Loading...</h4>}
+                                                    loader={<span className="fa fa-lg fa-spinner text-warning"><b>Loading</b></span>}
                                                     endMessage={
                                                         <p> no more results </p>
                                                     }
