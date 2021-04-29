@@ -35,6 +35,8 @@ class ReactDatePicker extends Component {
         this.props.changeDailyInvoices(startDate, endDate);
         this.props.changeDailyDetailsInvoices(startDate, endDate);
         this.props.changeDailyStockUp(startDate, endDate);
+        this.props.changeDailyMiscellaneous(startDate,endDate);
+        this.props.changeDailyResourcesReports(startDate,endDate);
     }
 
     render() {

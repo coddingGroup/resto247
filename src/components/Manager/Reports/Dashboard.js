@@ -8,6 +8,9 @@ import {Table} from "reactstrap";
 import ProductSold from "./ProductSold";
 import DailyInvoicesComponent from "./DailyInvoicesComponent";
 import DailyStockUp from "./DailyStockUp";
+import MainManager from "../Main";
+import DailyMiscellaneousComponent from "./DailyMiscellaneousComponent";
+import DailyResourcesReportsComponent from "./DailyResourcesReportsComponent";
 
 const Dashboard = (props) => {
 
@@ -21,7 +24,12 @@ const Dashboard = (props) => {
                 <div className="col-12 col-md-8 ">
                     <ReactDatePicker changeDailyDetailsInvoices={props.changeDailyDetailsInvoices}
                                      changeDailyStockUp={props.changeDailyStockUp}
-                                     changeDailyInvoices={props.changeDailyInvoices}/>
+                                     changeDailyInvoices={props.changeDailyInvoices}
+                                     changeDailyResourcesReports={props.changeDailyResourcesReports}
+                                     changeDailyMiscellaneous={props.changeDailyMiscellaneous}
+                    />
+
+
                 </div>
             </div>
             <div className="row">
@@ -60,28 +68,7 @@ const Dashboard = (props) => {
 
                 </div>
                 <div className="col">
-                    <h2>
-                        Daily order
-                    </h2>
-                    <Table responsive hover>
-                        <thead>
-                        <tr>
-                            <th> OrdersId</th>
-                            <th> Date</th>
-                            <th> Waiter</th>
-                            <th> Client Name</th>
-                            <th> Total Price</th>
-
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr>
-
-                        </tr>
-                        </tbody>
-
-
-                    </Table>
+                    <DailyMiscellaneousComponent dailyMiscellaneous={props.dailyMiscellaneous}/>
                 </div>
             </div>
             <div className="row">
@@ -93,28 +80,7 @@ const Dashboard = (props) => {
 
                 </div>
                 <div className="col">
-                    <h2>
-                        Daily order
-                    </h2>
-                    <Table responsive hover>
-                        <thead>
-                        <tr>
-                            <th> OrdersId</th>
-                            <th> Date</th>
-                            <th> Waiter</th>
-                            <th> Client Name</th>
-                            <th> Total Price</th>
-
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr>
-
-                        </tr>
-                        </tbody>
-
-
-                    </Table>
+                    <DailyResourcesReportsComponent dailyResourcesReports={props.dailyResourcesReports} />
                 </div>
             </div>
 

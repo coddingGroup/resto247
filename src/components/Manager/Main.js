@@ -66,6 +66,12 @@ const MainManager = (props) => {
                             waiters={props.waiters}
                             dailyInvoiceDetails={props.dailyInvoiceDetails}
                             cart={props.cart}
+
+                            changeDailyResourcesReports={props.changeDailyResourcesReports}
+                            dailyResourcesReports={props.dailyResourcesReports}
+                            changeDailyMiscellaneous={props.changeDailyMiscellaneous}
+                            dailyMiscellaneous={props.dailyMiscellaneous}
+
                             uploadMiscellaneous={props.uploadMiscellaneous}
                             pushInvoice={props.pushInvoice}
                             products={props.products}

@@ -30,7 +30,7 @@ import {
     uploadProduct,
     uploadResource
 } from "../redux/ActionCreators";
-import {changeDailyDetailsInvoices, changeDailyInvoices, changeDailyStockUp} from "../redux/ActionCreator2";
+import {changeDailyDetailsInvoices, changeDailyInvoices, changeDailyStockUp,changeDailyMiscellaneous,changeDailyResourcesReports} from "../redux/ActionCreator2";
 import {actions} from "react-redux-form";
 import {CSSTransition, TransitionGroup} from "react-transition-group";
 import Login from "./Login";
@@ -57,11 +57,15 @@ const mapStateToProps = state => {
         miscellaneous: state.miscellaneous,
         dailyInvoices: state.dailyInvoices,
         dailyInvoiceDetails: state.dailyInvoiceDetails,
-        dailyStockUp: state.dailyStockUp
+        dailyStockUp: state.dailyStockUp,
+        dailyResourcesReports:state.dailyResourcesReports,
+        dailyMiscellaneous: state.dailyMiscellaneous
     }
 }
 
 const mapDispatchToProps = (dispatch) => ({
+    changeDailyResourcesReports: (startDate,endDate) =>dispatch(changeDailyResourcesReports(startDate,endDate)),
+    changeDailyMiscellaneous: (startDate,endDate) => dispatch(changeDailyMiscellaneous(startDate,endDate)),
     changeDailyStockUp: (startDate, endDate) => dispatch(changeDailyStockUp(startDate, endDate)),
     changeDailyDetailsInvoices: (stateDate, endDate) => dispatch(changeDailyDetailsInvoices(stateDate, endDate)),
     changeDailyInvoices: (startDate, endDate) => dispatch(changeDailyInvoices(startDate, endDate)),
@@ -187,16 +191,75 @@ class Main extends Component {
 
 
         };
-        const PrivateRoute = ({component: Component, ...rest}) => (
-            <Route {...rest} render={(props) => (
-                // this.props.auth.isAuthenticated
-                localStorage.getItem('user') != null
-                    ? <Component {...props} />
-                    : <Redirect to={{
+        const PrivateRouteW = ({component: Component, ...rest}) => (
+            <Route {...rest} render={(props) => {
+                let userCollection = JSON.parse(localStorage.getItem('userCollection'));
+                let typeOfUser = userCollection.typeOfUser;
+                if(localStorage.getItem('user') != null){
+                    if(typeOfUser === 'receptionist' ){
+                        return <Component {...props} />
+                    }
+                    else {
+                        return <Redirect to={{
+                            pathname: '/home',
+                            state: {from: props.location}
+                        }}/>
+                    }
+                }
+                else {
+                    return <Redirect to={{
                         pathname: '/home',
                         state: {from: props.location}
                     }}/>
-            )}/>
+                }
+
+
+
+                // return (
+                //     // this.props.auth.isAuthenticated
+                //     localStorage.getItem('user') != null
+                //         ? <Component {...props} />
+                //         : <Redirect to={{
+                //             pathname: '/home',
+                //             state: {from: props.location}
+                //         }}/>
+                // )
+            }}/>
+        );
+        const PrivateRouteM = ({component: Component, ...rest}) => (
+            <Route {...rest} render={(props) => {
+                let userCollection = JSON.parse(localStorage.getItem('userCollection'));
+                let typeOfUser = userCollection.typeOfUser;
+                if(localStorage.getItem('user') != null){
+                    if(typeOfUser === 'stockManager' || typeOfUser === 'manager'){
+                        return <Component {...props} />
+                    }
+                    else {
+                       return <Redirect to={{
+                            pathname: '/home',
+                            state: {from: props.location}
+                        }}/>
+                    }
+                }
+                else {
+                    return <Redirect to={{
+                        pathname: '/home',
+                        state: {from: props.location}
+                    }}/>
+                }
+
+
+
+                // return (
+                //     // this.props.auth.isAuthenticated
+                //     localStorage.getItem('user') != null
+                //         ? <Component {...props} />
+                //         : <Redirect to={{
+                //             pathname: '/home',
+                //             state: {from: props.location}
+                //         }}/>
+                // )
+            }}/>
         );
         return (
             <div>
@@ -222,7 +285,7 @@ class Main extends Component {
                             <Route exact path="/aboutus" component={() => <About leaders={this.props.leaders}/>}/>
                             <Route exact path="/login" component={() => <Login loginUser={this.props.loginUser}
                                                                                googleLogin={this.props.googleLogin}/>}/>
-                            <PrivateRoute exact path="/witer" component={() => <WiterHome products={this.props.products}
+                            <PrivateRouteW exact path="/witer" component={() => <WiterHome products={this.props.products}
                                                                                           addToCart={this.props.addToCart}
                                                                                           removeToCart={this.props.removeToCart}
                                                                                           waiters={this.props.waiters}
@@ -231,7 +294,7 @@ class Main extends Component {
                                                                                           pushInvoice={this.props.pushInvoice}
                             />}/>
 
-                            <PrivateRoute path="/management"
+                            <PrivateRouteM path="/management"
                                           component={() => <MainManager products={this.props.products}
 
 
@@ -242,6 +305,10 @@ class Main extends Component {
                                                                         pushInvoice={this.props.pushInvoice}
                                                                         dailyStockUp={this.props.dailyStockUp}
                                                                         changeDailyStockUp={this.props.changeDailyStockUp}
+                                                                        changeDailyResourcesReports={this.props.changeDailyResourcesReports}
+                                                                        dailyResourcesReports={this.props.dailyResourcesReports}
+                                                                        changeDailyMiscellaneous={this.props.changeDailyMiscellaneous}
+                                                                        dailyMiscellaneous={this.props.dailyMiscellaneous}
 
 
                                                                         uploadProduct={this.props.uploadProduct}

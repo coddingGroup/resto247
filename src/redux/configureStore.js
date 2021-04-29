@@ -13,6 +13,8 @@ import {Behaviors} from "./behaviors";
 import {Miscellaneous} from "./collections/miscellaneous";
 import {Invoices} from "./collections/invoices";
 import {Cart} from "./Cart";
+import {DailyMiscellaneous} from "./others/dailyMiscellaneous";
+import {DailyResourcesReports} from "./others/dailyResourcesReports";
 import {DailyStockUp} from "./others/dailyStockUp";
 import {DailyInvoiceDetails} from "./others/dailyInvoiceDetails";
 import {DailyInvoices} from "./others/dailyInvoices";
@@ -34,6 +36,8 @@ export const ConfigureStore = () => {
             miscellaneous: Miscellaneous,
             invoices: Invoices,
             behaviors: Behaviors,
+            dailyMiscellaneous:DailyMiscellaneous,
+            dailyResourcesReports:DailyResourcesReports,
             dailyInvoices: DailyInvoices,
             dailyInvoiceDetails: DailyInvoiceDetails,
             outOfStockProducts: OutOfStockProducts,

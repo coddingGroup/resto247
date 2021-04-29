@@ -119,3 +119,59 @@ export const setProductsInDailyInvoiceDetails = (products) => ({
     type: ActionTypes.SET_PRODUCTS_IN_DAILY_INVOICE_DETAILS,
     payload: products
 });
+
+
+
+
+
+export const changeDailyResourcesReports = (startDate, endDate) => dispatch => {
+    firestore.collection('resourcesReports').where('createdAt', '>=', startDate).where('createdAt', '<=', endDate).get()
+        .then(snapshot => {
+            let dailyResourcesReport = [];
+            snapshot.forEach(doc => {
+                let id = doc.id;
+                let data = doc.data();
+                dailyResourcesReport.push({id, ...data});
+            });
+            return dailyResourcesReport;
+        }).then((dailyResourcesReport) => {
+        dispatch(setDailyResourcesReport(dailyResourcesReport));
+    })
+        .catch(error => {
+
+            console.log('error occur ' + error.message);
+            return null;
+        })
+
+};
+export const setDailyResourcesReport = (dailyResourcesReport) => ({
+    type: ActionTypes.CHANGE_DAILY_RESOURCES_REPORTS,
+    payload: dailyResourcesReport
+});
+
+
+
+export const changeDailyMiscellaneous = (startDate, endDate) => dispatch => {
+    firestore.collection('miscellaneous').where('createdAt', '>=', startDate).where('createdAt', '<=', endDate).get()
+        .then(snapshot => {
+            let dailyMiscellaneous = [];
+            snapshot.forEach(doc => {
+                let id = doc.id;
+                let data = doc.data();
+                dailyMiscellaneous.push({id, ...data});
+            });
+            return dailyMiscellaneous;
+        }).then((dailyMiscellaneous) => {
+        dispatch(setDailyMiscellaneous(dailyMiscellaneous));
+    })
+        .catch(error => {
+
+            console.log('error occur ' + error.message);
+            return null;
+        })
+
+};
+export const setDailyMiscellaneous = (dailyMiscellaneous) => ({
+    type: ActionTypes.CHANGE_DAILY_MISCELLANEOUS,
+    payload: dailyMiscellaneous
+});

@@ -477,9 +477,9 @@ export const signUp = (values, typeOfUser) => (dispatch) => {
                         .then(doc => {
                             if (doc.exists) {
                                 const data = doc.data();
-                                // const id = doc.id;
+                                const id = doc.id;
                                 // let userCollection = {id, ...data};
-                                dispatch(setUser(user, data));
+                                dispatch(setUser(user, {id,...data}));
                             } else {
                                 // doc.data() will be undefined in this case
                                 console.log("No such document!");
