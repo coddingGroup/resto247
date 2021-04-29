@@ -39,6 +39,33 @@ const TableItems = React.forwardRef(
         if (props.cart.items.length === 0) {
             return <tr></tr>
         } else {
+            let waitersInOptions = props.waiters.map(oneWaiter =>{
+                return(
+                    <option>
+                        {oneWaiter.firstName}
+                    </option>
+                )
+            });
+            let handleChange = (event) =>{
+                let name = event.target.name;
+                let value = event.target.value;
+                if(name==="waiterName"){
+                    props.setWaiterName(value);
+                }
+                else if(name==="paymentStatus"){
+                    let isChecked = event.target.checked;
+                    if(isChecked){
+                        props.setPaymentStatus('paid');
+                    }
+                    else {
+                        props.setPaymentStatus('notPaid');
+                    }
+                }
+                else if(name==="clientName"){
+                    props.setClientName(value);
+                }
+
+            }
 
 
             let keys = Object.keys(props.cart.items);
@@ -96,14 +123,14 @@ const TableItems = React.forwardRef(
                                     <Row className="form-group">
                                         <Col><Label>Client Name</Label></Col>
                                         <Col>
-                                            <Input name='clientName' value={props.clientName} type="text"/>
+                                            <Input name='clientName' value={props.clientName} onChange={handleChange} type="text"/>
 
                                         </Col>
                                     </Row>
                                     <Row>
                                         <Col>Order Paid</Col>
                                         <Col>
-                                            <Input name="paymentStatus" value={props.paymentStatus} type="checkBox"/>
+                                            <Input name="paymentStatus" value={props.paymentStatus} onChange={handleChange} type="checkBox"/>
                                         </Col>
 
                                     </Row>
@@ -114,16 +141,8 @@ const TableItems = React.forwardRef(
                                             <Label> <b>waiter</b> </Label>
                                         </Col>
                                         <Col>
-                                            <select>
-                                                <option>
-                                                    Kilungi
-                                                </option>
-                                                <option>
-                                                    Aime
-                                                </option>
-                                                <option>
-                                                    Paterne
-                                                </option>
+                                            <select name="waiterName" onChange={handleChange} value={props.waiterName}>
+                                                {waitersInOptions}
                                             </select>
                                         </Col>
 
@@ -143,14 +162,15 @@ const TableItems = React.forwardRef(
         }
     }
 );
-let TableAddedCarts = ({cart, removeToCart, pushInvoice}) => {
+let TableAddedCarts = ({cart, removeToCart, pushInvoice,waiters}) => {
+    const [userCollection] = useState(JSON.parse(localStorage.getItem("userCollection")));
     const [date, setDate] = useState('');
     const [totalQuantity] = useState(0);
     const [totalPrice] = useState(0);
     //const [order,setOrder] = useState(null);
-    const [waiterName, setWaiterName] = useState('paterne');
+    const [waiterName, setWaiterName] = useState(waiters[0] === undefined?'':waiters[0].firstName);
     const [clientName, setClientName] = useState('client');
-    const [paymentStatus, setPaymentStatus] = useState('paid');
+    const [paymentStatus, setPaymentStatus] = useState("notPaid");
     const [receptionistName] = useState('aime');
     const componentRef = useRef();
     const handlePrint = useReactToPrint({
@@ -172,7 +192,7 @@ let TableAddedCarts = ({cart, removeToCart, pushInvoice}) => {
             totalQuantity = totalQuantity + parseInt(cart.items[key].quantity);
             totalPrice = totalPrice + (cart.items[key].price * cart.items[key].quantity);
         })
-        pushInvoice(receptionistName, waiterName, clientName, paymentStatus, totalPrice, order);
+        pushInvoice(userCollection.firstName, waiterName, clientName, paymentStatus, totalPrice, order);
 
         let orderDate = new Date();
         let hour = String(orderDate.getHours()).padStart(2, '0');
@@ -189,6 +209,7 @@ let TableAddedCarts = ({cart, removeToCart, pushInvoice}) => {
     return (
         <div>
             <TableItems date={date} cart={cart}
+                        waiters={waiters}
                         totalPrice={totalPrice} totalQuantity={totalQuantity} receptionistName={receptionistName}
                         waiterName={waiterName} setWaiterName={setWaiterName}
                         clientName={clientName} setClientName={setClientName}

@@ -222,6 +222,7 @@ const TabsMenu = (props) => {
                                     </h3>
                                 </CardTitle>
                                 <CardBody> <TableAddedCarts pushInvoice={props.pushInvoice}
+                                                            waiters={props.waiters.waiters}
                                                             removeToCart={props.removeToCart} cart={props.cart}/>
                                 </CardBody>
                             </Card>
