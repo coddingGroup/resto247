@@ -72,13 +72,15 @@ export const changeDailyDetailsInvoices = (startDate, endDate) => dispatch => {
                     dailyInvoicesDetails[productName][receptionistName] = {};
                     dailyInvoicesDetails[productName][receptionistName] = {
                         totalPrice: parseInt(data.price),
-                        totalQuantity: parseInt(data.quantity)
+                        totalQuantity: parseInt(data.quantity),
+                        id:id
                     };
                 } else if (dailyInvoicesDetails[productName][receptionistName] === null || dailyInvoicesDetails[productName][receptionistName] === undefined) {
                     dailyInvoicesDetails[productName][receptionistName] = {};
                     dailyInvoicesDetails[productName][receptionistName] = {
                         totalPrice: parseInt(data.price),
-                        totalQuantity: parseInt(data.quantity)
+                        totalQuantity: parseInt(data.quantity),
+                        id
                     };
                 } else {
                     console.log("4 step of else");
@@ -87,7 +89,7 @@ export const changeDailyDetailsInvoices = (startDate, endDate) => dispatch => {
                     let quantity = dailyInvoicesDetails[productName][receptionistName].totalQuantity;
                     price += (parseInt(data.price) * parseInt(data.quantity));
                     quantity += parseInt(data.quantity);
-                    dailyInvoicesDetails[productName][receptionistName] = {totalPrice: price, totalQuantity: quantity}
+                    dailyInvoicesDetails[productName][receptionistName] = {totalPrice: price, totalQuantity: quantity,id}
                 }
 
 
@@ -96,9 +98,7 @@ export const changeDailyDetailsInvoices = (startDate, endDate) => dispatch => {
 
             return dailyInvoicesDetails;
         }).then((dailyInvoicesDetails) => {
-        alert(JSON.stringify(dailyInvoicesDetails));
         let products = Object.keys(dailyInvoicesDetails);
-        alert(JSON.stringify(products));
         //dispatch(setProductsInDailyInvoiceDetails(products));
         console.log("5 step of if");
         dispatch(setDailyInvoicesDetails(dailyInvoicesDetails, products));

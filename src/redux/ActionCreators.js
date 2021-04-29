@@ -493,8 +493,9 @@ export const signUp = (values, typeOfUser) => (dispatch) => {
                 })
         })
         .catch((error) => {
-            var errorCode = error.code;
-            var errorMessage = error.message;
+            let errorCode = error.code;
+            let errorMessage = error.message;
+            console.log(errorCode + errorMessage);
 
         });
 }
@@ -659,6 +660,9 @@ export const postFeedback = (feedback) => (dispatch) => {
 
     return firestore.collection('feedback').add(feedback)
         .then(response => {
+            dispatch({
+                type:ActionTypes.FEEDBACK_POSTED
+            });
             console.log('Feedback', response);
             console.log('Thank you for your feedback!');
         })
@@ -761,6 +765,7 @@ export const logoutUser = () => (dispatch) => {
     auth.signOut().then(() => {
         // Sign-out successful.
     }).catch((error) => {
+        console.log('error' + error);
         // An error happened.
     });
     localStorage.removeItem('user');
@@ -1082,14 +1087,14 @@ export const fetchRecommanded = () => (dispatch) => {
                 if (response.ok) {
                     return response;
                 } else {
-                    var error = new Error('Error ' + response.status + ': ' + response.statusText);
+                    let error = new Error('Error ' + response.status + ': ' + response.statusText);
                     error.response = response;
                     throw error;
                 }
             },
             error => {
-                var errmess = new Error(error.message);
-                throw errmess;
+                let err = new Error(error.message);
+                throw err;
             })
         .then(response => response.json())
         .then(recommanded => dispatch(addRecommanded(recommanded)))
@@ -1119,14 +1124,10 @@ export const fetchHotdeals = () => (dispatch) => {
                 if (response.ok) {
                     return response;
                 } else {
-                    var error = new Error('Error ' + response.status + ': ' + response.statusText);
+                    let error = new Error('Error ' + response.status + ': ' + response.statusText);
                     error.response = response;
                     throw error;
                 }
-            },
-            error => {
-                var errmess = new Error(error.message);
-                throw errmess;
             })
         .then(response => response.json())
         .then(hotdeals => dispatch(addHotdeals(hotdeals)))
@@ -1198,22 +1199,26 @@ export const addFeedback = (feedback) => ({
 export const fetchOutOfStockProducts = () => (dispatch) => {
     dispatch(OutOfStockLoading(true));
 
-    return fetch(baseUrl + 'outOfStockProducts').then(response => {
-            if (response.ok) {
-                return response;
-            } else {
-                var error = new Error('Error ' + response.status + ': ' + response.statusText);
-                error.response = response;
-                throw error;
+    return firestore.collection('resources').where('stockQuantity', '==', 0).get()
+        .then(snapshot => {
+            let outOfStock = [];
+            snapshot.forEach(doc => {
+                let id = doc.id;
+                let data = doc.data();
+                outOfStock.push({id, ...data});
+            });
+            return outOfStock;
+        })
+        .then(
+            outOfStock => {
+                dispatch(addOutOfStockProducts(outOfStock))
             }
-        },
-        error => {
-            var err = new Error(error.message);
-            throw err;
-        }
-    ).then(response => response.json())
-        .then(dishes => dispatch(addOutOfStockProducts(dishes)))
-        .catch(error => dispatch(OutOfStockProductsFailed(error.message)));
+        )
+        .catch(error => {
+            dispatch(OutOfStockProductsFailed(error.message));
+            console.log(error.message);
+        });
+
 
 };
 export const OutOfStockLoading = () => ({

@@ -211,6 +211,7 @@ class Main extends Component {
         return (
             <div>
                 <Navigation mainNavItems={this.state.mainNavItems}
+                            products={this.props.products}
                             auth={this.props.auth}
                             loginUser={this.props.loginUser}
                             logoutUser={this.props.logoutUser}
@@ -248,7 +249,6 @@ class Main extends Component {
                                                                         removeToCart={this.props.removeToCart}
                                                                         waiters={this.props.waiters}
                                                                         cart={this.props.cart}
-                                                                        uploadMiscellaneous={this.props.uploadMiscellaneous}
                                                                         pushInvoice={this.props.pushInvoice}
                                                                         dailyStockUp={this.props.dailyStockUp}
                                                                         changeDailyStockUp={this.props.changeDailyStockUp}

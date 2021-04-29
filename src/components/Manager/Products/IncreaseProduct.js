@@ -22,7 +22,7 @@ const IncreaseProduct = ({
                 return result;
             }, []
         );
-        if (txt == '') {
+        if (txt === '') {
             setSearchOutput([]);
         } else {
             setSearchOutput(output);
@@ -30,7 +30,7 @@ const IncreaseProduct = ({
 
     }
     let outOfSt;
-    if (opName !== "dailyUsagee") {
+    if (opName === "resources") {
         outOfSt = <OutOfStock allProducts={outOfStockProducts.outOfStockProducts}
                               isLoading={outOfStockProducts.isLoading}
                               behaviors={behaviors}

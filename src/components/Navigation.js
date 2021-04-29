@@ -23,9 +23,28 @@ import {
     NavItem,
     UncontrolledDropdown
 } from 'reactstrap';
+import SearchOutputDisplay from "./Manager/SearchOutputDisplay";
 
 
 let Navigation = (props) => {
+    const [text, setText] = useState('');
+    const [searchOutput, setSearchOutput] = useState([]);
+    const searchText = (txt = text) => {
+        let output = props.products.products.reduce(
+            (result, oneProduct) => {
+                if (oneProduct.name.toLowerCase().includes(txt.toLowerCase()) || oneProduct.category.toLowerCase().includes(txt.toLowerCase())) {
+                    result = [...result, oneProduct];
+                }
+                return result;
+            }, []
+        );
+        if (txt === '') {
+            setSearchOutput([]);
+        } else {
+            setSearchOutput(output);
+        }
+
+    }
 
     const [isOpen, setIsOpen] = useState(false);
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -80,7 +99,7 @@ let Navigation = (props) => {
     return (
         <div className="container-fluid">
             <Navbar color="light" light expand="md">
-                <NavbarBrand href="/"><img src="http://localhost:3000/logo.jpg" width="40px"/> 24/7 Resto</NavbarBrand>
+                <NavbarBrand href="/"><img src="http://localhost:3000/logo.jpg" width="40px" alt="logo"/> 24/7 Resto</NavbarBrand>
                 <NavbarToggler onClick={toggle}/>
                 <Collapse isOpen={isOpen} navbar>
                     <Nav className="mr-auto" navbar>
@@ -116,7 +135,7 @@ let Navigation = (props) => {
                         </UncontrolledDropdown>
 
                     </Nav>
-                    <span className="mr-5"> <Search searchbar="searchbar"/></span>
+                    <span className="mr-5"> <Search searchText={searchText}  setText={setText} text={text} searchbar="searchbar"/></span>
                 </Collapse>
 
 
@@ -161,6 +180,7 @@ let Navigation = (props) => {
                         <span class="fa fa-sign-in"></span> Login
                     </a> */}
             </Navbar>
+            <SearchOutputDisplay output={searchOutput}/>
             <Modal isOpen={isModalOpen} toggle={toggleModal}>
                 <ModalHeader toggle={toggleModal}>Login</ModalHeader>
                 <ModalBody>
