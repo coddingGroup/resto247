@@ -30,7 +30,9 @@ import {
     uploadProduct,
     uploadResource
 } from "../redux/ActionCreators";
-import {changeDailyDetailsInvoices, changeDailyInvoices, changeDailyStockUp,changeDailyMiscellaneous,changeDailyResourcesReports} from "../redux/ActionCreator2";
+import {changeDailyDetailsInvoices, changeDailyInvoices, changeDailyStockUp,changeDailyMiscellaneous,
+    changeNonPaidInvoices,
+    changeDailyResourcesReports} from "../redux/ActionCreator2";
 import {actions} from "react-redux-form";
 import {CSSTransition, TransitionGroup} from "react-transition-group";
 import Login from "./Login";
@@ -59,11 +61,13 @@ const mapStateToProps = state => {
         dailyInvoiceDetails: state.dailyInvoiceDetails,
         dailyStockUp: state.dailyStockUp,
         dailyResourcesReports:state.dailyResourcesReports,
-        dailyMiscellaneous: state.dailyMiscellaneous
+        dailyMiscellaneous: state.dailyMiscellaneous,
+        nonPaidInvoices: state.nonPaidInvoices
     }
 }
 
 const mapDispatchToProps = (dispatch) => ({
+    changeNonPaidInvoices:(receptionistName) => dispatch(changeNonPaidInvoices(receptionistName)),
     changeDailyResourcesReports: (startDate,endDate) =>dispatch(changeDailyResourcesReports(startDate,endDate)),
     changeDailyMiscellaneous: (startDate,endDate) => dispatch(changeDailyMiscellaneous(startDate,endDate)),
     changeDailyStockUp: (startDate, endDate) => dispatch(changeDailyStockUp(startDate, endDate)),
@@ -292,6 +296,8 @@ class Main extends Component {
                                                                                           cart={this.props.cart}
                                                                                           uploadMiscellaneous={this.props.uploadMiscellaneous}
                                                                                           pushInvoice={this.props.pushInvoice}
+                                                                                           nonPaidInvoices={this.props.nonPaidInvoices}
+                                                                                           changeNonPaidInvoices={this.props.changeNonPaidInvoices}
                             />}/>
 
                             <PrivateRouteM path="/management"

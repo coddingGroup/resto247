@@ -122,17 +122,17 @@ let Navigation = (props) => {
                                 <span className="fa fa-address-card fa-lg"> Contact Us </span>
                             </NavLink>
                         </NavItem>
-                        <UncontrolledDropdown nav inNavbar>
-                            <DropdownToggle nav caret>
-                                Options
-                            </DropdownToggle>
-                            <DropdownMenu right>
-                                <DropdownItem> Option 1</DropdownItem>
-                                <DropdownItem> Option 2</DropdownItem>
-                                <DropdownItem divider/>
-                                <DropdownItem> Reset </DropdownItem>
-                            </DropdownMenu>
-                        </UncontrolledDropdown>
+                        {/*<UncontrolledDropdown nav inNavbar>*/}
+                        {/*    <DropdownToggle nav caret>*/}
+                        {/*        Options*/}
+                        {/*    </DropdownToggle>*/}
+                        {/*    <DropdownMenu right>*/}
+                        {/*        <DropdownItem> Option 1</DropdownItem>*/}
+                        {/*        <DropdownItem> Option 2</DropdownItem>*/}
+                        {/*        <DropdownItem divider/>*/}
+                        {/*        <DropdownItem> Reset </DropdownItem>*/}
+                        {/*    </DropdownMenu>*/}
+                        {/*</UncontrolledDropdown>*/}
 
                     </Nav>
                     <span className="mr-5"> <Search searchText={searchText}  setText={setText} text={text} searchbar="searchbar"/></span>

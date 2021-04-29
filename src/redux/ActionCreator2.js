@@ -53,6 +53,38 @@ export const setStockUp = (dailySockUp) => ({
 });
 
 
+
+export const changeNonPaidInvoices = (receptionistName) => dispatch => {
+
+    firestore.collection('invoices').where('paymentStatus','==','notPaid').where('receptionistName','==',receptionistName).get()
+        .then(snapshot =>{
+            let receptionistInvoices = [];
+            snapshot.forEach(doc => {
+                let id = doc.id;
+                let data = doc.data();
+                receptionistInvoices.push({id, ...data});
+            });
+            return receptionistInvoices;
+        }).then(receptionistInvoices =>{
+        dispatch(addNOnPaidInvoices(receptionistInvoices));
+    }).catch(error =>{
+        dispatch(nonPaidInvoicesFailed(error.message));
+        console.log('error error with message ' + error.message);
+    });
+
+};
+export const addNOnPaidInvoices = (receptionistInvoices) => ({
+    type: ActionTypes.CHANGE_NON_PAID_INVOICES,
+    payload: receptionistInvoices
+});
+export const nonPaidInvoicesFailed=(errM)=>({
+    type: ActionTypes.NON_PAID_INVOICES_FAILED,
+    payload: errM
+})
+
+
+
+
 export const changeDailyDetailsInvoices = (startDate, endDate) => dispatch => {
     console.log("fist step");
     firestore.collection('invoiceDetails').where('createdAt', '>=', startDate).where('createdAt', '<=', endDate).get()

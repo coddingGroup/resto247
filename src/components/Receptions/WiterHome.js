@@ -13,6 +13,8 @@ const WiterHome = (props) => {
                     <TabsMenu cart={props.cart} addToCart={props.addToCart} removeToCart={props.removeToCart}
                               pushInvoice={props.pushInvoice}
                               waiters={props.waiters}
+                              nonPaidInvoices={props.nonPaidInvoices}
+                              changeNonPaidInvoices={props.changeNonPaidInvoices}
                               products={props.products}/>
                 </div>
 

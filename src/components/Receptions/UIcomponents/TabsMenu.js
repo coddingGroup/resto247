@@ -23,9 +23,11 @@ import {Sticky, StickyContainer} from 'react-sticky'
 
 import ScrollView from './ScrollView';
 import RenderCard3 from "../../homepagecomponents/RenderCard3";
+import NonPaidInvoicesComponent from "./NonPaidInvoicesComponent";
 
 let numberOfItem = 12;
 const TabsMenu = (props) => {
+
 
 
     let opElement = props.products.products.slice(0, numberOfItem);
@@ -47,7 +49,7 @@ const TabsMenu = (props) => {
     ];
 
 
-    const [activeTab, setActiveTab] = useState('1');
+    const [activeTab, setActiveTab] = useState(localStorage.getItem('activeTab1')===null? '1': localStorage.getItem('activeTab1'));
     const [productToDisplay, setProductToDisplay] = useState(props.products.products);
     const [category, setCategory] = useState('All');
 
@@ -57,6 +59,18 @@ const TabsMenu = (props) => {
     const [itemToStartOn, setItemToStartOn] = useState(numberOfItem);
     const [items2, setItems2] = useState(arr);
 
+
+
+
+    const toggle = tab => {
+        if (activeTab !== tab) setActiveTab(tab);
+        localStorage.setItem('activeTab1',tab);
+    }
+
+
+    let handleReportsClick = () =>{
+        props.changeNonPaidInvoices(JSON.parse(localStorage.getItem('userCollection')).firstName);
+    }
     let keysToUse = props.products.products.reduce(
         (keysToUse, pr) => {
             if (!keysToUse.includes(pr.category)) {
@@ -137,9 +151,7 @@ const TabsMenu = (props) => {
     }
 
 
-    const toggle = tab => {
-        if (activeTab !== tab) setActiveTab(tab);
-    }
+
 
 
     return (
@@ -162,7 +174,8 @@ const TabsMenu = (props) => {
                             toggle('2');
                         }}
                     >
-                        Reports
+                        <span onClick={handleReportsClick}>Reports</span>
+
                     </NavLink>
                 </NavItem>
             </Nav>
@@ -238,21 +251,8 @@ const TabsMenu = (props) => {
                 </TabPane>
                 <TabPane tabId="2">
                     <Row>
-                        <Col sm="6">
-                            <Card body>
-                                <CardTitle>Special Title Treatment</CardTitle>
-                                <CardText>With supporting text below as a natural lead-in to additional
-                                    content.</CardText>
-                                <Button>Go somewhere</Button>
-                            </Card>
-                        </Col>
-                        <Col sm="6">
-                            <Card body>
-                                <CardTitle>Special Title Treatment</CardTitle>
-                                <CardText>With supporting text below as a natural lead-in to additional
-                                    content.</CardText>
-                                <Button>Go somewhere</Button>
-                            </Card>
+                        <Col>
+                            <NonPaidInvoicesComponent changeNonPaidInvoices={props.changeNonPaidInvoices} nonPaidInvoices={props.nonPaidInvoices} />
                         </Col>
                     </Row>
                 </TabPane>
