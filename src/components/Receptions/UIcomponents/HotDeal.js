@@ -1,16 +1,7 @@
 import '../../../css/Some.css'
 import React, {useState} from 'react';
-import {
-    Carousel,
-    CarouselItem,
-    CarouselControl,
-    CarouselIndicators,
-    CarouselCaption,
-    Button
-} from 'reactstrap';
-import {ITEMS} from '../../../shared/hotDealData';
+import {Button, Carousel, CarouselCaption, CarouselControl, CarouselIndicators, CarouselItem} from 'reactstrap';
 import {Loading} from "../../LoadingComponent";
-import {baseUrl} from "../../../shared/baseUrl";
 
 var HotDeal = (props) => {
     const [activeIndex, setActiveIndex] = useState(0);

@@ -1,11 +1,9 @@
 import React, {useState} from 'react';
-import {TabContent, TabPane, Nav, NavItem, NavLink, Card, Button, CardTitle, CardText, Row, Col} from 'reactstrap';
+import {Nav, NavItem, NavLink, Row, TabContent, TabPane} from 'reactstrap';
 import classnames from 'classnames';
-import {ITEMS} from '../../shared/ProductsCategories'
 import FlippingCard from "./FlippingCard";
 import {Loading} from "../LoadingComponent";
 import RenderCard3 from "../homepagecomponents/RenderCard3";
-import IncreaseProduct from "./Products/IncreaseProduct";
 
 
 const SearchFilterInM = (props) => {

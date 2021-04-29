@@ -1,14 +1,15 @@
 import React from 'react';
-import {Card, CardImg, CardImgOverlay, CardTitle, Breadcrumb, BreadcrumbItem} from 'reactstrap';
+import {Breadcrumb, BreadcrumbItem, Card, CardImg, CardImgOverlay, CardTitle} from 'reactstrap';
 import {Link} from "react-router-dom";
 import {Loading} from "./LoadingComponent";
-import {baseUrl} from "../shared/baseUrl";
+import {setImage} from "../functions/setImage";
 
 function RenderMenuItem({dish, onClick}) {
+    setImage(dish.image);
     return (
         <Card>
             <Link to={`/menu/${dish.id}`}>
-                <CardImg width="100%" src={dish.image} alt={dish.name}/>
+                <CardImg width="100%" className={dish.image} src="" alt={dish.name}/>
                 <CardImgOverlay>
                     <CardTitle>{dish.name}</CardTitle>
                 </CardImgOverlay>

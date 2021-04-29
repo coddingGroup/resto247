@@ -1,11 +1,11 @@
 import * as ActionTypes from './ActionTypes';
 
 export const favorites = (state = {
-        isLoading: true,
-        errMess: null,
-        favorites: null
-    }, action) => {
-    switch(action.type) {
+    isLoading: true,
+    errMess: null,
+    favorites: null
+}, action) => {
+    switch (action.type) {
         case ActionTypes.ADD_FAVORITES:
             return {...state, isLoading: false, errMess: null, favorites: action.payload};
 

@@ -2,7 +2,7 @@ import * as ActionTypes from './ActionTypes';
 
 export const Behaviors = (state = {
     flippingCardSaveButton: 'enable',
-    other:''
+    other: ''
 }, action) => {
     switch (action.type) {
         case ActionTypes.FLIPPING_CARD_SAVE_ENABLE:

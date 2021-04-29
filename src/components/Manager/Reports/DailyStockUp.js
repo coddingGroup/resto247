@@ -1,52 +1,36 @@
-import {Col, Row, Table,} from "reactstrap";
+import {Col, Row, Table} from "reactstrap";
 import {Sticky, StickyContainer} from "react-sticky";
 import {useState} from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
 
 let numberOfItem = 12;
-const ProductSold = (props) => {
-    const [productToDisplay, setProductToDisplay] = useState(props.dailyInvoiceDetails.dailyInvoiceDetails);
-    const [products, setProducts] = useState(props.dailyInvoiceDetails.products);
-    const [hasMoreS, setHasMoreS] = useState(true);
+const DailyStockUp = (props) => {
+    const [productToDisplay, setProductToDisplay] = useState(props.dailyStockUp.dailyStockUp);
 
-    let initial_values = (start = 0, lastIndex = numberOfItem, indexing = 0) => {
-
-        //alert(JSON.stringify(productToDisplay));
+    let initial_values = (start = 0, endIndex = numberOfItem, indexing = 0) => {
         if (productToDisplay === null || productToDisplay === undefined) {
-            setHasMoreS(false);
+            console.log("dailyStockUp is undefined or null");
             return [];
         }
         let indexing1;
-        let opElement = products.slice(start, lastIndex);
-        let menu1New = opElement.map((product, index) => {
 
-            let receptionist = Object.keys(productToDisplay[product]);
-            let details = "";
-            let totalPrice = 0;
-            let totalQuantity = 0;
-            receptionist.forEach((rec) => {
-                totalPrice += parseInt(productToDisplay[product][rec].totalPrice);
-                totalQuantity += parseInt(productToDisplay[product][rec].totalQuantity);
-                details += rec + ":" + productToDisplay[product][rec].totalQuantity + ", ";
-
-
-            });
+        let opElement1New = productToDisplay.slice(start, endIndex);
+        let menu1New = opElement1New.map((oneStockUp, index) => {
+            let totalPrice = parseInt(oneStockUp.quantity) * parseInt(oneStockUp.unitPrice);
             return (
-
-                <tr>
+                <tr key={oneStockUp.id}>
                     <th> {indexing === 0 ? (index + 1) : (++indexing1)}</th>
-                    <td>{product}</td>
-                    <td>{totalQuantity}</td>
+                    <td>{oneStockUp.resourceName}</td>
+                    <td>{oneStockUp.quantity}</td>
+                    <td> {oneStockUp.unitPrice}</td>
                     <td>{totalPrice}</td>
-                    <td>{details}</td>
+                    <td> {oneStockUp.from}</td>
+                    <td> {oneStockUp.newStockQuantity} </td>
+                    <td> --</td>
                 </tr>
             )
-
-
         });
-        if (productToDisplay.length <= (lastIndex + 1)) {
-            setHasMoreS(false);
-        }
+
 
         const arrNew = [...menu1New];
         return arrNew;
@@ -54,19 +38,12 @@ const ProductSold = (props) => {
 
 
     const [activeTab, setActiveTab] = useState('1');
-
-    const [category, setCategory] = useState('All');
-
-
+    const [hasMoreS, setHasMoreS] = useState(true);
     const [itemToFetch, setItemToFetch] = useState(numberOfItem);
     const [itemToStartOn, setItemToStartOn] = useState(numberOfItem);
     const [items2, setItems2] = useState(initial_values());
 
     let funMenuNew = (dailyUsange = productToDisplay, reset = false) => {
-        if (dailyUsange === null || dailyUsange === undefined) {
-            setHasMoreS(false);
-            return [];
-        }
         let start;
         if (!reset) {
             start = itemToStartOn;
@@ -80,9 +57,14 @@ const ProductSold = (props) => {
         let lastIndex = (dailyUsange.length < last) ? dailyUsange.length : last;
         if (dailyUsange.length >= lastIndex) {
             let indexing = start;
-            let menuNew = initial_values(start, lastIndex, indexing);
-
+            // this.setState({
+            //     itemToStartOn:lastIndex
+            // }
+            //
+            //
+            // )
             setItemToStartOn(lastIndex);
+            let menuNew = initial_values(start, lastIndex, indexing);
             if (dailyUsange.length === lastIndex) {
                 // this.setState({hasMoreS: false});
                 setHasMoreS(false);
@@ -125,10 +107,9 @@ const ProductSold = (props) => {
             <Row>
 
                 <Col sm="12">
-                    <div className="d-flex justify-content-center color3 mt-4">
-                        <h3>Daily sold product </h3>
+                    <div className="d-flex justify-content-center bg-warning mt-4">
+                        <h3>Daily Stock Up </h3>
                     </div>
-
                     <Table responsive hover>
 
                         <StickyContainer>
@@ -155,11 +136,14 @@ const ProductSold = (props) => {
 
                                     <thead>
                                     <tr>
-                                        <th>Id</th>
-                                        <th>Product Name</th>
-                                        <th>Total Quantity</th>
-                                        <th>Total Price</th>
-                                        <th>Details</th>
+                                        <th> Id</th>
+                                        <th>Resource name</th>
+                                        <th>Quantity</th>
+                                        <th> Unit price</th>
+                                        <th>Total price</th>
+                                        <th> From</th>
+                                        <th> Stock comes</th>
+                                        <th> Created At</th>
 
                                     </tr>
                                     </thead>
@@ -171,18 +155,17 @@ const ProductSold = (props) => {
 
                             <div>
 
-
-                                <div id="scrollableDivForProductSold"
+                                <div id="scrollableDivInDailyStockUp"
                                      className="card fixedDiv square scrollbar-cyan bordered-cyan">
                                     <div className="card-body">
                                         <div className="mt-2">
                                             <InfiniteScroll
-                                                scrollableTarget={"scrollableDivForProductSold"}
+                                                scrollableTarget={"scrollableDivInDailyStockUp"}
                                                 dataLength={items2.length}
                                                 next={fetchMoreData}
                                                 hasMore={hasMoreS}
                                                 loader={<span
-                                                    className="fa fa-lg fa-spinner text-warning"><b>loading..</b></span>}
+                                                    className="fa fa-lg fa-spinner text-warning"><b>Loading</b></span>}
                                                 endMessage={
                                                     <p> no more results </p>
                                                 }
@@ -192,14 +175,16 @@ const ProductSold = (props) => {
                                                     <Table>
                                                         <thead>
                                                         <tr>
-                                                            <th>Id</th>
-                                                            <th>Product Name</th>
-                                                            <th>Total Quantity</th>
-                                                            <th>Total Price</th>
-                                                            <th>Details</th>
+                                                            <th> Id</th>
+                                                            <th>Resource name</th>
+                                                            <th>Quantity</th>
+                                                            <th> Unit price</th>
+                                                            <th>Total price</th>
+                                                            <th> From</th>
+                                                            <th> Stock comes</th>
+                                                            <th> Created At</th>
 
                                                         </tr>
-
                                                         </thead>
                                                         <tbody>
                                                         {
@@ -226,15 +211,11 @@ const ProductSold = (props) => {
                     </Table>
 
                 </Col>
-            </Row>
-            <Row>
-                <Col>
 
-                </Col>
             </Row>
 
         </div>
     );
 }
 
-export default ProductSold;
+export default DailyStockUp;

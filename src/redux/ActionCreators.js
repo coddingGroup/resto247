@@ -1,60 +1,53 @@
 import * as ActionTypes from './ActionTypes';
-import {DISHES} from "../shared/dishes";
 import {baseUrl} from "../shared/baseUrl";
-import {auth, firestore, fireauth, firebasestore, firebaseStorage} from '../firebase/firebase';
-
-
-
-
-
-
+import {auth, fireauth, firebasestore, firestore} from '../firebase/firebase';
 
 
 export const addComment = (comment) => ({
     type: ActionTypes.ADD_COMMENT,
     payload: comment
 });
-export const increaseStockComplete = () =>({
+export const increaseStockComplete = () => ({
     type: "",
     payload: true
 });
-export const changeStock = (resourceId, quantity,unitPrice,from) =>({
+export const changeStock = (resourceId, quantity, unitPrice, from) => ({
     type: ActionTypes.ADD_STOCK,
-    payload:{
-        resourceId:resourceId,
+    payload: {
+        resourceId: resourceId,
         quantity: quantity,
-        unitPrice:unitPrice,
-        from:from
+        unitPrice: unitPrice,
+        from: from
     }
 });
-export const increaseStock = (resourceId, unitPrice,quantity,from,name )=> (dispatch) =>{
-    if(!auth.currentUser){
+export const increaseStock = (resourceId, unitPrice, quantity, from, name) => (dispatch) => {
+    if (!auth.currentUser) {
         console.log("login first");
         console.log("login first");
         return;
     }
     return firestore.collection('stockUp').add({
-        quantity:quantity,
-        unitPrice:unitPrice,
-        from:from,
-        resourceName:name,
-        resourceId:resourceId,
-        remainingQuantity:quantity,
-        updatedAt:firebasestore.FieldValue.serverTimestamp(),
-        createdAt:firebasestore.FieldValue.serverTimestamp()
+        quantity: quantity,
+        unitPrice: unitPrice,
+        from: from,
+        resourceName: name,
+        resourceId: resourceId,
+        newStockQuantity: quantity,
+        updatedAt: firebasestore.FieldValue.serverTimestamp(),
+        createdAt: firebasestore.FieldValue.serverTimestamp()
     })
-        .then(docRef =>{
+        .then(docRef => {
             firestore.collection('stockUp').doc(docRef.id).get()
-                .then(doc =>{
+                .then(doc => {
                     if (doc.exists) {
                         const data = doc.data();
                         const id = doc.id;
                         let newStock = {id, ...data};
                         firestore.collection('resources').doc(resourceId).get()
                             .then(doc => {
-                                if(doc.exists){
+                                if (doc.exists) {
                                     const data = doc.data();
-                                    let stockQuantity =parseInt(data.stockQuantity);
+                                    let stockQuantity = parseInt(data.stockQuantity);
                                     let totalCost = parseInt(data.totalCost);
 
                                     totalCost += (parseInt(quantity) * parseInt(unitPrice));
@@ -65,375 +58,15 @@ export const increaseStock = (resourceId, unitPrice,quantity,from,name )=> (disp
                                     firestore.collection('resources').doc(resourceId).update({
                                         stockQuantity: stockQuantity,
                                         totalCost: totalCost,
-                                        updatedAt:firebasestore.FieldValue.serverTimestamp()
+                                        updatedAt: firebasestore.FieldValue.serverTimestamp()
                                     })
-                                        .catch( error =>{
+                                        .catch(error => {
                                             dispatch(failedToSaveFlippingCardSaveButton());
-                                            console.log(  error.message);
-                                        });
-
-                                }
-                            }).catch(error =>{
-                            dispatch(failedToSaveFlippingCardSaveButton());
-                                console.log(error.message);
-                        })
-
-
-                        dispatch(changeStock(newStock));
-                    } else {
-                        // doc.data() will be undefined in this case
-                        console.log("No such document!");
-                    }
-                })
-        })
-        .catch(error => {
-        console.log('Post comments ', error.message);
-        console.log('Your comment could not be posted\nError: ' + error.message);
-    })
-}
-
-
-export const uploadProduct = (values,image) => (dispatch) =>{
-    if(!auth.currentUser){
-        console.log("login first");
-        console.log("login first");
-        return;
-    }
-    firestore.collection('products').add({
-        category:values.category,
-        description:values.description,
-        image:image,
-        name:values.productName,
-        marched:false,
-        price:values.soldPrice,
-        quantity:0,
-        featured:true,
-        buyUnitPrice:0,
-        createdAt: firebasestore.FieldValue.serverTimestamp(),
-        updatedAt: firebasestore.FieldValue.serverTimestamp()
-    })
-        .then(docRef => {
-            firestore.collection('products').doc(docRef.id).get()
-                .then(doc => {
-                    if (doc.exists) {
-                        const data = doc.data();
-                        const id = doc.id;
-                        let newProduct = {id, ...data};
-                        dispatch(addOneProduct(newProduct));
-                    }
-                    else {
-                        // doc.data() will be undefined in this case
-                        console.log("No such document!");
-                    }
-
-                })
-                .catch(error =>{
-                    console.log(error.message);
-                });
-        }).catch(error =>{
-        console.log(error.message);
-        dispatch(uploadProductFailed(error));
-    });
-}
-export const uploadProductFailed=(error) => ({
-    type:ActionTypes.UPLOAD_PRODUCT_FAILED,
-    payload:error
-});
-export const addOneProduct=(newProduct) => ({
-    type:ActionTypes.ADD_ONE_PRODUCT,
-    payload: newProduct
-});
-
-
-export const uploadResource = (values,image) => (dispatch) =>{
-    if(!auth.currentUser){
-        console.log("login first");
-        return;
-    }
-    console.log("here");
-    firestore.collection('resources').add({
-        category:values.category,
-        description:values.description,
-        image:image,
-        name:values.resourceName,
-        stockQuantity: 0,
-        totalCost: 0,
-        unit:values.unit,
-        featured:true,
-        createdAt: firebasestore.FieldValue.serverTimestamp(),
-        updatedAt: firebasestore.FieldValue.serverTimestamp()
-    })
-        .then(docRef => {
-            firestore.collection('resources').doc(docRef.id).get()
-                .then(doc => {
-                    if (doc.exists) {
-                        const data = doc.data();
-                        const id = doc.id;
-                        let newResource = {id, ...data};
-                        dispatch(addOneResource(newResource));
-                    }
-                    else {
-                        // doc.data() will be undefined in this case
-                        console.log("No such document!");
-                    }
-
-                })
-                .catch(error =>{
-                    console.log(error.message);
-                });
-            return docRef.id;
-        }).then(id=>{
-            dispatch(increaseStock(id,values.unitPrice,values.initialQuantity,"initialSet",values.resourceName));
-    })
-        .catch(error =>{
-        console.log(error.message);
-        dispatch(uploadResourceFailed(error));
-    });
-}
-export const uploadResourceFailed=(error) => ({
-    type:ActionTypes.UPLOAD_RESOURCE_FAILED,
-    payload:error
-});
-export const addOneResource=(newResource) => ({
-    type:ActionTypes.ADD_ONE_RESOURCE,
-    payload: newResource
-});
-
-export const miscellaneousLoading = () =>({
-    type:ActionTypes.MISCELLANEOUS_LOADING,
-    payload:true
-});
-export const miscellaneousFailed = (error) =>({
-   type:ActionTypes.MISCELLANEOUS_FAILED,
-   payload: error
-});
-export const addMiscellaneous = (miscellaneous) =>({
-   type:ActionTypes.ADD_MISCELLANEOUS,
-   payload: miscellaneous
-});
-export const addOneMiscellaneous = (newMiscellaneous) =>({
-    type:ActionTypes.ADD_ONE_MISCELLANEOUS,
-    payload: newMiscellaneous
-});
-
-export const uploadMiscellaneous = (values, proof )=> (dispatch) =>{
-    if(!auth.currentUser){
-        console.log("login first");
-        console.log("login first");
-        return;
-    }
-    dispatch(miscellaneousLoading(true));
-    return firestore.collection('miscellaneous').add({
-        price:values.price,
-        reason:values.reason,
-        isExpanse:values.isExpanse,
-        proof:proof,
-        by:values.by,
-        description:values.description,
-        createdAt: firebasestore.FieldValue.serverTimestamp()
-    })
-        .then(docRef =>{
-            firestore.collection('miscellaneous').doc(docRef.id).get()
-                .then(doc =>{
-                    if (doc.exists) {
-                        const data = doc.data();
-                        const id = doc.id;
-                        let newMiscellaneous = {id, ...data};
-                        dispatch(addOneMiscellaneous(newMiscellaneous));
-
-                    }
-                    else {
-                        // doc.data() will be undefined in this case
-                        console.log("No such document!");
-                    }
-                })
-        })
-        .catch(error => {
-            dispatch(miscellaneousFailed(error));
-            console.log('Post comments ', error.message);
-            console.log('Your comment could not be posted\nError: ' + error.message);
-        });
-}
-
-
-
-
-export const pushInvoice = (receptionistName, waiterName,clientName,paymentStatus,totalPrice,orders )=> (dispatch) =>{
-    if(!auth.currentUser){
-        console.log("login first");
-        console.log("login first");
-        return;
-    }
-    dispatch(invoiceLoading(true));
-    return firestore.collection('invoices').add({
-        receptionistName:receptionistName
-        , waiterName:waiterName
-        ,clientName:clientName
-        ,paymentStatus:paymentStatus,
-        totalPrice:totalPrice,
-        featured:true,
-        status:"active",
-        createdAt: firebasestore.FieldValue.serverTimestamp(),
-        updatedAt:firebasestore.FieldValue.serverTimestamp()
-    })
-        .then(docRef =>{
-            firestore.collection('invoices').doc(docRef.id).get()
-                .then(doc =>{
-                    if (doc.exists) {
-                        const data = doc.data();
-                        const id = doc.id;
-                        let newInvoice = {id, ...data};
-                            dispatch(addInvoice(newInvoice));
-                            dispatch(invoiceDetailsLoading(true));
-                        orders.forEach(order => {
-                            firestore.collection('invoiceDetails').add({
-                                receptionistName:receptionistName,
-                                invoiceId: id
-                                , price: order.price
-                                , productName: order.productName
-                                , quantity: order.quantity,
-                                createdAt: firebasestore.FieldValue.serverTimestamp()
-                            })
-                                .then(docRef => {
-                                    firestore.collection('invoiceDetails').doc(docRef.id).get()
-                                        .then(doc => {
-                                            if (doc.exists) {
-                                                const data = doc.data();
-                                                const id = doc.id;
-                                                let newInvoiceDetails = {id, ...data};
-                                                dispatch(addInvoiceDetails(data.invoiceId,newInvoiceDetails));
-                                            }
-                                            else {
-                                                // doc.data() will be undefined in this case
-                                                console.log("No such document!");
-                                            }
-
-                                        })
-                                        .catch(error =>{
                                             console.log(error.message);
-                                            dispatch(invoiceDetailsFailed(error));
-                                        });
-                                });
-                        });
-                            }
-                     else {
-                        // doc.data() will be undefined in this case
-                        console.log("No such document!");
-                    }
-                })
-        })
-        .catch(error => {
-            dispatch(invoiceFailed(error));
-            console.log('Post comments ', error.message);
-            console.log('Your comment could not be posted\nError: ' + error.message);
-        });
-}
-
-export const addInvoice =(newInvoice)=>({type: ActionTypes.ADD_INVOICE, payload:newInvoice});
-export const invoiceLoading=()=>({type:ActionTypes.INVOICE_LOADING,payload:true});
-export const invoiceFailed=(error)=>({type:ActionTypes.INVOICE_FAILED,payload:error});
-export const addInvoiceDetails=(invoiceId,newInvoiceDetails)=>({type:ActionTypes.ADD_INVOICE_DETAILS,payload:newInvoiceDetails,invoiceId:invoiceId});
-export const invoiceDetailsLoading=()=>({type:ActionTypes.INVOICE_DETAILS_LOADING,payload:true});
-export const invoiceDetailsFailed=(error)=>({type:ActionTypes.INVOICE_DETAILS_FAILED, payload:error});
-
-export const fetchWaiters = () =>(dispatch) =>{
-    dispatch(waitersLoading(true));
-    return firestore.collection('waiters').get()
-        .then(snapshot =>{
-            let waiters=[];
-            snapshot.forEach(doc =>{
-                let id = doc.id;
-                let data = doc.data();
-                waiters.push({id, ...data});
-            });
-            return waiters;
-        })
-        .then(
-            waiters =>{dispatch(addWaiters(waiters))}
-        )
-        .catch(error => {
-            dispatch(waitersFailed(error.message));
-            console.log(error.message);
-        });
-}
-export const addWaiters = (waiters) =>({
-    type:ActionTypes.ADD_WAITERS,
-    payload:waiters
-});
-export const waitersFailed = (error) =>({
-    type:ActionTypes.WAITERS_FAILURE,
-    payload: error
-});
-export const waitersLoading = () =>({
-    type:ActionTypes.WAITERS_LOADING,
-    payload: true
-})
-
-export const updateProduct = (values)=> (dispatch) => {
-     firestore.collection('products').doc((values.id)).update({
-        buyUnitPrice: parseInt(values.buyUnitPrice),
-        category: values.category,
-        description: values.description,
-        featured: values.featured,
-        image: values.image,
-        marched: values.marched,
-        name: values.name,
-        price: parseInt(values.price),
-        quantity: parseInt(values.quantity),
-        updatedAt: firebasestore.FieldValue.serverTimestamp()
-    }).then(() => {
-        console.log("updateComplete");
-        //dispatch(updateComplete);
-    })
-        .catch(error => {
-            dispatch(failedToSaveFlippingCardSaveButton());
-            console.log(error.message);
-        });
-}
-export const addResourcesReport = (resourceId, unitPrice,quantity,to,name )=> (dispatch) =>{
-    if(!auth.currentUser){
-        console.log("login first");
-        console.log("login first");
-        return;
-    }
-    return firestore.collection('resourcesReports').add({
-        quantity:quantity,
-        unitPrice:unitPrice,
-        to:to,
-        resourceName:name,
-        resourceId:resourceId,
-        createdAt:firebasestore.FieldValue.serverTimestamp()
-    })
-        .then(docRef =>{
-            firestore.collection('resourcesReports').doc(docRef.id).get()
-                .then(doc =>{
-                    if (doc.exists) {
-                        const data = doc.data();
-                        const id = doc.id;
-                        let newStock = {id, ...data};
-                        firestore.collection('resources').doc(resourceId).get()
-                            .then(doc => {
-                                if(doc.exists){
-                                    const data = doc.data();
-                                    let stockQuantity =parseInt(data.stockQuantity);
-                                    let totalCost = parseInt(data.totalCost);
-
-                                    totalCost -= (parseInt(quantity) * parseInt(unitPrice));
-                                    stockQuantity -= parseInt(quantity);
-
-                                    dispatch(enableFlippingCardSaveButton());
-
-                                    firestore.collection('resources').doc(resourceId).update({
-                                        stockQuantity: stockQuantity,
-                                        totalCost: totalCost
-                                    })
-                                        .catch( error =>{
-                                            dispatch(failedToSaveFlippingCardSaveButton());
-                                            console.log(  error.message);
                                         });
 
                                 }
-                            }).catch(error =>{
+                            }).catch(error => {
                             dispatch(failedToSaveFlippingCardSaveButton());
                             console.log(error.message);
                         })
@@ -453,11 +86,366 @@ export const addResourcesReport = (resourceId, unitPrice,quantity,to,name )=> (d
 }
 
 
+export const uploadProduct = (values, image) => (dispatch) => {
+    if (!auth.currentUser) {
+        console.log("login first");
+        console.log("login first");
+        return;
+    }
+    firestore.collection('products').add({
+        category: values.category,
+        description: values.description,
+        image: image,
+        name: values.productName,
+        marched: false,
+        price: values.soldPrice,
+        quantity: 0,
+        featured: true,
+        buyUnitPrice: 0,
+        createdAt: firebasestore.FieldValue.serverTimestamp(),
+        updatedAt: firebasestore.FieldValue.serverTimestamp()
+    })
+        .then(docRef => {
+            firestore.collection('products').doc(docRef.id).get()
+                .then(doc => {
+                    if (doc.exists) {
+                        const data = doc.data();
+                        const id = doc.id;
+                        let newProduct = {id, ...data};
+                        dispatch(addOneProduct(newProduct));
+                    } else {
+                        // doc.data() will be undefined in this case
+                        console.log("No such document!");
+                    }
+
+                })
+                .catch(error => {
+                    console.log(error.message);
+                });
+        }).catch(error => {
+        console.log(error.message);
+        dispatch(uploadProductFailed(error));
+    });
+}
+export const uploadProductFailed = (error) => ({
+    type: ActionTypes.UPLOAD_PRODUCT_FAILED,
+    payload: error
+});
+export const addOneProduct = (newProduct) => ({
+    type: ActionTypes.ADD_ONE_PRODUCT,
+    payload: newProduct
+});
 
 
+export const uploadResource = (values, image) => (dispatch) => {
+    if (!auth.currentUser) {
+        console.log("login first");
+        return;
+    }
+    console.log("here");
+    firestore.collection('resources').add({
+        category: values.category,
+        description: values.description,
+        image: image,
+        name: values.resourceName,
+        stockQuantity: 0,
+        totalCost: 0,
+        unit: values.unit,
+        featured: true,
+        createdAt: firebasestore.FieldValue.serverTimestamp(),
+        updatedAt: firebasestore.FieldValue.serverTimestamp()
+    })
+        .then(docRef => {
+            firestore.collection('resources').doc(docRef.id).get()
+                .then(doc => {
+                    if (doc.exists) {
+                        const data = doc.data();
+                        const id = doc.id;
+                        let newResource = {id, ...data};
+                        dispatch(addOneResource(newResource));
+                    } else {
+                        // doc.data() will be undefined in this case
+                        console.log("No such document!");
+                    }
+
+                })
+                .catch(error => {
+                    console.log(error.message);
+                });
+            return docRef.id;
+        }).then(id => {
+        dispatch(increaseStock(id, values.unitPrice, values.initialQuantity, "initialSet", values.resourceName));
+    })
+        .catch(error => {
+            console.log(error.message);
+            dispatch(uploadResourceFailed(error));
+        });
+}
+export const uploadResourceFailed = (error) => ({
+    type: ActionTypes.UPLOAD_RESOURCE_FAILED,
+    payload: error
+});
+export const addOneResource = (newResource) => ({
+    type: ActionTypes.ADD_ONE_RESOURCE,
+    payload: newResource
+});
+
+export const miscellaneousLoading = () => ({
+    type: ActionTypes.MISCELLANEOUS_LOADING,
+    payload: true
+});
+export const miscellaneousFailed = (error) => ({
+    type: ActionTypes.MISCELLANEOUS_FAILED,
+    payload: error
+});
+export const addMiscellaneous = (miscellaneous) => ({
+    type: ActionTypes.ADD_MISCELLANEOUS,
+    payload: miscellaneous
+});
+export const addOneMiscellaneous = (newMiscellaneous) => ({
+    type: ActionTypes.ADD_ONE_MISCELLANEOUS,
+    payload: newMiscellaneous
+});
+
+export const uploadMiscellaneous = (values, proof) => (dispatch) => {
+    if (!auth.currentUser) {
+        console.log("login first");
+        console.log("login first");
+        return;
+    }
+    dispatch(miscellaneousLoading(true));
+    return firestore.collection('miscellaneous').add({
+        price: values.price,
+        reason: values.reason,
+        isExpanse: values.isExpanse,
+        proof: proof,
+        by: values.by,
+        description: values.description,
+        createdAt: firebasestore.FieldValue.serverTimestamp()
+    })
+        .then(docRef => {
+            firestore.collection('miscellaneous').doc(docRef.id).get()
+                .then(doc => {
+                    if (doc.exists) {
+                        const data = doc.data();
+                        const id = doc.id;
+                        let newMiscellaneous = {id, ...data};
+                        dispatch(addOneMiscellaneous(newMiscellaneous));
+
+                    } else {
+                        // doc.data() will be undefined in this case
+                        console.log("No such document!");
+                    }
+                })
+        })
+        .catch(error => {
+            dispatch(miscellaneousFailed(error));
+            console.log('Post comments ', error.message);
+            console.log('Your comment could not be posted\nError: ' + error.message);
+        });
+}
 
 
-export const signUp = (values, typeOfUser) => (dispatch) =>{
+export const pushInvoice = (receptionistName, waiterName, clientName, paymentStatus, totalPrice, orders) => (dispatch) => {
+    if (!auth.currentUser) {
+        console.log("login first");
+        console.log("login first");
+        return;
+    }
+    dispatch(invoiceLoading(true));
+    return firestore.collection('invoices').add({
+        receptionistName: receptionistName
+        , waiterName: waiterName
+        , clientName: clientName
+        , paymentStatus: paymentStatus,
+        totalPrice: totalPrice,
+        featured: true,
+        status: "active",
+        createdAt: firebasestore.FieldValue.serverTimestamp(),
+        updatedAt: firebasestore.FieldValue.serverTimestamp()
+    })
+        .then(docRef => {
+            firestore.collection('invoices').doc(docRef.id).get()
+                .then(doc => {
+                    if (doc.exists) {
+                        const data = doc.data();
+                        const id = doc.id;
+                        let newInvoice = {id, ...data};
+                        dispatch(addInvoice(newInvoice));
+                        dispatch(invoiceDetailsLoading(true));
+                        orders.forEach(order => {
+                            firestore.collection('invoiceDetails').add({
+                                receptionistName: receptionistName,
+                                invoiceId: id
+                                , price: order.price
+                                , productName: order.productName
+                                , quantity: order.quantity,
+                                createdAt: firebasestore.FieldValue.serverTimestamp()
+                            })
+                                .then(docRef => {
+                                    firestore.collection('invoiceDetails').doc(docRef.id).get()
+                                        .then(doc => {
+                                            if (doc.exists) {
+                                                const data = doc.data();
+                                                const id = doc.id;
+                                                let newInvoiceDetails = {id, ...data};
+                                                dispatch(addInvoiceDetails(data.invoiceId, newInvoiceDetails));
+                                            } else {
+                                                // doc.data() will be undefined in this case
+                                                console.log("No such document!");
+                                            }
+
+                                        })
+                                        .catch(error => {
+                                            console.log(error.message);
+                                            dispatch(invoiceDetailsFailed(error));
+                                        });
+                                });
+                        });
+                    } else {
+                        // doc.data() will be undefined in this case
+                        console.log("No such document!");
+                    }
+                })
+        })
+        .catch(error => {
+            dispatch(invoiceFailed(error));
+            console.log('Post comments ', error.message);
+            console.log('Your comment could not be posted\nError: ' + error.message);
+        });
+}
+
+export const addInvoice = (newInvoice) => ({type: ActionTypes.ADD_INVOICE, payload: newInvoice});
+export const invoiceLoading = () => ({type: ActionTypes.INVOICE_LOADING, payload: true});
+export const invoiceFailed = (error) => ({type: ActionTypes.INVOICE_FAILED, payload: error});
+export const addInvoiceDetails = (invoiceId, newInvoiceDetails) => ({
+    type: ActionTypes.ADD_INVOICE_DETAILS,
+    payload: newInvoiceDetails,
+    invoiceId: invoiceId
+});
+export const invoiceDetailsLoading = () => ({type: ActionTypes.INVOICE_DETAILS_LOADING, payload: true});
+export const invoiceDetailsFailed = (error) => ({type: ActionTypes.INVOICE_DETAILS_FAILED, payload: error});
+
+export const fetchWaiters = () => (dispatch) => {
+    dispatch(waitersLoading(true));
+    return firestore.collection('waiters').get()
+        .then(snapshot => {
+            let waiters = [];
+            snapshot.forEach(doc => {
+                let id = doc.id;
+                let data = doc.data();
+                waiters.push({id, ...data});
+            });
+            return waiters;
+        })
+        .then(
+            waiters => {
+                dispatch(addWaiters(waiters))
+            }
+        )
+        .catch(error => {
+            dispatch(waitersFailed(error.message));
+            console.log(error.message);
+        });
+}
+export const addWaiters = (waiters) => ({
+    type: ActionTypes.ADD_WAITERS,
+    payload: waiters
+});
+export const waitersFailed = (error) => ({
+    type: ActionTypes.WAITERS_FAILURE,
+    payload: error
+});
+export const waitersLoading = () => ({
+    type: ActionTypes.WAITERS_LOADING,
+    payload: true
+})
+
+export const updateProduct = (values) => (dispatch) => {
+    firestore.collection('products').doc((values.id)).update({
+        buyUnitPrice: parseInt(values.buyUnitPrice),
+        category: values.category,
+        description: values.description,
+        featured: values.featured,
+        image: values.image,
+        marched: values.marched,
+        name: values.name,
+        price: parseInt(values.price),
+        quantity: parseInt(values.quantity),
+        updatedAt: firebasestore.FieldValue.serverTimestamp()
+    }).then(() => {
+        console.log("updateComplete");
+        //dispatch(updateComplete);
+    })
+        .catch(error => {
+            dispatch(failedToSaveFlippingCardSaveButton());
+            console.log(error.message);
+        });
+}
+export const addResourcesReport = (resourceId, unitPrice, quantity, to, name) => (dispatch) => {
+    if (!auth.currentUser) {
+        console.log("login first");
+        console.log("login first");
+        return;
+    }
+    return firestore.collection('resourcesReports').add({
+        quantity: quantity,
+        unitPrice: unitPrice,
+        to: to,
+        resourceName: name,
+        resourceId: resourceId,
+        createdAt: firebasestore.FieldValue.serverTimestamp()
+    })
+        .then(docRef => {
+            firestore.collection('resourcesReports').doc(docRef.id).get()
+                .then(doc => {
+                    if (doc.exists) {
+                        const data = doc.data();
+                        const id = doc.id;
+                        let newStock = {id, ...data};
+                        firestore.collection('resources').doc(resourceId).get()
+                            .then(doc => {
+                                if (doc.exists) {
+                                    const data = doc.data();
+                                    let stockQuantity = parseInt(data.stockQuantity);
+                                    let totalCost = parseInt(data.totalCost);
+
+                                    totalCost -= (parseInt(quantity) * parseInt(unitPrice));
+                                    stockQuantity -= parseInt(quantity);
+
+                                    dispatch(enableFlippingCardSaveButton());
+
+                                    firestore.collection('resources').doc(resourceId).update({
+                                        stockQuantity: stockQuantity,
+                                        totalCost: totalCost
+                                    })
+                                        .catch(error => {
+                                            dispatch(failedToSaveFlippingCardSaveButton());
+                                            console.log(error.message);
+                                        });
+
+                                }
+                            }).catch(error => {
+                            dispatch(failedToSaveFlippingCardSaveButton());
+                            console.log(error.message);
+                        })
+
+
+                        dispatch(changeStock(newStock));
+                    } else {
+                        // doc.data() will be undefined in this case
+                        console.log("No such document!");
+                    }
+                })
+        })
+        .catch(error => {
+            console.log('Post comments ', error.message);
+            console.log('Your comment could not be posted\nError: ' + error.message);
+        })
+}
+
+
+export const signUp = (values, typeOfUser) => (dispatch) => {
     auth.createUserWithEmailAndPassword(values.email, values.password)
         .then((userCredential) => {
             // Signed in
@@ -485,9 +473,9 @@ export const signUp = (values, typeOfUser) => (dispatch) =>{
                 typeOfUser: typeOfUser,
                 userId: user.uid
             })
-                .then(docRef =>{
+                .then(docRef => {
                     firestore.collection("userCollection").doc(docRef.id).get()
-                        .then(doc =>{
+                        .then(doc => {
                             if (doc.exists) {
                                 const data = doc.data();
                                 // const id = doc.id;
@@ -699,17 +687,17 @@ export const loginError = (message) => {
         message
     }
 }
-export const setUser = (user="JSON.parse(localStorage.getItem('user'))", userCollection="JSON.parse(localStorage.getItem('userCollection'))") =>({
+export const setUser = (user = "JSON.parse(localStorage.getItem('user'))", userCollection = "JSON.parse(localStorage.getItem('userCollection'))") => ({
     type: ActionTypes.SET_USER,
     user: user,
     userCollection: userCollection
 })
 
-export const getUserCollection =(userId) =>{
-     firestore.collection('userCollection').where('userId', '==', userId).get()
+export const getUserCollection = (userId) => {
+    firestore.collection('userCollection').where('userId', '==', userId).get()
         .then(snapshot => {
             console.log(snapshot);
-            let userCollection ;
+            let userCollection;
             snapshot.forEach(doc => {
 
                 userCollection = doc.data();
@@ -734,11 +722,10 @@ export const loginUser = (creds) => (dispatch) => {
             dispatch(receiveLogin(user));
 
 
-
             firestore.collection('userCollection').where('userId', '==', user.uid).get()
                 .then(snapshot => {
                     console.log(snapshot);
-                    let userCollection ;
+                    let userCollection;
                     snapshot.forEach(doc => {
 
                         userCollection = doc.data();
@@ -894,7 +881,7 @@ export const googleLogin = () => (dispatch) => {
             firestore.collection('userCollection').where('userId', '==', user.uid).get()
                 .then(snapshot => {
                     console.log(snapshot);
-                    let userCollection ;
+                    let userCollection;
                     snapshot.forEach(doc => {
 
                         userCollection = doc.data();
@@ -1243,40 +1230,36 @@ export const addOutOfStockProducts = (outOfStockProducts) => ({
 });
 
 
-
-export const changeFlippingCardSaveBehavior = (behavior) => (dispatch) =>{
-    if(behavior === 'disable'){
+export const changeFlippingCardSaveBehavior = (behavior) => (dispatch) => {
+    if (behavior === 'disable') {
         dispatch(disableFlippingCardSaveButton())
-    }
-    else if(behavior === 'loading'){
+    } else if (behavior === 'loading') {
         dispatch(loadingFlippingCardSaveButton())
-    }
-    else if(behavior === 'failed'){
+    } else if (behavior === 'failed') {
         dispatch(failedToSaveFlippingCardSaveButton())
-    }
-    else if(behavior==='enable'){
+    } else if (behavior === 'enable') {
         dispatch(enableFlippingCardSaveButton())
     }
 }
-export const enableFlippingCardSaveButton = ()=> (
-{
-    type: ActionTypes.FLIPPING_CARD_SAVE_DISABLE,
+export const enableFlippingCardSaveButton = () => (
+    {
+        type: ActionTypes.FLIPPING_CARD_SAVE_DISABLE,
         payload: 'enable'
-}
+    }
 );
-export const disableFlippingCardSaveButton = ()=> (
+export const disableFlippingCardSaveButton = () => (
     {
         type: ActionTypes.FLIPPING_CARD_SAVE_DISABLE,
         payload: 'disable'
     }
 );
-export const loadingFlippingCardSaveButton = ()=> (
+export const loadingFlippingCardSaveButton = () => (
     {
         type: ActionTypes.FLIPPING_CARD_SAVE_DISABLE,
         payload: 'loading'
     }
 );
-export const failedToSaveFlippingCardSaveButton = ()=> (
+export const failedToSaveFlippingCardSaveButton = () => (
     {
         type: ActionTypes.FLIPPING_CARD_SAVE_DISABLE,
         payload: 'failed'

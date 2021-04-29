@@ -1,10 +1,8 @@
 import React, {useState} from "react";
 import '../../../css/home.css';
-import {NavLink} from "react-router-dom";
-import {Button, Col, FormGroup, Input, Label, Modal, ModalBody, ModalHeader, Row} from "reactstrap";
+import {Button, Col, Label, Modal, ModalBody, ModalHeader, Row} from "reactstrap";
 import {Control, Errors, Form} from "react-redux-form";
 import {firebaseStorage} from "../../../firebase/firebase";
-import {uploadResource} from "../../../redux/ActionCreators";
 
 let items = [
     {
@@ -33,7 +31,7 @@ let items = [
         color: 'btn-warning'
     }
 ];
-const CircleMenu = ({items,uploadProduct,uploadResource, uploadMiscellaneous}) => {
+const CircleMenu = ({items, uploadProduct, uploadResource, uploadMiscellaneous}) => {
     //const [image, setImage] = useState('');
 
 
@@ -49,8 +47,6 @@ const CircleMenu = ({items,uploadProduct,uploadResource, uploadMiscellaneous}) =
     // const [initialQuantity] = useState('food');
     // const [unitPrice] = useState('food');
     // const [unit] = useState('food');
-
-
 
 
     const required = (val) => val && val.length;
@@ -69,33 +65,31 @@ const CircleMenu = ({items,uploadProduct,uploadResource, uploadMiscellaneous}) =
     const togglerModalR = () => setIsModalOpenR(!isModalOpenR);
 
 
-
-
-    let handleProductSubmit=(values,event)=>{
+    let handleProductSubmit = (values, event) => {
         const file = values.image[0];
 
         const fileName = file.name;
         const fileExtension = fileName.split('.').pop();
         alert(fileExtension);
-        const name =values.productName + '-' +  (+new Date()) ;
+        const name = values.productName + '-' + (+new Date());
         let ref = firebaseStorage.ref();
-        let imagePath =  "images/products/"+name+'.'+fileExtension;
+        let imagePath = "images/products/" + name + '.' + fileExtension;
         let fullRef = ref.child(imagePath);
         const task = fullRef.put(file);
         task.then((snapshot) => {
-                uploadProduct(values, imagePath);
+            uploadProduct(values, imagePath);
 
-             });
+        });
     };
 
-    let handleResourceSubmit=(values,event)=>{
+    let handleResourceSubmit = (values, event) => {
         const file = values.image[0];
 
         const fileName = file.name;
         const fileExtension = fileName.split('.').pop();
-        const name =values.resourceName + '-' +  (+new Date()) ;
+        const name = values.resourceName + '-' + (+new Date());
         let ref = firebaseStorage.ref();
-        let imagePath =  "images/resources/"+name+'.'+fileExtension;
+        let imagePath = "images/resources/" + name + '.' + fileExtension;
         let fullRef = ref.child(imagePath);
         const task = fullRef.put(file);
         task.then((snapshot) => {
@@ -103,15 +97,15 @@ const CircleMenu = ({items,uploadProduct,uploadResource, uploadMiscellaneous}) =
 
         });
     };
-    let handleMiscellaneousSubmit=(values,event)=>{
+    let handleMiscellaneousSubmit = (values, event) => {
         const file = values.proof[0];
 
         const fileName = file.name;
         const fileExtension = fileName.split('.').pop();
         alert(fileExtension);
-        const name =values.reason + '-' +  (+new Date()) ;
+        const name = values.reason + '-' + (+new Date());
         let ref = firebaseStorage.ref();
-        let imagePath =  "images/miscellaneous/"+name+'.'+fileExtension;
+        let imagePath = "images/miscellaneous/" + name + '.' + fileExtension;
         let fullRef = ref.child(imagePath);
         const task = fullRef.put(file);
         task.then((snapshot) => {
@@ -201,7 +195,8 @@ const CircleMenu = ({items,uploadProduct,uploadResource, uploadMiscellaneous}) =
                         <Row className="form-group">
                             <Label htmlFor="soldPrice" md={2}> soldPrice</Label>
                             <Col md={10}>
-                                <Control.text type="number" model=".soldPrice" id="soldPrice" name="soldPrice" placeholder="Sold Price"
+                                <Control.text type="number" model=".soldPrice" id="soldPrice" name="soldPrice"
+                                              placeholder="Sold Price"
                                               className="form-control"
                                               validators={{
                                                   required,
@@ -358,7 +353,8 @@ const CircleMenu = ({items,uploadProduct,uploadResource, uploadMiscellaneous}) =
                         <Row className="form-group">
                             <Label htmlFor="initialQuantity" md={2}> Initial Quantity</Label>
                             <Col md={10}>
-                                <Control.text type="number" model=".initialQuantity" id="initialQuantity" name="initialQuantity" placeholder="Initial Quantity"
+                                <Control.text type="number" model=".initialQuantity" id="initialQuantity"
+                                              name="initialQuantity" placeholder="Initial Quantity"
                                               className="form-control"
                                               validators={{
                                                   required,
@@ -384,7 +380,8 @@ const CircleMenu = ({items,uploadProduct,uploadResource, uploadMiscellaneous}) =
                         <Row className="form-group">
                             <Label htmlFor="unitPrice" md={2}> Unit Price</Label>
                             <Col md={10}>
-                                <Control.text type="number" model=".unitPrice" id="unitPrice" name="unitPrice" placeholder="Unit Price"
+                                <Control.text type="number" model=".unitPrice" id="unitPrice" name="unitPrice"
+                                              placeholder="Unit Price"
                                               className="form-control"
                                               validators={{
                                                   required,
@@ -413,9 +410,9 @@ const CircleMenu = ({items,uploadProduct,uploadResource, uploadMiscellaneous}) =
                                 <Control.file model=".image" id="image" name="image"
                                               placeholder="image"
                                               className="form-control"
-                                              // validators={{
-                                              //     required, minLength: minLength(4), maxLength: maxLength(30)
-                                              // }}
+                                    // validators={{
+                                    //     required, minLength: minLength(4), maxLength: maxLength(30)
+                                    // }}
                                 />
                                 {/*<Errors*/}
                                 {/*    className="text-danger"*/}
@@ -520,7 +517,8 @@ const CircleMenu = ({items,uploadProduct,uploadResource, uploadMiscellaneous}) =
                         <Row className="form-group">
                             <Label htmlFor="price" md={2}> Price</Label>
                             <Col md={10}>
-                                <Control.text type="number" model=".price" id="price" name="price" placeholder="how much?"
+                                <Control.text type="number" model=".price" id="price" name="price"
+                                              placeholder="how much?"
                                               className="form-control"
                                               validators={{
                                                   required,
@@ -585,18 +583,18 @@ const CircleMenu = ({items,uploadProduct,uploadResource, uploadMiscellaneous}) =
 
                 <div className="col ">
                     <div className="">
-                    <button onClick={togglerModal} type="button" className="btn-warning btn btn-circle btn-xl "><i
-                        className="fa fa-plus"></i>
-                    </button>
-                    <span className="row"> Add new Product </span>
+                        <button onClick={togglerModal} type="button" className="btn-warning btn btn-circle btn-xl "><i
+                            className="fa fa-plus"></i>
+                        </button>
+                        <span className="row"> Add new Product </span>
                     </div>
                 </div>
                 <div className="col ">
                     <div className="">
-                    <button onClick={togglerModalR} type="button" className="btn-primary btn btn-circle btn-xl "><i
-                        className="fa fa-plus"></i>
-                    </button>
-                    <span className="row"> Add new Resources </span>
+                        <button onClick={togglerModalR} type="button" className="btn-primary btn btn-circle btn-xl "><i
+                            className="fa fa-plus"></i>
+                        </button>
+                        <span className="row"> Add new Resources </span>
                     </div>
                 </div>
 

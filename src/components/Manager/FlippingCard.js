@@ -1,17 +1,13 @@
-import React, {Component} from "react";
+import React, {useState} from "react";
 import '../../css/Manager.css';
 import {Form, FormGroup, Input, Label} from "reactstrap";
-import {baseUrl} from "../../shared/baseUrl";
-import {useState} from 'react';
-import {quantity} from "../../redux/Forms";
-import IncreaseProduct from "./Products/IncreaseProduct";
-import RenderCard3 from "../homepagecomponents/RenderCard3";
-import {firebaseStorage} from "../../firebase/firebase";
 import {setImage} from "../../functions/setImage";
 
-const FlippingCard = ({increaseStock,oneProduct, showPriceField = true,
-                          opName,handleSaving,
-                          behaviors, changeFlippingCardSaveBehavior}) => {
+const FlippingCard = ({
+                          increaseStock, oneProduct, showPriceField = true,
+                          opName, handleSaving,
+                          behaviors, changeFlippingCardSaveBehavior
+                      }) => {
 
     return (
         <div className="page-container">
@@ -21,7 +17,7 @@ const FlippingCard = ({increaseStock,oneProduct, showPriceField = true,
                       opName={opName}
                       handleSaving={handleSaving}
                       changeFlippingCardSaveBehavior={changeFlippingCardSaveBehavior}
-                      increaseStock={increaseStock} />
+                      increaseStock={increaseStock}/>
         </div>
     )
 }
@@ -47,7 +43,7 @@ const BlogCard = (props) => {
                   opName={props.opName}
                   handleSaving={props.handleSaving}
                   changeFlippingCardSaveBehavior={props.changeFlippingCardSaveBehavior}
-                  increaseStock={props.increaseStock} />
+                  increaseStock={props.increaseStock}/>
         </div>
 
     )
@@ -66,52 +62,46 @@ const Front = ({oneProduct}) => {
 
 const Back = (props) => {
     const [qtyN, setQtyN] = useState('');
-    const[unitPrice,setUnitPrice] = useState(0);
-    const[behavior, setBehavior] = useState('enable');
-    const[errorM, setErrorM] = useState(null);
-    const[comesFrom,setComesFrom] = useState('suppler');
-    const[goesTo, setGoesTo] = useState('kitchen');
-    const[disabled, setDisabled] = useState(true);
-    const[soldPrice, setSoldPrice] = useState(0);
+    const [unitPrice, setUnitPrice] = useState(0);
+    const [behavior, setBehavior] = useState('enable');
+    const [errorM, setErrorM] = useState(null);
+    const [comesFrom, setComesFrom] = useState('suppler');
+    const [goesTo, setGoesTo] = useState('kitchen');
+    const [disabled, setDisabled] = useState(true);
+    const [soldPrice, setSoldPrice] = useState(0);
 
 
-
-    const handleChange = (event) =>{
+    const handleChange = (event) => {
         event.preventDefault();
         let name = event.target.name;
-        let value=event.target.value;
-        if(name ==='qtyN'){
+        let value = event.target.value;
+        if (name === 'qtyN') {
             setQtyN(value);
-        }
-        else if(name==='unitPrice'){
+        } else if (name === 'unitPrice') {
             setUnitPrice(value);
-        }
-        else if(name==='goesTo'){
+        } else if (name === 'goesTo') {
             setGoesTo(value);
-        }
-        else if(name === 'comesFrom'){
+        } else if (name === 'comesFrom') {
             setComesFrom(value);
-        }
-        else if(name==='soldPrice'){
+        } else if (name === 'soldPrice') {
             setSoldPrice(value);
         }
     }
-    const handleSave = (event) =>{
+    const handleSave = (event) => {
         event.preventDefault();
         setBehavior('loading');
-        setTimeout(() =>{
+        setTimeout(() => {
             setBehavior('enable');
         }, 2000);
-        if(props.opName ==='dailyUsage'){
+        if (props.opName === 'dailyUsage') {
             props.handleSaving({
                 id: props.oneProduct.id,
                 unitPrice: unitPrice,
                 quantity: qtyN,
                 to: goesTo,
-                name:props.oneProduct.name
+                name: props.oneProduct.name
             });
-        }
-        else if(props.opName==='resources') {
+        } else if (props.opName === 'resources') {
             props.handleSaving({
                 id: props.oneProduct.id,
                 unitPrice: unitPrice,
@@ -120,8 +110,7 @@ const Back = (props) => {
                 name: props.oneProduct.name
             });
             // props.increaseStock(props.oneProduct.id, unitPrice,qtyN,"suppler", props.oneProduct.name );
-        }
-        else if(props.opName==='products'){
+        } else if (props.opName === 'products') {
             props.handleSaving({
                 id: props.oneProduct.id,
                 buyUnitPrice: unitPrice,
@@ -136,31 +125,32 @@ const Back = (props) => {
             });
         }
     }
-    let additionalField= null;
+    let additionalField = null;
     let otherField;
-    if(props.opName === 'products'){
+    if (props.opName === 'products') {
         // setQtyN(props.oneProduct.quantity);
         // setSoldPrice(props.oneProduct.price);
         // setUnitPrice(props.oneProduct.buyUnitPrice);
 
-        additionalField =<FormGroup className="">
+        additionalField = <FormGroup className="">
 
             <Label className=""> Sold Price </Label>
             <Input onChange={handleChange} value={soldPrice} name="soldPrice" className="" type={"number"}/>
         </FormGroup>
-       otherField = <React.Fragment>
-           <FormGroup className="">
+        otherField = <React.Fragment>
+            <FormGroup className="">
 
-               <Label className=""> unit price </Label>
-               <Input disabled = {(disabled)? "disabled" : ""} onChange={handleChange} value={unitPrice} name="unitPrice" className="" type={"number"}/>
-           </FormGroup>
-           <FormGroup>
-               <Label className="">quantity</Label>
-               <Input disabled = {(disabled)? "disabled" : ""}  onChange={handleChange} value={qtyN} name="qtyN" className="" type="number"/>
-           </FormGroup>
-       </React.Fragment>
-    }
-    else{
+                <Label className=""> unit price </Label>
+                <Input disabled={(disabled) ? "disabled" : ""} onChange={handleChange} value={unitPrice}
+                       name="unitPrice" className="" type={"number"}/>
+            </FormGroup>
+            <FormGroup>
+                <Label className="">quantity</Label>
+                <Input disabled={(disabled) ? "disabled" : ""} onChange={handleChange} value={qtyN} name="qtyN"
+                       className="" type="number"/>
+            </FormGroup>
+        </React.Fragment>
+    } else {
         otherField = <React.Fragment>
 
             <FormGroup className="">
@@ -174,28 +164,26 @@ const Back = (props) => {
             </FormGroup>
         </React.Fragment>
 
-        if(props.opName === 'dailyUsage'){
-            additionalField =<FormGroup className="">
+        if (props.opName === 'dailyUsage') {
+            additionalField = <FormGroup className="">
 
                 <Label className=""> goes To </Label>
                 <Input onChange={handleChange} value={goesTo} name="goesTo" className="" type={"text"}/>
-            </FormGroup> ;
-        }
-        else if(props.opName==='resources'){
-            additionalField =<FormGroup className="">
+            </FormGroup>;
+        } else if (props.opName === 'resources') {
+            additionalField = <FormGroup className="">
 
                 <Label className=""> comes From </Label>
                 <Input onChange={handleChange} value={comesFrom} name="comesFrom" className="" type={"text"}/>
-            </FormGroup> ;
+            </FormGroup>;
         }
     }
 
     let button = null;
 
-    if(behavior === 'loading'){
-        button = <button type="button" className="btn btn-warning"> <span className="fa fa-spinner"></span> </button>
-    }
-    else if(behavior === 'enable'){
+    if (behavior === 'loading') {
+        button = <button type="button" className="btn btn-warning"><span className="fa fa-spinner"></span></button>
+    } else if (behavior === 'enable') {
         button = <button type="button" onClick={handleSave} className="btn btn-warning"> Save</button>;
     }
 
@@ -205,14 +193,11 @@ const Back = (props) => {
     // }
 
 
-
-
     return (
         <div className="back">
             <h2 className="bg-warning d-flex justify-content-center pb-2"> {props.oneProduct.name} </h2>
             <span className="text-danger"> {errorM}</span>
             <Form>
-
 
 
                 {otherField}
@@ -229,14 +214,12 @@ const Back = (props) => {
 let ImageArea = ({oneProduct}) => {
     setImage(oneProduct.image);
 
-        return (
-            <div className="image-container">
-                <img className={"card-image " + oneProduct.image } src=''></img>
-                <h1 className="title">{oneProduct.name}</h1>
-            </div>
-        )
-
-
+    return (
+        <div className="image-container">
+            <img className={"card-image " + oneProduct.image} src=''></img>
+            <h1 className="title">{oneProduct.name}</h1>
+        </div>
+    )
 
 
 }

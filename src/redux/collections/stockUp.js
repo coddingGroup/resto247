@@ -2,7 +2,7 @@ import * as ActionTypes from '../ActionTypes';
 
 export const dailyReports = (state = {
     isLoading: true,
-    saveComplete:false,
+    saveComplete: false,
     errMess: null,
     stock: []
 }, action) => {

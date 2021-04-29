@@ -1,28 +1,23 @@
-import {useState} from 'react';
-import React, {Component} from 'react';
+import React, {useState} from 'react';
 import {NavLink} from "react-router-dom";
 import {
-    Collapse,
-    Navbar,
-    NavbarToggler,
-    NavbarBrand,
-    Nav,
-    NavItem,
-    UncontrolledDropdown,
-    DropdownToggle,
-    DropdownMenu,
-    DropdownItem,
     Button,
-    ButtonGroup,
-    Modal,
-    Label,
+    Collapse,
+    DropdownItem,
+    DropdownMenu,
+    DropdownToggle,
     Form,
     FormGroup,
     Input,
+    Label,
+    Modal,
     ModalBody,
     ModalHeader,
-    ModalFooter
-
+    Nav,
+    Navbar,
+    NavbarToggler,
+    NavItem,
+    UncontrolledDropdown
 } from 'reactstrap';
 import '../../../css/styles.css';
 

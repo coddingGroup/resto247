@@ -1,22 +1,19 @@
 import {Redirect, Route, Switch} from "react-router-dom";
-import SignUp from "../../SignUp";
 import IncreaseProduct from "./IncreaseProduct";
-import Dashboard from "../Reports/Dashboard";
 import React from "react";
 import MarchProductToResources from "./MarchProductToResources";
-import Navigation from "../UIcomponents/SideNavigation";
 
 
 let StockManagement = (props) => {
-    const handleSavingForResources = (values) =>{
-        props.increaseStock(values.id, values.unitPrice,values.quantity,values.from, values.name );
+    const handleSavingForResources = (values) => {
+        props.increaseStock(values.id, values.unitPrice, values.quantity, values.from, values.name);
     };
-    const handleSavingForProducts = (values) =>{
+    const handleSavingForProducts = (values) => {
         //props.increaseStock(values.id, values.unitPrice,values.quantity,values.from, values.name );
         props.updateProduct(values);
     };
-    const handleSavingForDailyUsage = (values) =>{
-        props.addResourcesReport(values.id, values.unitPrice,values.quantity,values.to, values.name );
+    const handleSavingForDailyUsage = (values) => {
+        props.addResourcesReport(values.id, values.unitPrice, values.quantity, values.to, values.name);
     }
 
     return (

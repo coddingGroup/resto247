@@ -16,7 +16,7 @@ export const Products = (state = {
             return {...state, isLoading: false, errMess: action.payload, products: []};
         case ActionTypes.ADD_ONE_PRODUCT:
             let prev = state.products;
-            return {...state, isLoading: false, errMess: null, products: [...prev,action.payload]};
+            return {...state, isLoading: false, errMess: null, products: [...prev, action.payload]};
 
         default:
             return state;

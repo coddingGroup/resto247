@@ -1,19 +1,7 @@
-import {
-    Card, CardImg, CardBody,
-    CardTitle,
-    Button,
-    Form,
-    Input,
-    Row,
-    Col,
-    Label, CardSubtitle, CardText
-} from "reactstrap";
+import {Button, Card, CardBody, CardImg, CardSubtitle, CardText, CardTitle, Col, Form, Input, Row} from "reactstrap";
 import {Loading} from "../LoadingComponent";
-import {baseUrl} from "../../shared/baseUrl";
-import {FadeTransform} from "react-animation-components";
 import React, {useState} from "react";
 import '../../css/Some.css';
-import {firebaseStorage} from "../../firebase/firebase";
 import {setImage} from "../../functions/setImage";
 
 function RenderCard3({item, addToCart, cart}) {

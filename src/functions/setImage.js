@@ -1,6 +1,6 @@
 import {firebaseStorage} from "../firebase/firebase";
 
-export const setImage = (image) =>{
+export const setImage = (image) => {
 
     let ref = firebaseStorage.ref();
     let fullRef = ref.child(image);
@@ -13,8 +13,8 @@ export const setImage = (image) =>{
             // elements.map(img =>{
             //     img.setAttribute('src',url);
             // });
-            for(let i = 0; i< elements.length; i++){
-                elements[i].setAttribute('src',url);
+            for (let i = 0; i < elements.length; i++) {
+                elements[i].setAttribute('src', url);
             }
             //elements.setAttribute('src', url);
 

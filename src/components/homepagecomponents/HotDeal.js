@@ -1,13 +1,6 @@
 import '../../css/Some.css'
 import {useState} from 'react';
-import {
-    Carousel,
-    CarouselItem,
-    CarouselControl,
-    CarouselIndicators,
-    CarouselCaption,
-    Button
-} from 'reactstrap';
+import {Button, Carousel, CarouselCaption, CarouselControl, CarouselIndicators, CarouselItem} from 'reactstrap';
 import {ITEMS} from '../../shared/hotDealData';
 
 

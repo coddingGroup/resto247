@@ -1,5 +1,5 @@
 import React from 'react';
-import {Card, CardBody, Row, Col, CardHeader, CardFooter, Button} from 'reactstrap';
+import {Button, Card, CardBody, CardFooter, Col, Row} from 'reactstrap';
 
 const DairyEarning = () => {
 

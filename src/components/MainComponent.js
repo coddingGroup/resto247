@@ -4,42 +4,43 @@ import DishDetail from './DishdetailComponent';
 import Contact from "./ContactComponent";
 import Footer from "./FooterComponent";
 import Home from "./HomeComponent";
-import {Switch, Route, Redirect, withRouter} from 'react-router-dom';
+import {Redirect, Route, Switch, withRouter} from 'react-router-dom';
 import {connect} from "react-redux";
 import About from './AboutComponent';
 import {
-    postComment,
-    postFeedback,
-    fetchDishes,
-    fetchResources,
-    fetchRecommanded,
+    addResourcesReport,
+    addToCart,
+    changeFlippingCardSaveBehavior,
     fetchComments,
+    fetchDishes,
     fetchHotdeals,
     fetchOutOfStockProducts,
-    addToCart,
-    removeToCart,
+    fetchRecommanded,
+    fetchResources,
+    fetchWaiters,
+    googleLogin,
+    increaseStock,
     loginUser,
-    logoutUser,uploadProduct,uploadResource,
-    googleLogin, fetchWaiters,
-    addResourcesReport,updateProduct,uploadMiscellaneous,
-    increaseStock, signUp,changeFlippingCardSaveBehavior,pushInvoice
+    logoutUser,
+    postComment,
+    postFeedback,
+    pushInvoice,
+    removeToCart,
+    signUp,
+    updateProduct,
+    uploadMiscellaneous,
+    uploadProduct,
+    uploadResource
 } from "../redux/ActionCreators";
-import {changeDailyInvoices,
-
-    changeDailyDetailsInvoices} from "../redux/ActionCreator2";
+import {changeDailyDetailsInvoices, changeDailyInvoices, changeDailyStockUp} from "../redux/ActionCreator2";
 import {actions} from "react-redux-form";
-import {TransitionGroup, CSSTransition} from "react-transition-group";
+import {CSSTransition, TransitionGroup} from "react-transition-group";
 import Login from "./Login";
 import SignUp from "./SignUp";
 import WiterHome from './Receptions/WiterHome';
 import Navigation from './Navigation';
-import Dashboard from './Manager/Reports/Dashboard';
 import MainManager from './Manager/Main';
-import IncreaseProduct from "./Manager/Products/IncreaseProduct";
-import * as ActionTypes from "../redux/ActionTypes";
-import {quantity} from "../redux/Forms";
 import '../css/styles.css';
-import {DailyInvoiceDetails} from "../redux/others/dailyInvoiceDetails";
 
 const mapStateToProps = state => {
     return {
@@ -57,22 +58,24 @@ const mapStateToProps = state => {
         waiters: state.waiters,
         miscellaneous: state.miscellaneous,
         dailyInvoices: state.dailyInvoices,
-        dailyInvoiceDetails:state.dailyInvoiceDetails
+        dailyInvoiceDetails: state.dailyInvoiceDetails,
+        dailyStockUp: state.dailyStockUp
     }
 }
 
 const mapDispatchToProps = (dispatch) => ({
-    changeDailyDetailsInvoices:(stateDate,endDate) =>dispatch(changeDailyDetailsInvoices(stateDate,endDate)),
-    changeDailyInvoices:(startDate, endDate) => dispatch(changeDailyInvoices(startDate,endDate)),
-    uploadMiscellaneous: (values,proof)=>dispatch(uploadMiscellaneous(values,proof)),
-    uploadResource: (values,image) =>dispatch(uploadResource(values,image)),
-    uploadProduct: (values,image) =>dispatch(uploadProduct(values,image)),
-    pushInvoice: (receptionistName, waiterName,clientName,paymentStatus,totalPrice,orders) =>dispatch(pushInvoice(receptionistName, waiterName,clientName,paymentStatus,totalPrice,orders)),
+    changeDailyStockUp: (startDate, endDate) => dispatch(changeDailyStockUp(startDate, endDate)),
+    changeDailyDetailsInvoices: (stateDate, endDate) => dispatch(changeDailyDetailsInvoices(stateDate, endDate)),
+    changeDailyInvoices: (startDate, endDate) => dispatch(changeDailyInvoices(startDate, endDate)),
+    uploadMiscellaneous: (values, proof) => dispatch(uploadMiscellaneous(values, proof)),
+    uploadResource: (values, image) => dispatch(uploadResource(values, image)),
+    uploadProduct: (values, image) => dispatch(uploadProduct(values, image)),
+    pushInvoice: (receptionistName, waiterName, clientName, paymentStatus, totalPrice, orders) => dispatch(pushInvoice(receptionistName, waiterName, clientName, paymentStatus, totalPrice, orders)),
     fetchWaiters: () => dispatch(fetchWaiters()),
-    addResourcesReport: (resourceId, unitPrice,quantity,from,name) => dispatch(addResourcesReport(resourceId, unitPrice,quantity,from,name)),
-    changeFlippingCardSaveBehavior:(behavior) => dispatch(changeFlippingCardSaveBehavior(behavior)),
-    signUp:(value, typeOfUser) => dispatch(signUp(value, typeOfUser)),
-    increaseStock:(resourceId, unitPrice,quantity,from,name)=>dispatch(increaseStock(resourceId,unitPrice,quantity,from,name)),
+    addResourcesReport: (resourceId, unitPrice, quantity, from, name) => dispatch(addResourcesReport(resourceId, unitPrice, quantity, from, name)),
+    changeFlippingCardSaveBehavior: (behavior) => dispatch(changeFlippingCardSaveBehavior(behavior)),
+    signUp: (value, typeOfUser) => dispatch(signUp(value, typeOfUser)),
+    increaseStock: (resourceId, unitPrice, quantity, from, name) => dispatch(increaseStock(resourceId, unitPrice, quantity, from, name)),
     addToCart: (item) => dispatch(addToCart(item)),
     removeToCart: (removeId) => dispatch(removeToCart(removeId)),
     postComment: (dishId, rating, author, comment) => dispatch(postComment(dishId, rating, author, comment)),
@@ -151,6 +154,7 @@ class Main extends Component {
 
 
     }
+
     componentWillUnmount() {
         this.props.logoutUser();
     }
@@ -193,16 +197,16 @@ class Main extends Component {
 
 
         };
-        const PrivateRoute = ({ component: Component, ...rest }) => (
+        const PrivateRoute = ({component: Component, ...rest}) => (
             <Route {...rest} render={(props) => (
                 // this.props.auth.isAuthenticated
-                localStorage.getItem('user') !=null
+                localStorage.getItem('user') != null
                     ? <Component {...props} />
                     : <Redirect to={{
                         pathname: '/home',
-                        state: { from: props.location }
-                    }} />
-            )} />
+                        state: {from: props.location}
+                    }}/>
+            )}/>
         );
         return (
             <div>
@@ -214,7 +218,7 @@ class Main extends Component {
                             userCollection={this.props.userCollection}
                             cart={this.props.cart}/>
                 <TransitionGroup>
-                    <CSSTransition  key={this.props.location.key}
+                    <CSSTransition key={this.props.location.key}
                                    appear
                                    classNames="fade" timeout={{enter: 300, exit: 200}}>
                         <Switch>
@@ -225,61 +229,53 @@ class Main extends Component {
                                    component={() => <Contact resetFeedbackForm={this.props.resetFeedbackForm}
                                                              postFeedback={this.props.postFeedback}/>}/>
                             <Route exact path="/aboutus" component={() => <About leaders={this.props.leaders}/>}/>
-                            <Route exact path="/login" component={() => <Login loginUser={this.props.loginUser} googleLogin={this.props.googleLogin} />}/>
+                            <Route exact path="/login" component={() => <Login loginUser={this.props.loginUser}
+                                                                               googleLogin={this.props.googleLogin}/>}/>
                             <PrivateRoute exact path="/witer" component={() => <WiterHome products={this.props.products}
-                                                                                   addToCart={this.props.addToCart}
-                                                                                   removeToCart={this.props.removeToCart}
+                                                                                          addToCart={this.props.addToCart}
+                                                                                          removeToCart={this.props.removeToCart}
                                                                                           waiters={this.props.waiters}
-                                                                                   cart={this.props.cart}
+                                                                                          cart={this.props.cart}
                                                                                           uploadMiscellaneous={this.props.uploadMiscellaneous}
                                                                                           pushInvoice={this.props.pushInvoice}
                             />}/>
 
-                            <PrivateRoute path="/management" component={() => <MainManager products={this.props.products}
+                            <PrivateRoute path="/management"
+                                          component={() => <MainManager products={this.props.products}
 
 
+                                                                        addToCart={this.props.addToCart}
+                                                                        removeToCart={this.props.removeToCart}
+                                                                        waiters={this.props.waiters}
+                                                                        cart={this.props.cart}
+                                                                        uploadMiscellaneous={this.props.uploadMiscellaneous}
+                                                                        pushInvoice={this.props.pushInvoice}
+                                                                        dailyStockUp={this.props.dailyStockUp}
+                                                                        changeDailyStockUp={this.props.changeDailyStockUp}
 
 
-
-
-                                                                                           addToCart={this.props.addToCart}
-                                                                                           removeToCart={this.props.removeToCart}
-                                                                                           waiters={this.props.waiters}
-                                                                                           cart={this.props.cart}
-                                                                                           uploadMiscellaneous={this.props.uploadMiscellaneous}
-                                                                                           pushInvoice={this.props.pushInvoice}
-
-
-
-
-
-
-
-                                                                                           uploadProduct={this.props.uploadProduct}
-                                                                                    resources={this.props.resources}
-                                                                                           uploadResource={this.props.uploadResource}
-                                                                                    increaseStock={this.props.increaseStock}
-                                                                                    searchingOutput={this.props.searchingOutput}
-                                                                                    searchText={this.props.searchText}
-                                                                                           dailyInvoices={this.props.dailyInvoices}
-                                                                                           dailyInvoiceDetails={this.props.dailyInvoiceDetails}
-                                                                                           changeDailyDetailsInvoices={this.props.changeDailyDetailsInvoices}
-                                                                                           changeDailyInvoices={this.props.changeDailyInvoices}
-                                                                                           miscellaneous={this.props.miscellaneous}
-                                                                                           uploadMiscellaneous={this.props.uploadMiscellaneous}
-                                                                                           updateProduct={this.props.updateProduct}
-                                                                                           addResourcesReport = {this.props.addResourcesReport}
-                                                                                           changeFlippingCardSaveBehavior={this.props.changeFlippingCardSaveBehavior}
-                                                                                           behaviors={this.props.behaviors}
-                                                                                    outOfStockProducts={this.props.outOfStockProducts}/>}
-
-
-
+                                                                        uploadProduct={this.props.uploadProduct}
+                                                                        resources={this.props.resources}
+                                                                        uploadResource={this.props.uploadResource}
+                                                                        increaseStock={this.props.increaseStock}
+                                                                        searchingOutput={this.props.searchingOutput}
+                                                                        searchText={this.props.searchText}
+                                                                        dailyInvoices={this.props.dailyInvoices}
+                                                                        dailyInvoiceDetails={this.props.dailyInvoiceDetails}
+                                                                        changeDailyDetailsInvoices={this.props.changeDailyDetailsInvoices}
+                                                                        changeDailyInvoices={this.props.changeDailyInvoices}
+                                                                        miscellaneous={this.props.miscellaneous}
+                                                                        uploadMiscellaneous={this.props.uploadMiscellaneous}
+                                                                        updateProduct={this.props.updateProduct}
+                                                                        addResourcesReport={this.props.addResourcesReport}
+                                                                        changeFlippingCardSaveBehavior={this.props.changeFlippingCardSaveBehavior}
+                                                                        behaviors={this.props.behaviors}
+                                                                        outOfStockProducts={this.props.outOfStockProducts}/>}
 
 
                             />
 
-                            <Route path="/signup" component={() => <SignUp signUp={this.props.signUp} />}/>
+                            <Route path="/signup" component={() => <SignUp signUp={this.props.signUp}/>}/>
 
 
                             <Redirect to="/home"/>

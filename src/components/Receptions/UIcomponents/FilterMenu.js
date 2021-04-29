@@ -1,5 +1,4 @@
 import React from 'react';
-import {Button} from 'reactstrap';
 import '../../../css/home.css';
 import WaiterCategoryButton from "../WaiterCategoryButton";
 

@@ -2,30 +2,26 @@ import React, {useState} from 'react';
 import '../css/Some.css';
 import Search from './homepagecomponents/Search';
 import {NavLink} from "react-router-dom";
-import {baseUrl} from "../shared/baseUrl";
 import AddedCart from "./cartComponent/AddedCart";
 import {
-    Collapse,
-    Navbar,
-    NavbarToggler,
-    NavbarBrand,
-    Nav,
-    NavItem,
-    UncontrolledDropdown,
-    DropdownToggle,
-    DropdownMenu,
-    DropdownItem,
     Button,
-    ButtonGroup,
-    Modal,
-    Label,
+    Collapse,
+    DropdownItem,
+    DropdownMenu,
+    DropdownToggle,
     Form,
     FormGroup,
     Input,
+    Label,
+    Modal,
     ModalBody,
     ModalHeader,
-    ModalFooter
-
+    Nav,
+    Navbar,
+    NavbarBrand,
+    NavbarToggler,
+    NavItem,
+    UncontrolledDropdown
 } from 'reactstrap';
 
 
@@ -56,29 +52,28 @@ let Navigation = (props) => {
     function handleLogout() {
         props.logoutUser();
     }
-    const handleChangeOfUsername = (event)=>{
+
+    const handleChangeOfUsername = (event) => {
         setUsername(event.target.value);
     }
-    const handleChangeOfPassword = (event) =>{
+    const handleChangeOfPassword = (event) => {
         setPassword(event.target.value);
     }
-    const handleChangeOfRemember = (event) =>{
+    const handleChangeOfRemember = (event) => {
         setRemember(event.target.value);
     }
-    const getLink = (typeOfUser) =>{
-        if(typeOfUser === 'receptionist'){
-            return  <NavItem><NavLink className="nav-link" to="/witer">
+    const getLink = (typeOfUser) => {
+        if (typeOfUser === 'receptionist') {
+            return <NavItem><NavLink className="nav-link" to="/witer">
                 <span className="fa fa-list fa-lg"> Waiter </span>
             </NavLink> </NavItem>
 
-        }
-        else if(typeOfUser === 'stockManager'){
-            return  <NavItem><NavLink className="nav-link" to="/management">
+        } else if (typeOfUser === 'stockManager') {
+            return <NavItem><NavLink className="nav-link" to="/management">
                 <span className="fa fa-list fa-lg"> Management </span>
             </NavLink></NavItem>
-        }
-        else{
-            return  <NavLink to="/profile"> Profile </NavLink>
+        } else {
+            return <NavLink to="/profile"> Profile </NavLink>
         }
     }
 
@@ -125,47 +120,44 @@ let Navigation = (props) => {
                 </Collapse>
 
 
-
-
-
-          <Nav className="ml-auto" navbar>
-                                <NavItem>
-                                    <Button className="bg-light">
-                                        <AddedCart cart={props.cart}/>
-                                    </Button>
-                                </NavItem>
-                                    { !(localStorage.getItem('user')!==null) ?
-                                        <Button outline onClick={toggleModal}>
-                                            <span className="fa fa-sign-in fa-lg"></span> Login
-                                            {props.auth.isFetching ?
-                                                <span className="fa fa-spinner fa-pulse fa-fw"></span>
-                                                : null
-                                            }
-                                        </Button>
-                                        :
-                                        <React.Fragment>
-                                            {getLink(props.userCollection.userCollection.typeOfUser)}
-                                            {/*<div className="navbar-text mr-3">*/}
-                                            {/*    {props.userCollection.userCollection.firstName === null? "no first" : props.userCollection.userCollection.firstName} */}
-                                            {/*</div>*/}
-                                            <NavItem>
-                                                <Button outline onClick={handleLogout}>
-                                                    <span className="fa fa-sign-out fa-lg"></span> Logout
-                                                    {props.auth.isFetching ?
-                                                        <span className="fa fa-spinner fa-pulse fa-fw"></span>
-                                                        : null
-                                                    }
-                                                </Button>
-                                            </NavItem>
-
-                                        </React.Fragment>
+                <Nav className="ml-auto" navbar>
+                    <NavItem>
+                        <Button className="bg-light">
+                            <AddedCart cart={props.cart}/>
+                        </Button>
+                    </NavItem>
+                    {!(localStorage.getItem('user') !== null) ?
+                        <Button outline onClick={toggleModal}>
+                            <span className="fa fa-sign-in fa-lg"></span> Login
+                            {props.auth.isFetching ?
+                                <span className="fa fa-spinner fa-pulse fa-fw"></span>
+                                : null
+                            }
+                        </Button>
+                        :
+                        <React.Fragment>
+                            {getLink(props.userCollection.userCollection.typeOfUser)}
+                            {/*<div className="navbar-text mr-3">*/}
+                            {/*    {props.userCollection.userCollection.firstName === null? "no first" : props.userCollection.userCollection.firstName} */}
+                            {/*</div>*/}
+                            <NavItem>
+                                <Button outline onClick={handleLogout}>
+                                    <span className="fa fa-sign-out fa-lg"></span> Logout
+                                    {props.auth.isFetching ?
+                                        <span className="fa fa-spinner fa-pulse fa-fw"></span>
+                                        : null
                                     }
+                                </Button>
+                            </NavItem>
+
+                        </React.Fragment>
+                    }
 
 
-                            </Nav>
+                </Nav>
 
 
-                    {/* <a href="" data-toggle="modal" data-target= "#loginModal">
+                {/* <a href="" data-toggle="modal" data-target= "#loginModal">
                         <span class="fa fa-sign-in"></span> Login
                     </a> */}
             </Navbar>
@@ -178,28 +170,29 @@ let Navigation = (props) => {
                             <Input type="text" id="username" name="username"
                                    value={username}
                                    onChange={handleChangeOfUsername}
-                                    />
+                            />
                         </FormGroup>
                         <FormGroup>
                             <Label htmlFor="password">Password</Label>
                             <Input type="password" id="password" name="password"
                                    value={password}
                                    onChange={handleChangeOfPassword}
-                                     />
+                            />
                         </FormGroup>
                         <FormGroup check>
                             <Label check>
                                 <Input type="checkbox" name="remember"
                                        value={remember}
                                        onChange={handleChangeOfRemember}
-                                         />
+                                />
                                 Remember me
                             </Label>
                         </FormGroup>
                         <Button type="submit" value="submit" color="primary">Login</Button>
                     </Form>
                     <p></p>
-                    <Button color="danger" onClick={handleGoogleLogin}><span className="fa fa-google fa-lg"></span> Login with Google</Button>
+                    <Button color="danger" onClick={handleGoogleLogin}><span
+                        className="fa fa-google fa-lg"></span> Login with Google</Button>
                 </ModalBody>
             </Modal>
         </div>

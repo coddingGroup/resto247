@@ -1,33 +1,14 @@
-import RenderCard3 from "../../homepagecomponents/RenderCard3";
-import {
-    Button,
-    Card,
-    CardBody,
-    CardText,
-    CardTitle,
-    Col,
-    Nav,
-    NavItem,
-    NavLink,
-    Row,
-    TabContent, Table,
-    TabPane
-} from "reactstrap";
+import {Col, Row, Table} from "reactstrap";
 import {Sticky, StickyContainer} from "react-sticky";
-import FilterMenu from "../../Receptions/UIcomponents/FilterMenu";
-import classnames from 'classnames';
-import ScrollView from "../../Receptions/UIcomponents/ScrollView";
-import AddedCarts from "../../cartComponent/AddedCart";
-import TableAddedCarts from "../../cartComponent/TableAddedCarts";
 import {useState} from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
 
 let numberOfItem = 12;
 const DailyInvoicesComponent = (props) => {
-    let allTr = props.dailyInvoices.dailyInvoices.map((invoice, index) =>{
-        return(
+    let allTr = props.dailyInvoices.dailyInvoices.map((invoice, index) => {
+        return (
             <tr>
-                <td>{index+1}</td>
+                <td>{index + 1}</td>
                 <td>{invoice.clientName}</td>
                 <td>{invoice.id}</td>
             </tr>
@@ -35,13 +16,10 @@ const DailyInvoicesComponent = (props) => {
     })
 
 
-
-
-
-    let initial_values = () =>{
-        let opElement1New = props.dailyInvoices.dailyInvoices.slice(0,numberOfItem);
-        let menu1New = opElement1New.map((invoice, index) =>{
-            return(
+    let initial_values = () => {
+        let opElement1New = props.dailyInvoices.dailyInvoices.slice(0, numberOfItem);
+        let menu1New = opElement1New.map((invoice, index) => {
+            return (
                 <tr key={invoice.id}>
                     <th> {index + 1}</th>
                     <td>{invoice.receptionistName}</td>
@@ -49,7 +27,7 @@ const DailyInvoicesComponent = (props) => {
                     <td> {invoice.clientName}</td>
                     <td> {invoice.totalPrice}</td>
                     <td> {invoice.paymentStatus} </td>
-                    <td> -- </td>
+                    <td> --</td>
                     <td>--</td>
                 </tr>
             )
@@ -59,7 +37,6 @@ const DailyInvoicesComponent = (props) => {
         const arrNew = [...menu1New];
         return arrNew;
     }
-
 
 
     const [activeTab, setActiveTab] = useState('1');
@@ -85,8 +62,6 @@ const DailyInvoicesComponent = (props) => {
     // );
 
 
-
-
     let funMenuNew = (dailyUsange = props.dailyInvoices.dailyInvoices, reset = false) => {
         let start;
         if (!reset) {
@@ -109,8 +84,8 @@ const DailyInvoicesComponent = (props) => {
             //
             // )
             setItemToStartOn(lastIndex);
-            let menuNew = opElement.map((invoice, index) =>{
-                return(
+            let menuNew = opElement.map((invoice, index) => {
+                return (
                     <tr key={invoice.id}>
 
                         <th> {++indexing}</th>
@@ -119,7 +94,7 @@ const DailyInvoicesComponent = (props) => {
                         <td> {invoice.clientName}</td>
                         <td> {invoice.totalPrice}</td>
                         <td> {invoice.paymentStatus} </td>
-                        <td> -- </td>
+                        <td> --</td>
                         <td>--</td>
                     </tr>
                 )
@@ -163,73 +138,75 @@ const DailyInvoicesComponent = (props) => {
         <div>
 
 
-                    <Row>
+            <Row>
 
-                        <Col sm="12">
-                            <div className="d-flex justify-content-center bg-warning mt-4">
-                                <h3 >Daily Invoices </h3>
-                            </div>
-                            <Table responsive hover>
+                <Col sm="12">
+                    <div className="d-flex justify-content-center bg-warning mt-4">
+                        <h3>Daily Invoices </h3>
+                    </div>
+                    <Table responsive hover>
 
-                            <StickyContainer>
+                        <StickyContainer>
 
-                                <Sticky>
-                                    {({
-                                          style,
+                            <Sticky>
+                                {({
+                                      style,
 
 
-                                          isSticky,
-                                          wasSticky,
-                                          distanceFromTop,
-                                          distanceFromBottom,
-                                          calculatedHeight
-                                      }) => (
-                                        // <header style={style}>
-                                        //     {<FilterMenu categories={keysToUse}
-                                        //                  category={category}
-                                        //                  changeProductToDisplay={changeProductToDisplay}
-                                        //                  setCategory={setCategory}/>
-                                        //
-                                        //     }
-                                        // </header>
+                                      isSticky,
+                                      wasSticky,
+                                      distanceFromTop,
+                                      distanceFromBottom,
+                                      calculatedHeight
+                                  }) => (
+                                    // <header style={style}>
+                                    //     {<FilterMenu categories={keysToUse}
+                                    //                  category={category}
+                                    //                  changeProductToDisplay={changeProductToDisplay}
+                                    //                  setCategory={setCategory}/>
+                                    //
+                                    //     }
+                                    // </header>
 
-                                        <thead>
-                                        <tr>
+                                    <thead>
+                                    <tr>
                                         <th> Id</th>
                                         <th> Receptionist Name</th>
                                         <th> Waiter Name</th>
                                         <th> Client Name</th>
                                         <th> Total Price</th>
-                                        <th> Payment Status </th>
-                                            <th> Create At </th>
-                                            <th>Update At</th>
+                                        <th> Payment Status</th>
+                                        <th> Create At</th>
+                                        <th>Update At</th>
 
-                                        </tr>
-                                        </thead>
+                                    </tr>
+                                    </thead>
 
-                                    )}
+                                )}
 
 
-                                </Sticky>
+                            </Sticky>
 
-                                <div>
+                            <div>
 
-                                    <div id="scrollableDivInDailyInvoice" className="card fixedDiv square scrollbar-cyan bordered-cyan">
-                                        <div className="card-body">
-                                            <div className="mt-2">
-                                                <InfiniteScroll
-                                                    scrollableTarget={"scrollableDivInDailyInvoice"}
-                                                    dataLength={items2.length}
-                                                    next={fetchMoreData}
-                                                    hasMore={hasMoreS}
-                                                    loader={<span className="fa fa-lg fa-spinner text-warning"><b>Loading</b></span>}
-                                                    endMessage={
-                                                        <p> no more results </p>
-                                                    }
+                                <div id="scrollableDivInDailyInvoice"
+                                     className="card fixedDiv square scrollbar-cyan bordered-cyan">
+                                    <div className="card-body">
+                                        <div className="mt-2">
+                                            <InfiniteScroll
+                                                scrollableTarget={"scrollableDivInDailyInvoice"}
+                                                dataLength={items2.length}
+                                                next={fetchMoreData}
+                                                hasMore={hasMoreS}
+                                                loader={<span
+                                                    className="fa fa-lg fa-spinner text-warning"><b>Loading</b></span>}
+                                                endMessage={
+                                                    <p> no more results </p>
+                                                }
 
-                                                >
-                                                    <div className="">
-                                                        <Table>
+                                            >
+                                                <div className="">
+                                                    <Table>
                                                         <thead>
                                                         <tr>
                                                             <th> Id</th>
@@ -237,13 +214,13 @@ const DailyInvoicesComponent = (props) => {
                                                             <th> Waiter Name</th>
                                                             <th> Client Name</th>
                                                             <th> Total Price</th>
-                                                            <th> Payment Status </th>
-                                                            <th> Create At </th>
+                                                            <th> Payment Status</th>
+                                                            <th> Create At</th>
                                                             <th>Update At</th>
 
                                                         </tr>
                                                         </thead>
-                                                    <tbody>
+                                                        <tbody>
                                                         {
 
                                                             items2.map(
@@ -255,21 +232,21 @@ const DailyInvoicesComponent = (props) => {
                                                                 }
                                                             )
                                                         }
-                                                    </tbody>
-                                                        </Table>
-                                                    </div>
-                                                </InfiniteScroll>
-                                            </div>
+                                                        </tbody>
+                                                    </Table>
+                                                </div>
+                                            </InfiniteScroll>
                                         </div>
                                     </div>
                                 </div>
+                            </div>
 
-                            </StickyContainer>
-                            </Table>
+                        </StickyContainer>
+                    </Table>
 
-                        </Col>
+                </Col>
 
-                    </Row>
+            </Row>
 
         </div>
     );

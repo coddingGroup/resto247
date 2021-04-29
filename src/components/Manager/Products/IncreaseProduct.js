@@ -1,14 +1,14 @@
-import React, {useEffect, useState} from 'react';
-import {Col, Container, Row} from "reactstrap";
+import React, {useState} from 'react';
 import OutOfStock from "./HorizontalOutOfStock";
 import Search from "../../homepagecomponents/Search";
 import SearchFilterInM from "../SearchFilterIn";
 import SearchOutputDisplay from "../SearchOutputDisplay";
-import Navigation from "../UIcomponents/SideNavigation";
 
-const IncreaseProduct = ({products, outOfStockProducts,
-                             opName,behaviors, changeFlippingCardSaveBehavior,handleSaving,
-                             increaseStock}) => {
+const IncreaseProduct = ({
+                             products, outOfStockProducts,
+                             opName, behaviors, changeFlippingCardSaveBehavior, handleSaving,
+                             increaseStock
+                         }) => {
 
     const [text, setText] = useState('');
     const [searchOutput, setSearchOutput] = useState([]);

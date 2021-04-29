@@ -1,7 +1,6 @@
-import React from "react";
+import React, {Component} from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
 import RenderCard3 from "../../homepagecomponents/RenderCard3";
-import {Component} from 'react';
 
 
 const style = {

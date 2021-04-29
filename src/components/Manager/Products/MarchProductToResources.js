@@ -1,19 +1,5 @@
-import React, {useEffect, useState} from 'react';
-import {
-    Button,
-    Card,
-    CardBody,
-    CardHeader,
-    CardImg,
-    CardSubtitle,
-    CardText,
-    CardTitle,
-    Col,
-    Container, Form, FormGroup, Input, Label,
-    Row
-} from "reactstrap";
-import Navigation from "../UIcomponents/SideNavigation";
-import {baseUrl} from "../../../shared/baseUrl";
+import React from 'react';
+import {Col, Form, Input, Label, Row} from "reactstrap";
 import '../../../css/march.css';
 import MarchProductsCard from "../marching/MarchProductsCard";
 

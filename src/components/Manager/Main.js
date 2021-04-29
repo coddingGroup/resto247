@@ -1,14 +1,10 @@
-import React, {useState} from 'react';
+import React from 'react';
 import Navigation from './UIcomponents/SideNavigation'
 import Dashboard from './Reports/Dashboard'
 import {Redirect, Route, Switch} from "react-router-dom";
-import IncreaseProduct from "./Products/IncreaseProduct";
 import SignUp from "../SignUp";
 import CircleMenu from "../Receptions/UIcomponents/CicleMenu";
-import {CSSTransition, TransitionGroup} from "react-transition-group";
 import StockManagement from "./Products/StockManagement";
-import {changeDailyInvoice} from "../../redux/ActionCreator2";
-import WiterHome from "../Receptions/WiterHome";
 
 
 const MainManager = (props) => {
@@ -63,6 +59,8 @@ const MainManager = (props) => {
                                                                  products={props.products}/>}/>
                         <Route exact path="/management/dashboard" component={() => <Dashboard
                             changeDailyDetailsInvoices={props.changeDailyDetailsInvoices}
+                            dailyStockUp={props.dailyStockUp}
+                            changeDailyStockUp={props.changeDailyStockUp}
                             addToCart={props.addToCart}
                             removeToCart={props.removeToCart}
                             waiters={props.waiters}

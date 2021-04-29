@@ -1,6 +1,6 @@
 import React from 'react';
 
-import {Card, CardBody, Row, Col, CardHeader, CardFooter, Button} from 'reactstrap';
+import {Card, CardBody, CardHeader, Col} from 'reactstrap';
 
 const DairyUsage = () => {
 

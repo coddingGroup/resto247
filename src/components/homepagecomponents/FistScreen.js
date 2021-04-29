@@ -1,12 +1,5 @@
 import '../../css/Some.css'
-import {
-    Carousel,
-    CarouselItem,
-    CarouselControl,
-    CarouselIndicators,
-    CarouselCaption,
-    Button
-} from 'reactstrap';
+import {Button, Carousel, CarouselCaption, CarouselControl, CarouselIndicators, CarouselItem} from 'reactstrap';
 
 import {useState} from 'react';
 import {ITEMS} from '../../shared/carouselHome';

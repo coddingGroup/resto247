@@ -16,7 +16,7 @@ export const Miscellaneous = (state = {
             return {...state, isLoading: false, errMess: action.payload}
         case ActionTypes.ADD_ONE_MISCELLANEOUS:
             let prev = state.miscellaneous;
-            return {...state, isLoading: false, errMess: null, products: [...prev,action.payload]};
+            return {...state, isLoading: false, errMess: null, products: [...prev, action.payload]};
 
         default:
             return state;

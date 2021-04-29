@@ -1,22 +1,4 @@
 import React, {Component} from "react";
-import {
-    Jumbotron,
-    Navbar,
-    Nav,
-    NavbarToggler,
-    Collapse,
-    NavItem,
-    NavbarBrand,
-    Button,
-    Modal,
-    ModalBody,
-    ModalHeader,
-    Form,
-    FormGroup,
-    Label,
-    Input
-} from 'reactstrap';
-import {NavLink} from "react-router-dom";
 
 import FirstScreen from './homepagecomponents/FistScreen'
 

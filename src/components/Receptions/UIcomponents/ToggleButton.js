@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-import {Collapse, Button, CardBody, Card} from 'reactstrap';
+import {Button, Collapse} from 'reactstrap';
 import '../../../css/home.css';
 import CircleMenu from "./CicleMenu";
 

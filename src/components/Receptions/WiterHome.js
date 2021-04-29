@@ -1,7 +1,4 @@
-import React, {useState} from 'react';
-
-
-import HotDeal from './UIcomponents/HotDeal';
+import React from 'react';
 import TabsMenu from './UIcomponents/TabsMenu'
 
 

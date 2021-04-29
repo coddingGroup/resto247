@@ -1,32 +1,27 @@
 import React, {useState} from 'react';
 import {
-    TabContent,
-    TabPane,
+    Button,
+    Card,
+    CardBody,
+    CardText,
+    CardTitle,
+    Col,
     Nav,
     NavItem,
     NavLink,
-    Card,
-    Button,
-    CardTitle,
-    CardText,
     Row,
-    Col,
-    CardBody,
-    CardFooter
+    TabContent,
+    TabPane
 } from 'reactstrap';
 import classnames from 'classnames';
-import ToggleButton from './ToggleButton';
 import TableAddedCarts from '../../cartComponent/TableAddedCarts'
 import AddedCarts from '../../cartComponent/AddedCart';
 import '../../../css/home.css';
 import FilterMenu from './FilterMenu';
 import {Sticky, StickyContainer} from 'react-sticky'
-import AllProducts from "../AllProducts";
-import PageComponent from './PaginationComponent';
 
 
 import ScrollView from './ScrollView';
-import WiterHome from "../WiterHome";
 import RenderCard3 from "../../homepagecomponents/RenderCard3";
 
 let numberOfItem = 12;
@@ -226,7 +221,8 @@ const TabsMenu = (props) => {
                                         <span class="fa fa-print mt-2 float-right"> </span>
                                     </h3>
                                 </CardTitle>
-                                <CardBody> <TableAddedCarts pushInvoice={props.pushInvoice} removeToCart={props.removeToCart} cart={props.cart}/>
+                                <CardBody> <TableAddedCarts pushInvoice={props.pushInvoice}
+                                                            removeToCart={props.removeToCart} cart={props.cart}/>
                                 </CardBody>
                             </Card>
 

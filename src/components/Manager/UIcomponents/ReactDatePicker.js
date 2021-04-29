@@ -1,7 +1,5 @@
-import React,{Component} from 'react'
-import {FormGroup, Label, FormText} from 'reactstrap'
-import {Alert} from 'reactstrap';
-import {getSoldProductDate} from "../../../functions/getSoldProductDate";
+import React, {Component} from 'react'
+import {Alert, FormGroup, FormText, Label} from 'reactstrap'
 
 var DatePicker = require("reactstrap-date-picker");
 
@@ -31,11 +29,12 @@ class ReactDatePicker extends Component {
         let timestamp = Date.parse(hiddenInputElement.getAttribute('data-formattedvalue'));
         let startDate = new Date(timestamp);
         let endDate = new Date(timestamp);
-        startDate.setHours(0,0,0,0);
-        endDate.setHours(23,59,59,0);
+        startDate.setHours(0, 0, 0, 0);
+        endDate.setHours(23, 59, 59, 0);
         console.log("dkfdf;lkaj;ljidklfjkgjkld;fj;ldkfj;lkdjfa;lkdjfa;lkjf;lakjf;lajf;jka;fja;lkjdf;ajf;akjf;ljf;l");
-        this.props.changeDailyInvoices(startDate,endDate);
-        this.props.changeDailyDetailsInvoices(startDate,endDate);
+        this.props.changeDailyInvoices(startDate, endDate);
+        this.props.changeDailyDetailsInvoices(startDate, endDate);
+        this.props.changeDailyStockUp(startDate, endDate);
     }
 
     render() {

@@ -1,6 +1,6 @@
-import React, {useState, useRef} from 'react';
-import {Button, Col, Form, FormGroup, Input, Label, Row, Table} from 'reactstrap';
-import ReactToPrint, {useReactToPrint} from 'react-to-print';
+import React, {useRef, useState} from 'react';
+import {Button, Col, Form, Input, Label, Row, Table} from 'reactstrap';
+import {useReactToPrint} from 'react-to-print';
 import '../../css/printStyle.css';
 
 const OneItem = ({item, itemKey, removeToCart}) => {
@@ -160,9 +160,9 @@ let TableAddedCarts = ({cart, removeToCart, pushInvoice}) => {
 
     let handleClick = (event) => {
         let keys = Object.keys(cart.items);
-        let order=[];
+        let order = [];
         let totalPrice = 0;
-        let totalQuantity=0;
+        let totalQuantity = 0;
         keys.forEach(key => {
             order = [...order, {
                 price: cart.items[key].price
@@ -172,7 +172,7 @@ let TableAddedCarts = ({cart, removeToCart, pushInvoice}) => {
             totalQuantity = totalQuantity + parseInt(cart.items[key].quantity);
             totalPrice = totalPrice + (cart.items[key].price * cart.items[key].quantity);
         })
-        pushInvoice(receptionistName, waiterName,clientName,paymentStatus,totalPrice,order);
+        pushInvoice(receptionistName, waiterName, clientName, paymentStatus, totalPrice, order);
 
         let orderDate = new Date();
         let hour = String(orderDate.getHours()).padStart(2, '0');

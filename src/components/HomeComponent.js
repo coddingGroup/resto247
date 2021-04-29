@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-import {TabContent, TabPane, Nav, NavItem, NavLink, Row, Col} from "reactstrap";
+import {Col, Nav, NavItem, NavLink, Row, TabContent, TabPane} from "reactstrap";
 import classnames from 'classnames';
 import {ITEMS} from '../shared/ProductsCategories';
 import '../css/home.css';
@@ -56,21 +56,22 @@ function Home(props) {
                         <Row>
                             <Col sm="12">
                                 <div className="row align-items-start">
-                                    <div className="col-12 col-md m-2">
-                                        <RenderCard item={props.dish}
-                                                    isLoading={props.dishesLoading}
-                                                    errMess={props.dishesErrMess}/>
-                                    </div>
-                                    <div className="col-12 col-md m-2">
-                                        <RenderCard item={props.promotion}
-                                                    isLoading={props.promosLoading}
-                                                    errMess={props.promosErrMess}/>
-                                    </div>
-                                    <div className="col-12 col-md m-2">
-                                        <RenderCard item={props.hotdeal}
-                                                    isLoading={props.hotdealsLoading}
-                                                    errMess={props.hotdealsErrMess}/>
-                                    </div>
+                                    Upcomming
+                                    {/*<div className="col-12 col-md m-2">*/}
+                                    {/*    <RenderCard item={props.dish}*/}
+                                    {/*                isLoading={props.dishesLoading}*/}
+                                    {/*                errMess={props.dishesErrMess}/>*/}
+                                    {/*</div>*/}
+                                    {/*<div className="col-12 col-md m-2">*/}
+                                    {/*    <RenderCard item={props.promotion}*/}
+                                    {/*                isLoading={props.promosLoading}*/}
+                                    {/*                errMess={props.promosErrMess}/>*/}
+                                    {/*</div>*/}
+                                    {/*<div className="col-12 col-md m-2">*/}
+                                    {/*    <RenderCard item={props.hotdeal}*/}
+                                    {/*                isLoading={props.hotdealsLoading}*/}
+                                    {/*                errMess={props.hotdealsErrMess}/>*/}
+                                    {/*</div>*/}
                                 </div>
                             </Col>
                         </Row>

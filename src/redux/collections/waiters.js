@@ -5,7 +5,7 @@ export const Waiters = (state = {
     errMess: null,
     waiters: []
 }, action) => {
-    switch(action.type) {
+    switch (action.type) {
         case ActionTypes.ADD_WAITERS:
             return {...state, isLoading: false, errMess: null, waiters: action.payload};
 

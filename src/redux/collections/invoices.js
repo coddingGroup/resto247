@@ -3,16 +3,16 @@ import * as ActionTypes from '../ActionTypes';
 export const Invoices = (state = {
     isLoading: true,
     errMess: null,
-    detailLoading:true,
-    detailErrMess:null,
+    detailLoading: true,
+    detailErrMess: null,
     invoices: {}
 }, action) => {
     let prevInv = state.invoices;
 
-    switch(action.type) {
+    switch (action.type) {
         case ActionTypes.ADD_INVOICE:
             prevInv[action.payload.id] = action.payload;
-            prevInv[action.payload.id].invoiceDetails=null;
+            prevInv[action.payload.id].invoiceDetails = null;
             return {...state, isLoading: false, errMess: null, invoices: prevInv};
 
         case ActionTypes.INVOICE_LOADING:
