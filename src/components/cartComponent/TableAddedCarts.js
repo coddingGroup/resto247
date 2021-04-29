@@ -5,7 +5,7 @@ import '../../css/printStyle.css';
 
 const OneItem = ({item, itemKey, removeToCart}) => {
 
-    const deleteItem = (event) => {
+    const deleteItem = () => {
         removeToCart(item.id);
     }
     return (
@@ -36,7 +36,7 @@ const TableItems = React.forwardRef(
     (props, ref) => {
 
 
-        if (props.cart.items.length == 0) {
+        if (props.cart.items.length === 0) {
             return <tr></tr>
         } else {
 
@@ -145,13 +145,13 @@ const TableItems = React.forwardRef(
 );
 let TableAddedCarts = ({cart, removeToCart, pushInvoice}) => {
     const [date, setDate] = useState('');
-    const [totalQuantity, setTotalQuantity] = useState(0);
-    const [totalPrice, setTotalPrice] = useState(0);
+    const [totalQuantity] = useState(0);
+    const [totalPrice] = useState(0);
     //const [order,setOrder] = useState(null);
     const [waiterName, setWaiterName] = useState('paterne');
     const [clientName, setClientName] = useState('client');
     const [paymentStatus, setPaymentStatus] = useState('paid');
-    const [receptionistName, setReceptionistName] = useState('aime');
+    const [receptionistName] = useState('aime');
     const componentRef = useRef();
     const handlePrint = useReactToPrint({
         content: () => componentRef.current,

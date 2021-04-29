@@ -21,7 +21,7 @@ function RenderMenuItem({dish, onClick}) {
 const Menu = (props) => {
     const menu = props.products.products.map((dish) => {
         return (
-            <div className="col-12 col-md-5 m-1">
+            <div key={dish.id} className="col-12 col-md-5 m-1">
                 <RenderMenuItem dish={dish}/>
             </div>
         );

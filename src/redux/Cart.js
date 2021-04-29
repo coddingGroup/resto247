@@ -34,11 +34,11 @@ export const Cart = (state = {
         case ActionTypes.REMOVE_TO_CART:
 
             let ads = addedIds.filter((value) => {
-                return (value != action.removeId);
+                return (value !== action.removeId);
             });
             let keys = Object.keys(prev);
             let deleteId = keys.filter(value => {
-                return prev[value].id == action.removeId
+                return prev[value].id === action.removeId
             })
             delete prev[deleteId[0]];
 

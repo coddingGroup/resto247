@@ -1,5 +1,4 @@
 import * as ActionTypes from './ActionTypes';
-import {baseUrl} from "../shared/baseUrl";
 import {auth, fireauth, firebasestore, firestore} from '../firebase/firebase';
 
 
@@ -1079,69 +1078,69 @@ export const addResources = (resources) => ({
 // });
 
 
-export const fetchRecommanded = () => (dispatch) => {
-    dispatch(recommandedLoading(true))
+// export const fetchRecommanded = () => (dispatch) => {
+//     dispatch(recommandedLoading(true))
+//
+//     return fetch(baseUrl + 'promotions')
+//         .then(response => {
+//                 if (response.ok) {
+//                     return response;
+//                 } else {
+//                     let error = new Error('Error ' + response.status + ': ' + response.statusText);
+//                     error.response = response;
+//                     throw error;
+//                 }
+//             },
+//             error => {
+//                 let err = new Error(error.message);
+//                 throw err;
+//             })
+//         .then(response => response.json())
+//         .then(recommanded => dispatch(addRecommanded(recommanded)))
+//         .catch(error => dispatch(recommandedFailed(error.message)));
+// }
+//
+// export const recommandedLoading = () => ({
+//     type: ActionTypes.RECOMMANDED_LOADING
+// });
+//
+// export const recommandedFailed = (errmess) => ({
+//     type: ActionTypes.RECOMMANDED_FAILED,
+//     payload: errmess
+// });
 
-    return fetch(baseUrl + 'promotions')
-        .then(response => {
-                if (response.ok) {
-                    return response;
-                } else {
-                    let error = new Error('Error ' + response.status + ': ' + response.statusText);
-                    error.response = response;
-                    throw error;
-                }
-            },
-            error => {
-                let err = new Error(error.message);
-                throw err;
-            })
-        .then(response => response.json())
-        .then(recommanded => dispatch(addRecommanded(recommanded)))
-        .catch(error => dispatch(recommandedFailed(error.message)));
-}
+// export const addRecommanded = (recommanded) => ({
+//     type: ActionTypes.ADD_RECOMMANDED,
+//     payload: recommanded
+// });
+//
 
-export const recommandedLoading = () => ({
-    type: ActionTypes.RECOMMANDED_LOADING
-});
-
-export const recommandedFailed = (errmess) => ({
-    type: ActionTypes.RECOMMANDED_FAILED,
-    payload: errmess
-});
-
-export const addRecommanded = (recommanded) => ({
-    type: ActionTypes.ADD_RECOMMANDED,
-    payload: recommanded
-});
-
-
-export const fetchHotdeals = () => (dispatch) => {
-    dispatch(hotdealsLoading(true))
-
-    return fetch(baseUrl + 'hotdeals')
-        .then(response => {
-                if (response.ok) {
-                    return response;
-                } else {
-                    let error = new Error('Error ' + response.status + ': ' + response.statusText);
-                    error.response = response;
-                    throw error;
-                }
-            })
-        .then(response => response.json())
-        .then(hotdeals => dispatch(addHotdeals(hotdeals)))
-        .catch(error => dispatch(hotdealsFailed(error.message)));
-}
-
-export const hotdealsLoading = () => ({
-    type: ActionTypes.HOTDEALS_LOADING
-});
-
-export const hotdealsFailed = (errmess) => ({
-    type: ActionTypes.HOTDEALS_FAILED,
-    payload: errmess
-});
+// export const fetchHotdeals = () => (dispatch) => {
+//     dispatch(hotdealsLoading(true))
+//
+//     return fetch(baseUrl + 'hotdeals')
+//         .then(response => {
+//                 if (response.ok) {
+//                     return response;
+//                 } else {
+//                     let error = new Error('Error ' + response.status + ': ' + response.statusText);
+//                     error.response = response;
+//                     throw error;
+//                 }
+//             })
+//         .then(response => response.json())
+//         .then(hotdeals => dispatch(addHotdeals(hotdeals)))
+//         .catch(error => dispatch(hotdealsFailed(error.message)));
+// }
+//
+// export const hotdealsLoading = () => ({
+//     type: ActionTypes.HOTDEALS_LOADING
+// });
+//
+// export const hotdealsFailed = (errmess) => ({
+//     type: ActionTypes.HOTDEALS_FAILED,
+//     payload: errmess
+// });
 
 export const addHotdeals = (hotdeals) => ({
     type: ActionTypes.ADD_HOTDEALS,

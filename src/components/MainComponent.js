@@ -13,9 +13,7 @@ import {
     changeFlippingCardSaveBehavior,
     fetchComments,
     fetchDishes,
-    fetchHotdeals,
     fetchOutOfStockProducts,
-    fetchRecommanded,
     fetchResources,
     fetchWaiters,
     googleLogin,
@@ -86,12 +84,6 @@ const mapDispatchToProps = (dispatch) => ({
     fetchComments: () => {
         dispatch(fetchComments())
     },
-    fetchRecommanded: () => {
-        dispatch(fetchRecommanded())
-    },
-    fetchHotdeals: () => {
-        dispatch(fetchHotdeals())
-    },
     postFeedback: (firstname, lastname, email, contactType, telnum, agree) => dispatch(postFeedback(firstname, lastname, email, contactType, telnum, agree)),
     fetchDishes: () => {
         dispatch(fetchDishes())
@@ -146,8 +138,6 @@ class Main extends Component {
     componentDidMount() {
         this.props.fetchDishes();
         this.props.fetchComments();
-        this.props.fetchRecommanded();
-        this.props.fetchHotdeals();
         this.props.fetchOutOfStockProducts();
         this.props.fetchResources();
         this.props.fetchWaiters();

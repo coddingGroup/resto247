@@ -4,33 +4,6 @@ import {Button, Col, Label, Modal, ModalBody, ModalHeader, Row} from "reactstrap
 import {Control, Errors, Form} from "react-redux-form";
 import {firebaseStorage} from "../../../firebase/firebase";
 
-let items = [
-    {
-        name: 'Add Product',
-        icon: 'fa fa-plus',
-        color: 'btn-success'
-    },
-    {
-        name: 'Add Product',
-        icon: 'fa fa-plus',
-        color: 'btn-success'
-    },
-    {
-        name: 'Edit Product',
-        icon: 'fa fa-pencil',
-        color: 'btn-primary'
-    },
-    {
-        name: 'Delete Product',
-        icon: 'fa fa-trash',
-        color: 'btn-danger'
-    },
-    {
-        name: 'Stock IncreaseProduct',
-        icon: 'fa fa-tasks',
-        color: 'btn-warning'
-    }
-];
 const CircleMenu = ({items, uploadProduct, uploadResource, uploadMiscellaneous}) => {
     //const [image, setImage] = useState('');
 
@@ -53,7 +26,7 @@ const CircleMenu = ({items, uploadProduct, uploadResource, uploadMiscellaneous})
     const maxLength = (len) => (val) => !(val) || (val.length <= len);
     const minLength = (len) => (val) => (val) && (val.length >= len);
     const isNumber = (val) => !isNaN(Number(val));
-    const validEmail = (val) => /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(val);  //regular expression
+    //const validEmail = (val) => /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(val);  //regular expression
 
     const [isModalOpen, setIsModalOpen] = useState(false);
     const togglerModal = () => setIsModalOpen(!isModalOpen);
@@ -114,7 +87,6 @@ const CircleMenu = ({items, uploadProduct, uploadResource, uploadMiscellaneous})
         });
     };
 
-    let length = items.length;
 
     return (
         <div class="panel panel-default ">

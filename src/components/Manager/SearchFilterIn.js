@@ -66,16 +66,16 @@ const SearchFilterInM = (props) => {
         }
 
 
-        let allNavItemNew = keysToUse.map(cathegory => {
+        let allNavItemNew = keysToUse.map(category => {
             return (
-                <NavItem>
+                <NavItem key={category+"category"}>
                     <NavLink
-                        className={classnames({active: activeTab === cathegory})}
+                        className={classnames({active: activeTab === category})}
                         onClick={() => {
-                            toggle(cathegory);
+                            toggle(category);
                         }}
                     >
-                        {cathegory}
+                        {category}
                     </NavLink>
                 </NavItem>
             )

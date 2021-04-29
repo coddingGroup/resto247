@@ -1,37 +1,11 @@
 import React, {Component} from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
-import RenderCard3 from "../../homepagecomponents/RenderCard3";
-
-
-const style = {
-    height: 30,
-    border: "1px solid green",
-    margin: 6,
-    padding: 8
-};
-let lastIndex = 12;
 
 class ReactInfiniteScroll extends Component {
 
     constructor(props) {
         super(props);
-        let opElement = this.props.products.slice(0, lastIndex);
-        let menu = opElement.map((product) => {
-            return (
-                <div className="">
-                    <RenderCard3 item={product}
-                                 key={product.id}
-                                 cart={this.props.cart}
-                                 addToCart={this.props.addToCart}
-                                 removeToCart={this.props.removeToCart}
 
-                    />
-                </div>
-            );
-        });
-        const arr = [
-            ...menu
-        ];
 
 
         // this.state = {

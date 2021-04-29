@@ -4,15 +4,14 @@ import classnames from 'classnames';
 import {ITEMS} from '../shared/ProductsCategories';
 import '../css/home.css';
 import Header from "./HeaderComponent";
-import RenderCard3 from './homepagecomponents/RenderCard3'
-import RenderCard from './homepagecomponents/RenderCard'
+import RenderCard3 from './homepagecomponents/RenderCard3';
 import SearchFilterInM from "./Manager/SearchFilterIn";
 
 
 function Home(props) {
 
     const [activeTab, setActiveTab] = useState('1');
-    const [cathegories, setCathegories] = useState(ITEMS);
+    const [cathegories] = useState(ITEMS);
 
     const toggle = tab => {
         if (activeTab !== tab) setActiveTab(tab);
