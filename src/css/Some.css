@@ -164,6 +164,7 @@
     border-radius: 7px;
     border: #FF7300 solid 2px;
     width: 16rem;
+    height: 330px;
 }
 
 .bottom-shadow {
@@ -192,4 +193,12 @@
 
 .descriptionPartOfCartD_block {
     opacity: 1;
+}
+.renderCard3-image{
+    max-height: 250px;
+    min-height: 200px;
+}
+.card3D{
+    position: absolute;
+    bottom: 2px;
 }

@@ -35,7 +35,7 @@ let sideBarItems = [
         to: '/management/Report'
     },
     {
-        name: 'Increase Product',
+        name: 'Products info',
         icon: 'fa fa-plus',
         color: 'btn-success',
         to: '/management/stock/products'

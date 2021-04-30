@@ -53,7 +53,7 @@ function RenderCard3({item, addToCart, cart}) {
             <div key={item.id} className="m-2">
                 <Card onMouseEnter={showDescription} onMouseLeave={hideDescription}
                       className="bottom-shadow cardInWaiter">
-                    <CardImg width="100%" src='' className={item.image} alt={item.image}/>
+                    <CardImg width="100%" src='' className={"renderCard3-image "+ item.image} alt=" "  />
                     <CardTitle className="" tag="h6">
                         <div className="p-1 nameInCardForWaiter">
                             {item.name}
@@ -70,16 +70,16 @@ function RenderCard3({item, addToCart, cart}) {
                     </div>
 
 
-                    <CardBody className="cardBodyForProductShow">
+                    <CardBody className="cardBodyForProductShow card3D">
 
                         <div className="">
                             <Form className="z-index-front" onSubmit={handleSubmit}>
-                                <Row>
-                                    <Col md={5}>
+                                <Row className="">
+                                    <Col md={5} className="">
                                         <Input onChange={changeValue} type="number" name="quantity" value={quantity}
                                                placeholder="qty:1"/>
                                     </Col>
-                                    <Col md={7}>
+                                    <Col md={7} className="">
                                         <Button type="submit" size="sm"
                                                 className="bottom-shadow bg-light add-to-cart-btn ">
                                             <i className="fa fa-lg fa-cart-plus  add-to-cart-icon"

@@ -49,7 +49,7 @@ const IncreaseProduct = ({
             <div className="row">
                 <div className="col-12">
                     <div className="d-flex justify-content-center">
-                        <h2> Increase {opName} </h2>
+                        <h2> {opName} </h2>
                     </div>
 
                     {outOfSt}

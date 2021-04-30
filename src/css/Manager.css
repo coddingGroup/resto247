@@ -61,6 +61,8 @@ body #root .page-container .card-container .back {
 }
 
 body #root .page-container .card-container .image-container {
+    max-height: 290px;
+    min-height: 200px;
     position: relative;
 }
 
@@ -137,4 +139,8 @@ body #root footer {
 
 .searchResult:hover {
     padding-bottom: 5em;
+}
+.card-image{
+    /*max-height: 290px;*/
+    /*min-height: 200px;*/
 }

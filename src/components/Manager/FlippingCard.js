@@ -36,7 +36,7 @@ const BlogCard = (props) => {
 
         <div onMouseEnter={flip} onMouseLeave={flip} className={"card-container" + (flipped ? " flipped" : "")}>
 
-            <Front oneProduct={props.oneProduct}/>
+            <Front  opName={props.opName} oneProduct={props.oneProduct}/>
 
             <Back oneProduct={props.oneProduct}
                   behaviors={props.behaviors}
@@ -50,12 +50,12 @@ const BlogCard = (props) => {
 }
 
 
-const Front = ({oneProduct}) => {
+const Front = ({oneProduct, opName}) => {
 
     return (
         <div className="front">
-            <ImageArea oneProduct={oneProduct}/>
-            <MainArea oneProduct={oneProduct}/>
+            <ImageArea  opName={opName} oneProduct={oneProduct}/>
+            <MainArea  opName={opName} oneProduct={oneProduct}/>
         </div>
     )
 }
@@ -225,26 +225,81 @@ let ImageArea = ({oneProduct}) => {
 }
 
 
-var MainArea = ({oneProduct}) => {
+var MainArea = ({oneProduct, opName}) => {
+
+    let field1 = null;
+    let field2 = null;
+    if(opName==='dailyUsage'){
+        field1 =<React.Fragment>
+            <div className={"col-6"}>
+            <Label className=""> total Price </Label>
+        </div>
+        <div className="col-5 offset-1">
+            <span className="badge badge-warning rounded"> {oneProduct.totalCost}</span>
+        </div>
+        </React.Fragment>
+
+        field2 = <React.Fragment>
+            <div className={"col-6"}>
+                <Label className=""> Quantity Left </Label>
+            </div>
+            <div className="col-5 offset-1">
+                <span className="badge badge-warning rounded"> {oneProduct.stockQuantity} </span>
+            </div>
+
+        </React.Fragment>
+    }else if(opName==='resources'){
+        field1 =<React.Fragment>
+            <div className={"col-6"}>
+                <Label className=""> total Price </Label>
+            </div>
+            <div className="col-5 offset-1">
+                <span className="badge badge-warning rounded"> {oneProduct.totalCost}</span>
+            </div>
+        </React.Fragment>
+
+        field2 = <React.Fragment>
+            <div className={"col-6"}>
+                <Label className=""> Quantity Left </Label>
+            </div>
+            <div className="col-5 offset-1">
+                <span className="badge badge-warning rounded"> {oneProduct.stockQuantity} </span>
+            </div>
+
+        </React.Fragment>
+
+    }else if(opName==='products'){
+        field1 =<React.Fragment>
+            <div className={"col-6"}>
+                <Label className="">  Price </Label>
+            </div>
+            <div className="col-5 offset-1">
+                <span className="badge badge-warning rounded"> {oneProduct.price}</span>
+            </div>
+        </React.Fragment>
+
+        field2 = <React.Fragment>
+            <div className={"col-6"}>
+                <Label className=""> Quantity Left </Label>
+            </div>
+            <div className="col-5 offset-1">
+                <span className="badge badge-warning rounded"> {oneProduct.quantity} </span>
+            </div>
+
+        </React.Fragment>
+
+    }
+
+
     return (
         <div className="main-area">
             <div className="blog-post">
                 <div className=" row date">
-                    <div className={"col-6"}>
-                        <Label className=""> Price </Label>
-                    </div>
-                    <div className="col-5 offset-1">
-                        <span className="badge badge-warning rounded"> {oneProduct.price}</span>
-                    </div>
+                    {field1}
 
                 </div>
                 <div className=" row date ">
-                    <div className={"col-6"}>
-                        <Label className=""> Quantity Left </Label>
-                    </div>
-                    <div className="col-5 offset-1">
-                        <span className="badge badge-warning rounded"> 20 </span>
-                    </div>
+                    {field2}
 
                 </div>
                 <p className="read-more">Hover to Edit...</p>
