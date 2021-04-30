@@ -214,6 +214,15 @@ export const setDailyResourcesReport = (dailyResourcesReport) => ({
 
 
 
+
+
+export const setDailyPopularProduct = (product) => ({
+    type: ActionTypes.SET_DAILY_POPULAR_PRODUCT,
+    popularProduct:product
+})
+
+
+
 export const changeDailyMiscellaneous = (startDate, endDate) => dispatch => {
     firestore.collection('miscellaneous').where('createdAt', '>=', startDate).where('createdAt', '<=', endDate).get()
         .then(snapshot => {

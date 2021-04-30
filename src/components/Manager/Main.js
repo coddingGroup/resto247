@@ -71,7 +71,7 @@ const MainManager = (props) => {
                             dailyResourcesReports={props.dailyResourcesReports}
                             changeDailyMiscellaneous={props.changeDailyMiscellaneous}
                             dailyMiscellaneous={props.dailyMiscellaneous}
-
+                            setDailyPopularProduct={props.setDailyPopularProduct}
                             uploadMiscellaneous={props.uploadMiscellaneous}
                             pushInvoice={props.pushInvoice}
                             products={props.products}

@@ -8,7 +8,8 @@ export const OtherDailyReports = (state = {
     totalInvoices:null,
     totalStockUpMoney:null,
     totalMiscellaneousMoney:null,
-    totalStockOutMoney:null
+    totalStockOutMoney:null,
+    popularProduct:null,
 }, action) => {
     switch (action.type) {
         case ActionTypes.ADD_DAILY_TOTAL_PRICE_AND_QUANTITY:
@@ -16,6 +17,9 @@ export const OtherDailyReports = (state = {
 
         case ActionTypes.ADD_DAILY_TOTAL_INVOICES:
             return {...state, isLoading: false, errMess: null, totalInvoices: action.totalInvoices};
+
+        case ActionTypes.SET_DAILY_POPULAR_PRODUCT:
+            return {...state, isLoading: false, errMess: null, popularProduct: action.popularProduct};
 
         case ActionTypes.ADD_DAILY_TOTAL_STOCK_OUT_MONEY:
             return {...state, isLoading: false, errMess: null, totalStockOutMoney: action.totalStockOutMoney};

@@ -44,6 +44,7 @@ const ProductSold = (props) => {
 
 
         });
+
         if (productToDisplay.length <= (lastIndex + 1)) {
             setHasMoreS(false);
         }

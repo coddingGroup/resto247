@@ -31,7 +31,7 @@ import {
     uploadResource
 } from "../redux/ActionCreators";
 import {changeDailyDetailsInvoices, changeDailyInvoices, changeDailyStockUp,changeDailyMiscellaneous,
-    changeNonPaidInvoices,
+    changeNonPaidInvoices,setDailyPopularProduct,
     changeDailyResourcesReports} from "../redux/ActionCreator2";
 import {actions} from "react-redux-form";
 import {CSSTransition, TransitionGroup} from "react-transition-group";
@@ -68,6 +68,7 @@ const mapStateToProps = state => {
 }
 
 const mapDispatchToProps = (dispatch) => ({
+    setDailyPopularProduct:(product) =>dispatch(setDailyPopularProduct(product)),
     changeNonPaidInvoices:(receptionistName) => dispatch(changeNonPaidInvoices(receptionistName)),
     changeDailyResourcesReports: (startDate,endDate) =>dispatch(changeDailyResourcesReports(startDate,endDate)),
     changeDailyMiscellaneous: (startDate,endDate) => dispatch(changeDailyMiscellaneous(startDate,endDate)),
@@ -316,6 +317,7 @@ class Main extends Component {
                                                                         dailyResourcesReports={this.props.dailyResourcesReports}
                                                                         changeDailyMiscellaneous={this.props.changeDailyMiscellaneous}
                                                                         dailyMiscellaneous={this.props.dailyMiscellaneous}
+                                                                        setDailyPopularProduct={this.props.setDailyPopularProduct}
 
                                                                         otherDailyReports={this.props.otherDailyReports}
                                                                         uploadProduct={this.props.uploadProduct}
