@@ -99,7 +99,7 @@ let Navigation = (props) => {
     return (
         <div className="container-fluid">
             <Navbar color="light" light expand="md">
-                <NavbarBrand href="/"><img src="http://localhost:3000/logo.jpg" width="40px" alt="logo"/> 24/7 Resto</NavbarBrand>
+                <NavbarBrand href="/"><img src="https://firebasestorage.googleapis.com/v0/b/resto247-2c1f2.appspot.com/o/images%2Flogo.jpg?alt=media&token=6296ddb1-0cda-4a2a-8956-50209dc3a992" width="40px" alt="logo"/> 24/7 Resto</NavbarBrand>
                 <NavbarToggler onClick={toggle}/>
                 <Collapse isOpen={isOpen} navbar>
                     <Nav className="mr-auto" navbar>

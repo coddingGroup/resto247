@@ -5,7 +5,7 @@ import {useState} from 'react';
 import {ITEMS} from '../../shared/carouselHome';
 
 
-var FirstScreen = (props) => {
+let FirstScreen = (props) => {
 
 
     const [activeIndex, setActiveIndex] = useState(0);
