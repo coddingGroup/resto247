@@ -5,11 +5,14 @@ export const changeDailyInvoices = (startDate, endDate) => dispatch => {
     firestore.collection('invoices').where('createdAt', '>=', startDate).where('createdAt', '<=', endDate).get()
         .then(snapshot => {
             let invoices = [];
+            let totalInvoices=0;
             snapshot.forEach(doc => {
                 let id = doc.id;
                 let data = doc.data();
                 invoices.push({id, ...data});
+                ++totalInvoices;
             });
+            dispatch(addTotalDailyInvoices(totalInvoices))
             return invoices;
         }).then((invoices) => {
         dispatch(setDailyInvoice(invoices));
@@ -21,6 +24,10 @@ export const changeDailyInvoices = (startDate, endDate) => dispatch => {
         })
 
 };
+export const addTotalDailyInvoices = (total) =>({
+    type: ActionTypes.ADD_DAILY_TOTAL_INVOICES,
+    totalInvoices: total
+})
 export const setDailyInvoice = (invoices) => ({
     type: ActionTypes.CHANGE_DAILY_INVOICE,
     payload: invoices
@@ -31,11 +38,14 @@ export const changeDailyStockUp = (startDate, endDate) => dispatch => {
     firestore.collection('stockUp').where('createdAt', '>=', startDate).where('createdAt', '<=', endDate).get()
         .then(snapshot => {
             let dailyStockUp = [];
+            let totalStockUpMoney=0;
             snapshot.forEach(doc => {
                 let id = doc.id;
                 let data = doc.data();
+                totalStockUpMoney = parseInt(data.unitPrice) * parseInt(data.quantity);
                 dailyStockUp.push({id, ...data});
             });
+            dispatch(addTotalStockUpMoney(totalStockUpMoney));
             return dailyStockUp;
         }).then((dailyStockUp) => {
         dispatch(setStockUp(dailyStockUp));
@@ -47,6 +57,10 @@ export const changeDailyStockUp = (startDate, endDate) => dispatch => {
         })
 
 };
+export const addTotalStockUpMoney = (totalStockUpMoney) =>({
+    type: ActionTypes.ADD_DAILY_TOTAL_STOCK_UP_MONEY,
+    totalStockUpMoney: totalStockUpMoney
+});
 export const setStockUp = (dailySockUp) => ({
     type: ActionTypes.CHANGE_DAILY_STOCK_UP,
     payload: dailySockUp
@@ -127,12 +141,12 @@ export const changeDailyDetailsInvoices = (startDate, endDate) => dispatch => {
                     quantity += parseInt(data.quantity);
                     dailyInvoicesDetails[productName][receptionistName] = {totalPrice: price, totalQuantity: quantity,id}
                 }
-                dispatch(addDailyTotalPriceAndQuantity(totalEarn,totalDayQuantity));
+
 
 
             });
 
-
+            dispatch(addDailyTotalPriceAndQuantity(totalEarn,totalDayQuantity));
             return dailyInvoicesDetails;
         }).then((dailyInvoicesDetails) => {
         let products = Object.keys(dailyInvoicesDetails);
@@ -169,11 +183,14 @@ export const changeDailyResourcesReports = (startDate, endDate) => dispatch => {
     firestore.collection('resourcesReports').where('createdAt', '>=', startDate).where('createdAt', '<=', endDate).get()
         .then(snapshot => {
             let dailyResourcesReport = [];
+            let totalStockOutMoney = 0;
             snapshot.forEach(doc => {
                 let id = doc.id;
                 let data = doc.data();
+                totalStockOutMoney += parseInt(data.unitPrice) * parseInt(data.quantity);
                 dailyResourcesReport.push({id, ...data});
             });
+            dispatch(addTotalDailyOutStockMoney(totalStockOutMoney));
             return dailyResourcesReport;
         }).then((dailyResourcesReport) => {
         dispatch(setDailyResourcesReport(dailyResourcesReport));
@@ -185,6 +202,11 @@ export const changeDailyResourcesReports = (startDate, endDate) => dispatch => {
         })
 
 };
+export const addTotalDailyOutStockMoney = total => ({
+   type:ActionTypes.ADD_DAILY_TOTAL_STOCK_OUT_MONEY,
+    totalStockOutMoney: total
+
+});
 export const setDailyResourcesReport = (dailyResourcesReport) => ({
     type: ActionTypes.CHANGE_DAILY_RESOURCES_REPORTS,
     payload: dailyResourcesReport
@@ -196,11 +218,14 @@ export const changeDailyMiscellaneous = (startDate, endDate) => dispatch => {
     firestore.collection('miscellaneous').where('createdAt', '>=', startDate).where('createdAt', '<=', endDate).get()
         .then(snapshot => {
             let dailyMiscellaneous = [];
+            let totalMiscellaneousMoney=0;
             snapshot.forEach(doc => {
                 let id = doc.id;
                 let data = doc.data();
+                totalMiscellaneousMoney += parseInt(data.price);
                 dailyMiscellaneous.push({id, ...data});
             });
+            dispatch(addTotalDailyMiscellaneousMoney(totalMiscellaneousMoney));
             return dailyMiscellaneous;
         }).then((dailyMiscellaneous) => {
         dispatch(setDailyMiscellaneous(dailyMiscellaneous));
@@ -216,3 +241,8 @@ export const setDailyMiscellaneous = (dailyMiscellaneous) => ({
     type: ActionTypes.CHANGE_DAILY_MISCELLANEOUS,
     payload: dailyMiscellaneous
 });
+
+export const addTotalDailyMiscellaneousMoney = (total) =>({
+    type:ActionTypes.ADD_DAILY_TOTAL_MISCELLANEOUS_MONEY,
+    totalMiscellaneousMoney:total
+})

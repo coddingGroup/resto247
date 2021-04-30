@@ -12,16 +12,16 @@ const ItemsSold = (props) => {
                     <Row>
                         <Col className="border-right border-danger">
                             <Row>
-                                <h1><i class="fa fa-shopping-cart "> </i> <br/></h1>
+                                <h1><i className={props.icon}> </i> <br/></h1>
                             </Row>
                             <Row>
-                                <div class="p-1 bg-secondary text-white mr-1 d-flex flex-fill "> Sold</div>
+                                <div className="p-1 bg-secondary text-white mr-1 d-flex flex-fill "> {props.name}</div>
                             </Row>
 
                         </Col>
                         <Col>
-                            <i class="badge badge-warning">Products</i>
-                            <h1> {props.otherDailyReports===undefined ? "--": props.otherDailyReports.totalQuantity} </h1>
+                            <i className={"badge " + props.color}>{props.unit}</i>
+                            <h1> {props.value} </h1>
                         </Col>
 
                     </Row>
