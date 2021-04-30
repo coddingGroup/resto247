@@ -50,3 +50,11 @@
 .fade-exit-active {
     opacity: 0;
 }
+
+.card_main{
+    height: 500px;
+}
+.card_main_image{
+    min-height: 300px;
+    max-height: 500px;
+}

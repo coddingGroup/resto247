@@ -1,6 +1,7 @@
 import {Card, CardBody, CardImg, CardSubtitle, CardText, CardTitle} from "reactstrap";
 import {Loading} from "../LoadingComponent";
 import {FadeTransform} from "react-animation-components";
+import "../../css/styles.css";
 
 export default function RenderCard({item, isLoading, errMess}) {
     // render featured cards
@@ -19,8 +20,8 @@ export default function RenderCard({item, isLoading, errMess}) {
                            transformProps={{
                                exitTransform: 'scale(0.5) translateY(-50%)'
                            }}>
-                <Card>
-                    <CardImg src={item.image} alt={item.name}/>
+                <Card className="card_main">
+                    <CardImg className="card_main_image" src={item.image} alt={item.name}/>
                     <CardBody>
                         <CardTitle>{item.name}</CardTitle>
                         {item.designation ? <CardSubtitle>{item.designation}</CardSubtitle> : null}

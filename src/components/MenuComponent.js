@@ -3,13 +3,15 @@ import {Breadcrumb, BreadcrumbItem, Card, CardImg, CardImgOverlay, CardTitle} fr
 import {Link} from "react-router-dom";
 import {Loading} from "./LoadingComponent";
 import {setImage} from "../functions/setImage";
+import '../css/styles.css'
 
 function RenderMenuItem({dish, onClick}) {
     setImage(dish.image);
     return (
-        <Card>
-            <Link to={`/menu/${dish.id}`}>
-                <CardImg width="100%" className={dish.image} src="" alt={dish.name}/>
+        <Card className="card_main">
+            {/*{`/menu/${dish.id}}*/}
+            <Link to="#">
+                <CardImg width="100%" className={dish.image + " card_main_image"} src="" alt={dish.name}/>
                 <CardImgOverlay>
                     <CardTitle>{dish.name}</CardTitle>
                 </CardImgOverlay>
