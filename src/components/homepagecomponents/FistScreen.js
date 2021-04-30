@@ -37,10 +37,23 @@ let FirstScreen = (props) => {
                           onExited={() => setAnimating(false)}
                           key={item.src}
             >
-                <img src={item.src} alt={item.altText}/>
+                <img className="carouselImageMain" src={item.src} alt={item.altText}/>
 
-                <CarouselCaption captionText={item.caption} captionHeader={<Button className="color3"><span
-                    className="fa fa-phone fa-lg"></span> {item.mainlink}</Button>}/>
+                <CarouselCaption captionText="" captionHeader={
+                    <section className="section-intro">
+                    <header>
+                    <h1 className="mb-5">247Resto</h1>
+                    </header>
+                    <div className="link-to-book-wrapper">
+                    <a className="link-to-book" href="#reservations">Order Now</a>
+                    </div>
+                    </section>
+
+
+                }
+
+                                 CaptionFooter={<p>Just test</p>}
+                />
             </CarouselItem>
         );
     });
