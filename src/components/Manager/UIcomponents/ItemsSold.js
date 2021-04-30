@@ -2,7 +2,7 @@ import React from 'react';
 
 import {Button, Card, CardBody, CardFooter, Col, Row} from 'reactstrap';
 
-const ItemsSold = () => {
+const ItemsSold = (props) => {
 
     return (
         <Card className="bg-light mt-2">
@@ -21,7 +21,7 @@ const ItemsSold = () => {
                         </Col>
                         <Col>
                             <i class="badge badge-warning">Products</i>
-                            <h1> 100 </h1>
+                            <h1> {props.otherDailyReports===undefined ? "--": props.otherDailyReports.totalQuantity} </h1>
                         </Col>
 
                     </Row>

@@ -13,6 +13,7 @@ import {Behaviors} from "./behaviors";
 import {Miscellaneous} from "./collections/miscellaneous";
 import {Invoices} from "./collections/invoices";
 import {Cart} from "./Cart";
+import {OtherDailyReports} from "./others/otherDailyReports";
 import {DailyMiscellaneous} from "./others/dailyMiscellaneous";
 import {DailyResourcesReports} from "./others/dailyResourcesReports";
 import {DailyStockUp} from "./others/dailyStockUp";
@@ -26,6 +27,7 @@ import {addMiscellaneous, addNewProduct, addNewResource, InitialFeedback, login,
 export const ConfigureStore = () => {
     const store = createStore(
         combineReducers({
+            otherDailyReports:OtherDailyReports,
             waiters: Waiters,
             userCollection: UserCollection,
             products: Products,

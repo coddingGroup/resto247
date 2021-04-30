@@ -66,7 +66,7 @@ const MainManager = (props) => {
                             waiters={props.waiters}
                             dailyInvoiceDetails={props.dailyInvoiceDetails}
                             cart={props.cart}
-
+                            otherDailyReports={props.otherDailyReports}
                             changeDailyResourcesReports={props.changeDailyResourcesReports}
                             dailyResourcesReports={props.dailyResourcesReports}
                             changeDailyMiscellaneous={props.changeDailyMiscellaneous}

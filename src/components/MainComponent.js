@@ -62,7 +62,8 @@ const mapStateToProps = state => {
         dailyStockUp: state.dailyStockUp,
         dailyResourcesReports:state.dailyResourcesReports,
         dailyMiscellaneous: state.dailyMiscellaneous,
-        nonPaidInvoices: state.nonPaidInvoices
+        nonPaidInvoices: state.nonPaidInvoices,
+        otherDailyReports:state.otherDailyReports,
     }
 }
 
@@ -316,7 +317,7 @@ class Main extends Component {
                                                                         changeDailyMiscellaneous={this.props.changeDailyMiscellaneous}
                                                                         dailyMiscellaneous={this.props.dailyMiscellaneous}
 
-
+                                                                        otherDailyReports={this.props.otherDailyReports}
                                                                         uploadProduct={this.props.uploadProduct}
                                                                         resources={this.props.resources}
                                                                         uploadResource={this.props.uploadResource}

@@ -2,7 +2,7 @@ import React from 'react';
 import DairyUsage from './DairyUsage';
 import DairyVisits from './DairyVisits';
 import ItemsSold from '../UIcomponents/ItemsSold';
-import DairyEarning from './DairyEarning';
+import DairyEarning from '../UIcomponents/DairyEarning';
 import ReactDatePicker from '../UIcomponents/ReactDatePicker';
 import {Table} from "reactstrap";
 import ProductSold from "./ProductSold";
@@ -37,10 +37,10 @@ const Dashboard = (props) => {
                     <DairyVisits/>
                 </div>
                 <div className="col-12 col-md-3">
-                    <ItemsSold/>
+                    <ItemsSold otherDailyReports={props.otherDailyReports} />
                 </div>
                 <div className="col-12 col-md-3">
-                    <DairyEarning/>
+                    <DairyEarning otherDailyReports={props.otherDailyReports} />
                 </div>
                 <div className="col-12 col-md-3">
                     <ItemsSold/>

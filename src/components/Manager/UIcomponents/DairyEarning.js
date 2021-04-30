@@ -1,7 +1,7 @@
 import React from 'react';
 import {Button, Card, CardBody, CardFooter, Col, Row} from 'reactstrap';
 
-const DairyEarning = () => {
+const DairyEarning = (props) => {
 
     return (
         <Card className="bg-light mt-2">
@@ -22,7 +22,7 @@ const DairyEarning = () => {
                         </Col>
                         <Col>
                             <i class="badge badge-warning">Rwf</i>
-                            <h1> 100 </h1>
+                            <h1> {props.otherDailyReports === undefined ? '--': props.otherDailyReports.totalEarn} </h1>
                         </Col>
 
                     </Row>

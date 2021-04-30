@@ -90,11 +90,15 @@ export const changeDailyDetailsInvoices = (startDate, endDate) => dispatch => {
     firestore.collection('invoiceDetails').where('createdAt', '>=', startDate).where('createdAt', '<=', endDate).get()
         .then(snapshot => {
             console.log("sec step");
+            let totalEarn = 0;
+            let totalDayQuantity=0;
             let dailyInvoicesDetails = {};
             snapshot.forEach(doc => {
                 console.log("third step");
                 let id = doc.id;
                 let data = doc.data();
+                totalDayQuantity += parseInt(data.quantity);
+                totalEarn += parseInt(data.price);
                 let productName = (data.productName).replaceAll(' ', '_');
                 let receptionistName = (data.receptionistName).replaceAll(' ', '_');
                 let R_existing = dailyInvoicesDetails[productName];
@@ -123,6 +127,7 @@ export const changeDailyDetailsInvoices = (startDate, endDate) => dispatch => {
                     quantity += parseInt(data.quantity);
                     dailyInvoicesDetails[productName][receptionistName] = {totalPrice: price, totalQuantity: quantity,id}
                 }
+                dispatch(addDailyTotalPriceAndQuantity(totalEarn,totalDayQuantity));
 
 
             });
@@ -152,7 +157,11 @@ export const setProductsInDailyInvoiceDetails = (products) => ({
     payload: products
 });
 
-
+export const addDailyTotalPriceAndQuantity = (totalEarn, totalQuantity) =>({
+    type: ActionTypes.ADD_DAILY_TOTAL_PRICE_AND_QUANTITY,
+    totalEarn: totalEarn,
+    totalQuantity:totalQuantity
+})
 
 
 
