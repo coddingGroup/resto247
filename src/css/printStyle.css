@@ -2,19 +2,37 @@
     .allContentToPrint {
 
         width: 100%;
+        margin: 30px;
     }
 
     tr {
         border: none;
 
     }
+    .inCenter{
+        justify-content: center;
+        display: flex;
+    }
 
     .dontPrint {
         display: none;
     }
-
-    .changeFont {
-        font-size: 70px;
+    .showWenPrint{
+        display: block;
     }
 
+    .changeFont {
+        font-size: 60px;
+    }
+    .changeFont2{
+        font-size: 40px;
+    }
+
+
+}
+
+@media screen {
+    .showWenPrint{
+        display: none;
+    }
 }

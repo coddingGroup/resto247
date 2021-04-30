@@ -49,13 +49,13 @@ class Contact extends Component {
                     <div className="col-12 col-sm-4 offset-sm-1">
                         <h5>Our Address</h5>
                         <address>
-                            121, Clear Water Bay Road<br/>
-                            Clear Water Bay, Kowloon<br/>
-                            HONG KONG<br/>
-                            <i className="fa fa-phone"></i>: +852 1234 5678<br/>
-                            <i className="fa fa-fax"></i>: +852 8765 4321<br/>
+                            KK 8 AVE Road<br/>
+                            1*58'56.8''S   30*06'12.5''E<br/>
+                            KICUKIRO<br/>
+                            <i className="fa fa-phone"></i>: +250 7828 76343<br/>
+                            <i className="fa fa-fax"></i>: +250 7828 76343<br/>
                             <i className="fa fa-envelope"></i>: <a
-                            href="mailto:confusion@food.net">confusion@food.net</a>
+                            href="mailto:habimanamoise11@gmail.com">habimanamoise11@gmail.com</a>
                         </address>
                     </div>
                     <div className="col-12 col-sm-6 offset-sm-1">
@@ -63,10 +63,10 @@ class Contact extends Component {
                     </div>
                     <div className="col-12 col-sm-11 offset-sm-1">
                         <div className="btn-group" role="group">
-                            <a role="button" className="btn btn-primary" href="tel:+250786388768"><i
+                            <a role="button" className="btn btn-primary" href="tel:++250 7828 76343"><i
                                 className="fa fa-phone"></i> Call</a>
                             <a href="www.skype.com" role="button" className="btn btn-info"><i className="fa fa-skype"></i> Skype</a>
-                            <a role="button" className="btn btn-success" href="mailto:paternenught@gmail.com"><i
+                            <a role="button" className="btn btn-success" href="mailto:habimanamoise11@gmail.com"><i
                                 className="fa fa-envelope-o"></i> Email</a>
                         </div>
                     </div>

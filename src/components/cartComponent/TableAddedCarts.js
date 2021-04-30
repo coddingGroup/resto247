@@ -82,14 +82,38 @@ const TableItems = React.forwardRef(
 
             return (
                 <div className="allContentToPrint" ref={ref}>
-                    <div className=" container-fluid d-none">
+                    <div className="changeFont2 container-fluid showWenPrint">
                         <div className="row justify-content-center ">
                             <h2> 24/7 Resto </h2>
                         </div>
 
+
                         <div className="row justify-content-center">
-                            <h2 className="mr-5"> Date</h2> {props.date}
+                            <div className="col">
+                                <b> Client : </b>
+                            <span className=""> {props.clientName} </span>
+                            </div> <div className="col">|     |</div>
+                            <div className="col">
+                                <b>Waiter : </b>
+                                <span className=""> {props.waiterName} </span>
+                            </div>
                         </div>
+
+                        <div className="row justify-content-center">
+                            <div className="col">
+                                <b>Receptionist : </b>
+                                <span> {JSON.parse(localStorage.getItem('userCollection')).firstName} </span>
+                            </div>
+                            <div className="col">
+                                |     |
+                            </div>
+
+                            <div className="col">
+                                <h2 className="mr-5"> Date</h2> {props.date}
+                            </div>
+                        </div>
+
+
                     </div>
                     <Table striped>
                         <thead>
@@ -114,36 +138,46 @@ const TableItems = React.forwardRef(
 
                         </tbody>
                     </Table>
-                    <div className="mt-5">
+                    <div className="mt-5 changeFont">
 
 
                         <Form>
                             <Row>
                                 <Col>
                                     <Row className="form-group">
-                                        <Col><Label>Client Name</Label></Col>
+                                        <Col><Label className="dontPrint"><b>Client Name</b></Label>
+                                        </Col>
                                         <Col>
-                                            <Input name='clientName' value={props.clientName} onChange={handleChange} type="text"/>
+                                            <Input className="dontPrint" name='clientName' value={props.clientName} onChange={handleChange} type="text"/>
+
 
                                         </Col>
                                     </Row>
                                     <Row>
-                                        <Col>Order Paid</Col>
                                         <Col>
-                                            <Input name="paymentStatus" value={props.paymentStatus} onChange={handleChange} type="checkBox"/>
+                                            <Label className="dontPrint" > <b> Order is paid ?</b></Label>
+                                        </Col>
+                                        <Col>
+                                            <Input className="dontPrint" name="paymentStatus" value={props.paymentStatus} onChange={handleChange} type="checkBox"/>
+
                                         </Col>
 
+
+                                    </Row>
+                                    <Row>
+                                        <span className="showWenPrint inCenter"><b> order is  {props.paymentStatus}</b> </span>
                                     </Row>
                                 </Col>
                                 <Col>
                                     <Row className="form-group">
                                         <Col>
-                                            <Label> <b>waiter</b> </Label>
+                                            <Label className="dontPrint"> <b>waiter</b> </Label>
                                         </Col>
                                         <Col>
-                                            <select name="waiterName" onChange={handleChange} value={props.waiterName}>
+                                            <select className="dontPrint" name="waiterName" onChange={handleChange} value={props.waiterName}>
                                                 {waitersInOptions}
                                             </select>
+
                                         </Col>
 
 
@@ -179,6 +213,17 @@ let TableAddedCarts = ({cart, removeToCart, pushInvoice,waiters}) => {
 
 
     let handleClick = (event) => {
+
+        let orderDate = new Date();
+        let hour = String(orderDate.getHours()).padStart(2, '0');
+        let min = String(orderDate.getMinutes()).padStart(2, '0');
+        let dd = String(orderDate.getDate()).padStart(2, '0');
+        let mm = String(orderDate.getMonth() + 1).padStart(2, '0'); //January is 0!
+        let yyyy = orderDate.getFullYear();
+
+        orderDate = mm + '/' + dd + '/' + yyyy + ' ' + hour + ':' + min;
+        setDate(orderDate);
+        handlePrint();
         let keys = Object.keys(cart.items);
         let order = [];
         let totalPrice = 0;
@@ -194,16 +239,6 @@ let TableAddedCarts = ({cart, removeToCart, pushInvoice,waiters}) => {
         })
         pushInvoice(userCollection.firstName, waiterName, clientName, paymentStatus, totalPrice, order);
 
-        let orderDate = new Date();
-        let hour = String(orderDate.getHours()).padStart(2, '0');
-        let min = String(orderDate.getMinutes()).padStart(2, '0');
-        let dd = String(orderDate.getDate()).padStart(2, '0');
-        let mm = String(orderDate.getMonth() + 1).padStart(2, '0'); //January is 0!
-        let yyyy = orderDate.getFullYear();
-
-        orderDate = mm + '/' + dd + '/' + yyyy + ' ' + hour + ':' + min;
-        setDate(orderDate);
-        handlePrint();
     }
 
     return (
