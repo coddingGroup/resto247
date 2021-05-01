@@ -31,7 +31,7 @@ import {
     uploadResource
 } from "../redux/ActionCreators";
 import {changeDailyDetailsInvoices, changeDailyInvoices, changeDailyStockUp,changeDailyMiscellaneous,
-    changeNonPaidInvoices,setDailyPopularProduct,
+    changeNonPaidInvoices,setDailyPopularProduct,fetchMatchResourceToProducts,
     changeDailyResourcesReports} from "../redux/ActionCreator2";
 import {actions} from "react-redux-form";
 import {CSSTransition, TransitionGroup} from "react-transition-group";
@@ -64,10 +64,12 @@ const mapStateToProps = state => {
         dailyMiscellaneous: state.dailyMiscellaneous,
         nonPaidInvoices: state.nonPaidInvoices,
         otherDailyReports:state.otherDailyReports,
+        marchResourceToProducts: state.marchResourceToProducts
     }
 }
 
 const mapDispatchToProps = (dispatch) => ({
+    fetchMatchResourceToProducts: () => dispatch(fetchMatchResourceToProducts()),
     setDailyPopularProduct:(product) =>dispatch(setDailyPopularProduct(product)),
     changeNonPaidInvoices:(receptionistName) => dispatch(changeNonPaidInvoices(receptionistName)),
     changeDailyResourcesReports: (startDate,endDate) =>dispatch(changeDailyResourcesReports(startDate,endDate)),
@@ -151,6 +153,7 @@ class Main extends Component {
         this.props.fetchOutOfStockProducts();
         this.props.fetchResources();
         this.props.fetchWaiters();
+        this.props.fetchMatchResourceToProducts();
 
 
     }
@@ -336,7 +339,9 @@ class Main extends Component {
                                                                         addResourcesReport={this.props.addResourcesReport}
                                                                         changeFlippingCardSaveBehavior={this.props.changeFlippingCardSaveBehavior}
                                                                         behaviors={this.props.behaviors}
-                                                                        outOfStockProducts={this.props.outOfStockProducts}/>}
+                                                                        outOfStockProducts={this.props.outOfStockProducts}
+                                                                        marchResourceToProducts={this.props.marchResourceToProducts}
+                                          />}
 
 
                             />

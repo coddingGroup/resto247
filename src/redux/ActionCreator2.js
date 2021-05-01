@@ -255,3 +255,41 @@ export const addTotalDailyMiscellaneousMoney = (total) =>({
     type:ActionTypes.ADD_DAILY_TOTAL_MISCELLANEOUS_MONEY,
     totalMiscellaneousMoney:total
 })
+
+export const fetchMatchResourceToProducts = () =>dispatch =>{
+   return  firestore.collection('marchResourceToProducts').get()
+        .then(snapshot =>{
+            let marchResourceToProducts = [];
+            snapshot.forEach(doc =>{
+                let id = doc.id;
+                let data = doc.data();
+                let resourceData = {};
+                let resourceId = data.resourceId;
+                firestore.collection('resources').doc(resourceId).get()
+                    .then(document =>{
+                        if(document.exists){
+                            resourceData = document.data();
+                            console.log(JSON.stringify(resourceData));
+                        }
+                        else{
+                            console.log("data not found " +data.resourceId);
+                        }
+                    }).catch(error =>{
+                    console.log('error occur ' + error.message);
+                });
+                marchResourceToProducts.push({id,resourceData, ...data});
+
+            });
+            return marchResourceToProducts;
+        }).then(marchResourceToProducts =>{
+            console.log(JSON.stringify(marchResourceToProducts));
+            dispatch(setMarchResourceToProducts(marchResourceToProducts));
+    }).catch(error =>{
+        console.log(error.message);
+    })
+}
+
+export const setMarchResourceToProducts = (marchResourceToProducts) =>({
+   type:ActionTypes.SET_MARCH_RESOURCE_TO_PRODUCTS,
+   payload:marchResourceToProducts
+});

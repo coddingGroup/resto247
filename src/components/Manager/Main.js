@@ -56,7 +56,9 @@ const MainManager = (props) => {
                                                                  updateProduct={props.updateProduct}
                                                                  addResourcesReport={props.addResourcesReport}
                                                                  changeFlippingCardSaveBehavior={props.changeFlippingCardSaveBehavior}
-                                                                 products={props.products}/>}/>
+                                                                 products={props.products}
+                                                                 marchResourceToProducts={props.marchResourceToProducts}
+                               />}/>
                         <Route exact path="/management/dashboard" component={() => <Dashboard
                             changeDailyDetailsInvoices={props.changeDailyDetailsInvoices}
                             dailyStockUp={props.dailyStockUp}

@@ -969,7 +969,7 @@ export const fetchResources = () => (dispatch) => {
             let resources = [];
             snapshot.forEach(doc => {
                 const data = doc.data()
-                const id = doc.id
+                const id = doc.id;
                 resources.push({id, ...data});
             });
             return resources;

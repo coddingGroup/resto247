@@ -1,7 +1,7 @@
 import {Redirect, Route, Switch} from "react-router-dom";
 import IncreaseProduct from "./IncreaseProduct";
 import React from "react";
-import MarchProductToResources from "./MarchProductToResources";
+import MarchProductToResources from "../marching/MarchProductToResources";
 
 
 let StockManagement = (props) => {
@@ -52,7 +52,7 @@ let StockManagement = (props) => {
                                                              increaseStock={props.increaseStock}
                                                              products={props.resources}/>}/> />}/>
                     <Route exact path="/management/stock/marchProductToResources"
-                           component={() => <MarchProductToResources/>}/>
+                           component={() => <MarchProductToResources marchResourceToProducts={props.marchResourceToProducts}/>}/>
 
                     <Redirect to="/management/stock/products"/>
                 </Switch>
