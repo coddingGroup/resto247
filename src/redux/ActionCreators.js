@@ -449,6 +449,7 @@ export const signUp = (values, typeOfUser) => (dispatch) => {
         .then((userCredential) => {
             // Signed in
             let user = userCredential.user;
+            return user;
             // firestore.collection('userCollection').add(
             //     {
             //         firstName: values.firstName,
@@ -465,32 +466,34 @@ export const signUp = (values, typeOfUser) => (dispatch) => {
             // })
             //
 
-            firestore.collection("userCollection").add({
-                firstName: values.firstName,
-                secondName: values.secondName,
-                tel: values.telNum,
-                typeOfUser: typeOfUser,
-                userId: user.uid
-            })
-                .then(docRef => {
-                    firestore.collection("userCollection").doc(docRef.id).get()
-                        .then(doc => {
-                            if (doc.exists) {
-                                const data = doc.data();
-                                const id = doc.id;
-                                // let userCollection = {id, ...data};
-                                dispatch(setUser(user, {id,...data}));
-                            } else {
-                                // doc.data() will be undefined in this case
-                                console.log("No such document!");
-                            }
-                        })
-                })
-                .catch(error => {
-                    console.log("signUp error  ", error.message);
-                    console.log('Yerrro\nError: ' + error.message);
-                })
+
+        }).then((user) => {
+        firestore.collection("userCollection").add({
+            firstName: values.firstName,
+            secondName: values.secondName,
+            tel: values.telNum,
+            typeOfUser: typeOfUser,
+            userId: user.uid
         })
+            .then(docRef => {
+                firestore.collection("userCollection").doc(docRef.id).get()
+                    .then(doc => {
+                        if (doc.exists) {
+                            const data = doc.data();
+                            const id = doc.id;
+                            // let userCollection = {id, ...data};
+                            dispatch(setUser(user, {id,...data}));
+                        } else {
+                            // doc.data() will be undefined in this case
+                            console.log("No such document!");
+                        }
+                    })
+            })
+            .catch(error => {
+                console.log("signUp error  ", error.message);
+                console.log('Yerrro\nError: ' + error.message);
+            })
+    })
         .catch((error) => {
             let errorCode = error.code;
             let errorMessage = error.message;
