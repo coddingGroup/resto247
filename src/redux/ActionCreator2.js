@@ -1,5 +1,6 @@
 import {firestore} from "../firebase/firebase";
 import * as ActionTypes from './ActionTypes';
+import {getResourceWithId} from "../functions/getResourceWithId";
 
 export const changeDailyInvoices = (startDate, endDate) => dispatch => {
     firestore.collection('invoices').where('createdAt', '>=', startDate).where('createdAt', '<=', endDate).get()
@@ -263,21 +264,8 @@ export const fetchMatchResourceToProducts = () =>dispatch =>{
             snapshot.forEach(doc =>{
                 let id = doc.id;
                 let data = doc.data();
-                let resourceData = {};
-                let resourceId = data.resourceId;
-                firestore.collection('resources').doc(resourceId).get()
-                    .then(document =>{
-                        if(document.exists){
-                            resourceData = document.data();
-                            console.log(JSON.stringify(resourceData));
-                        }
-                        else{
-                            console.log("data not found " +data.resourceId);
-                        }
-                    }).catch(error =>{
-                    console.log('error occur ' + error.message);
-                });
-                marchResourceToProducts.push({id,resourceData, ...data});
+
+                marchResourceToProducts.push({id, ...data});
 
             });
             return marchResourceToProducts;

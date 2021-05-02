@@ -24,40 +24,18 @@ const MarchProductToResources = (props) => {
     if(marchResourceToProducts !==undefined && marchResourceToProducts !==null)
     {
         prevMarched = (marchResourceToProducts).map(doc =>{
-            let resourceSide = (<div>
+            let resourceSide = (<div className="mb-3">
                 <div className="march shadow-lg">
                     <div className="marchBody">
-                        <div>
-                            <Card>
-                                <CardImg top width="100%" src="" className={doc.resourceData.image} alt="Card image cap" />
-                                <CardBody>
-                                    <CardTitle tag="h5">{doc.resourceName}</CardTitle>
-                                    <CardSubtitle tag="h6" className="mb-2 text-muted">{doc.resourceData.image}</CardSubtitle>
-                                    <CardText>{doc.resourceData.category}</CardText>
-                                    <Button>Button</Button>
-                                </CardBody>
-                            </Card>
-                        </div>
-
-                        <div>
-                            <h5><a href="index.html">{doc.resourceName}</a></h5>
-                            <div>
-                                <Form>
-                                    <Row className="form-group">
-                                        <Col>
-                                            <Label>
-                                                {doc.resourceQuantity}
-                                            </Label>
-                                        </Col>
-                                        <Col>
-                                            <Input className="form-control" type="number"/>
-                                        </Col>
-
-                                    </Row>
-
-                                </Form>
+                        <div className="">
+                            <h2 className="d-flex justify-content-center color2 pb-1"> Resources</h2>
+                            <div className="resourcesPart">
+                                <img width="100%" src="" className={doc.image +" marchImage mr-2"} alt="Card image cap" />
+                                <div className="marchDescription">
+                                    <h3 tag="h5">Name : {doc.resourceName}</h3>
+                                    <h5 tag="h6" className="mb-2 text-muted">Quantity: {doc.resourceQuantity}</h5>
+                                </div>
                             </div>
-
                         </div>
                         <div className="clear"></div>
 
@@ -66,7 +44,7 @@ const MarchProductToResources = (props) => {
 
 
             </div>);
-
+            setImage(doc.image);
             let allProducts = doc.products.map(product =>{
                 return (
                     <React.Fragment>
@@ -143,35 +121,25 @@ const MarchProductToResources = (props) => {
                         <div>
                             <Row className="">
                                 <Col md={5}>
-                                    <div className="march shadow-lg">
-                                        <div className="marchBody">
-                                            <img className="marchImage mr-2"
-                                                 src={"images/products/confit-chicken-thigh-and-andouille-sausage-cassoulet.jpg"}
-                                                 alt=""/>
-
-                                            <div>
-                                                <h5><a href="index.html">Ibirayi</a></h5>
-                                                <div>
-                                                    <Form>
-                                                        <Row className="form-group">
-                                                            <Col>
-                                                                <Label>
-                                                                    Quantity
-                                                                </Label>
-                                                            </Col>
-                                                            <Col>
-                                                                <Input className="form-control" type="number"/>
-                                                            </Col>
-
-                                                        </Row>
-
-                                                    </Form>
+                                    <div className="mb-3">
+                                        <div className="march shadow-lg">
+                                            <div className="marchBody">
+                                                <div className="">
+                                                    <h2 className="d-flex justify-content-center color2 pb-1"> Resources</h2>
+                                                    <div className="resourcesPart">
+                                                        <img width="100%" src="" className={"doc.image" +" marchImage mr-2"} alt="Card image cap" />
+                                                        <div className="marchDescription">
+                                                            <h3 >Name : {"doc.resource Name"}</h3>
+                                                            <h5 className="mb-2 text-muted">Quantity: {"doc.resourceQuantity"}</h5>
+                                                        </div>
+                                                    </div>
                                                 </div>
+                                                <div className="clear"></div>
 
                                             </div>
-                                            <div className="clear"></div>
-
                                         </div>
+
+
                                     </div>
 
 

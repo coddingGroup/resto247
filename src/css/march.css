@@ -1,14 +1,25 @@
 .marchBody {
-    width: 500px;
+
 }
 
 .marchImage {
     float: left;
-    max-width: 40%;
+    width: 60%;
     max-height: 100%;
+    min-height: 200px;
     display: block;
 }
-
+.resourcesPart{
+    max-width: 500px;
+    min-height: 200px;
+    max-height: 250px;
+}
 .clear {
     clear: both;
+}
+.marchDescription{
+    position: absolute;
+    /*right: 19px;*/
+    padding-left: 310px;
+    padding-right: 19px;
 }
