@@ -1,13 +1,9 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {
     Button,
     Card,
     CardBody,
     CardHeader,
-    CardImg,
-    CardSubtitle,
-    CardText,
-    CardTitle,
     Col,
     Form,
     Input,
@@ -17,20 +13,27 @@ import {
 import '../../../css/march.css';
 import MarchProductsCard from "./MarchProductsCard";
 import {setImage} from "../../../functions/setImage";
+import MarchResourceCard from "./MarchResourceCard";
 
 const MarchProductToResources = (props) => {
+
+    const [chosenProducts,setChosenProducts] = useState({});
+    const [chosenResource, setChosenResource] = useState({});
+
+
+
     let prevMarched = null;
     let marchResourceToProducts = props.marchResourceToProducts.marchResourceToProducts;
     if(marchResourceToProducts !==undefined && marchResourceToProducts !==null)
     {
         prevMarched = (marchResourceToProducts).map(doc =>{
             let resourceSide = (<div className="mb-3">
-                <div className="march shadow-lg">
+                <div key={doc.id} className="march shadow-lg">
                     <div className="marchBody">
                         <div className="">
                             <h2 className="d-flex justify-content-center color2 pb-1"> Resources</h2>
                             <div className="resourcesPart">
-                                <img width="100%" src="" className={doc.image +" marchImage mr-2"} alt="Card image cap" />
+                                <img src="" className={doc.image +" marchImage mr-2"} alt="Card image cap" />
                                 <div className="marchDescription">
                                     <h3 tag="h5">Name : {doc.resourceName}</h3>
                                     <h5 tag="h6" className="mb-2 text-muted">Quantity: {doc.resourceQuantity}</h5>
@@ -109,6 +112,10 @@ const MarchProductToResources = (props) => {
 
 
 
+
+
+
+
     return (
         <React.Fragment>
 
@@ -121,41 +128,25 @@ const MarchProductToResources = (props) => {
                         <div>
                             <Row className="">
                                 <Col md={5}>
-                                    <div className="mb-3">
-                                        <div className="march shadow-lg">
-                                            <div className="marchBody">
-                                                <div className="">
-                                                    <h2 className="d-flex justify-content-center color2 pb-1"> Resources</h2>
-                                                    <div className="resourcesPart">
-                                                        <img width="100%" src="" className={"doc.image" +" marchImage mr-2"} alt="Card image cap" />
-                                                        <div className="marchDescription">
-                                                            <h3 >Name : {"doc.resource Name"}</h3>
-                                                            <h5 className="mb-2 text-muted">Quantity: {"doc.resourceQuantity"}</h5>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div className="clear"></div>
-
-                                            </div>
-                                        </div>
 
 
-                                    </div>
+
+                                    <MarchResourceCard resources={props.resources} chosenResource={chosenResource} setChosenResource={setChosenResource} />
 
 
                                 </Col>
                                 <Col md={2} className="d-flex align-items-center justify-content-center">
                                     <div>
-                                        <button type="button" className=" btn-circle btn btn-xl"><i
-                                            className="fa fa-lg fa-gg"></i>
-                                        </button>
+                                        <Button type="button"  className="bottom-shadow bg-light add-to-cart-btn"><i
+                                            className="fa fa-lg fa-save">Save</i>
+                                        </Button>
                                     </div>
 
                                 </Col>
                                 <Col md={5}>
 
 
-                                    <MarchProductsCard/>
+                                    <MarchProductsCard products={props.products} chosenProducts={chosenProducts} setChosenProducts={setChosenProducts} />
 
 
                                 </Col>

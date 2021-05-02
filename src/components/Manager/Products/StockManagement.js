@@ -52,7 +52,9 @@ let StockManagement = (props) => {
                                                              increaseStock={props.increaseStock}
                                                              products={props.resources}/>}/> />}/>
                     <Route exact path="/management/stock/marchProductToResources"
-                           component={() => <MarchProductToResources marchResourceToProducts={props.marchResourceToProducts}/>}/>
+                           component={() => <MarchProductToResources marchResourceToProducts={props.marchResourceToProducts}
+                                                                     products={props.products} resources={props.resources}
+                           />}/>
 
                     <Redirect to="/management/stock/products"/>
                 </Switch>

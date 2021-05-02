@@ -1,14 +1,17 @@
 import {firebaseStorage} from "../firebase/firebase";
 
-export const setImage = (image) => {
+export const setImage = (image, classN=null) => {
 
+    if(classN === null){
+        classN = image;
+    }
     let ref = firebaseStorage.ref();
     let fullRef = ref.child(image);
     fullRef.getDownloadURL()
         .then((url) => {
             //setImage(url);
             //let img = document.getElementById(item.image);
-            let elements = document.getElementsByClassName(image);
+            let elements = document.getElementsByClassName(classN);
             //elements[0].setAttribute('src', url);
             // elements.map(img =>{
             //     img.setAttribute('src',url);

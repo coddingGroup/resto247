@@ -80,11 +80,13 @@ const SearchFilterInM = (props) => {
                 </NavItem>
             )
         })
+        let keyTo = 34653432;
 
         let allTabPane = keysToUse.map(key => {
+
             let allComponents = arr[key].map(comp => {
                 return (
-                    <div className=" m-2">
+                    <div key={++keyTo} className=" m-2">
 
                         {comp}
                     </div>
