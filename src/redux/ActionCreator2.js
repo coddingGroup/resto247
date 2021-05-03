@@ -281,3 +281,47 @@ export const setMarchResourceToProducts = (marchResourceToProducts) =>({
    type:ActionTypes.SET_MARCH_RESOURCE_TO_PRODUCTS,
    payload:marchResourceToProducts
 });
+
+export const saveMarchedResource = (resource, products) => dispatch =>{
+
+    let productsTo = [];
+    for (let index in products) {
+        let oneProduct = {};
+        oneProduct.id = products[index].id;
+        oneProduct.name = products[index].name;
+        oneProduct.quantity = products[index].matchProductQuantity;
+
+        productsTo.push(oneProduct);
+    }
+    let data = {
+        featured:true,
+        image: resource.image,
+        resourceName: resource.name,
+        resourceId: resource.id,
+        resourceQuantity: resource.matchResourceQuantity,
+        products: productsTo
+
+    };
+    firestore.collection('marchResourceToProducts').add(data).then(docRef =>{
+
+        firestore.collection('marchResourceToProducts').doc(docRef.id).get()
+            .then(doc =>{
+                if(doc.exists){
+                    let id = doc.id;
+                    let data = doc.data();
+                    dispatch(addMarchResourceToProducts({id, ...data}));
+                }
+                else{
+                    console.log("doc not exists");
+                }
+            }).catch(error =>{
+                console.log(error.message);
+        })
+    }).catch(error =>{
+        console.log(error.message);
+    });
+}
+let addMarchResourceToProducts = (data)=>({
+    type:ActionTypes.ADD_MARCH_RESOURCE_TO_PRODUCTS,
+    payload: data
+})

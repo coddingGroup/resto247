@@ -7,6 +7,7 @@ let MarchResourceCard = (props) =>{
 
     let changeChosenProduct = (event) =>{
         let resource = JSON.parse(event.target.value);
+        resource.matchResourceQuantity = 0;
         props.setChosenResource(resource);
         setImage(resource.image,'marchResourceImage');
     }

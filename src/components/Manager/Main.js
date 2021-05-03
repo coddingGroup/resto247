@@ -54,6 +54,7 @@ const MainManager = (props) => {
                                                                  miscellaneous={props.miscellaneous}
                                                                  uploadMiscellaneous={props.uploadMiscellaneous}
                                                                  updateProduct={props.updateProduct}
+                                                                 saveMarchedResource={props.saveMarchedResource}
                                                                  addResourcesReport={props.addResourcesReport}
                                                                  changeFlippingCardSaveBehavior={props.changeFlippingCardSaveBehavior}
                                                                  products={props.products}

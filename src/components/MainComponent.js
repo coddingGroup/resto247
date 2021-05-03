@@ -32,7 +32,7 @@ import {
 } from "../redux/ActionCreators";
 import {changeDailyDetailsInvoices, changeDailyInvoices, changeDailyStockUp,changeDailyMiscellaneous,
     changeNonPaidInvoices,setDailyPopularProduct,fetchMatchResourceToProducts,
-    changeDailyResourcesReports} from "../redux/ActionCreator2";
+    changeDailyResourcesReports,saveMarchedResource} from "../redux/ActionCreator2";
 import {actions} from "react-redux-form";
 import {CSSTransition, TransitionGroup} from "react-transition-group";
 import Login from "./Login";
@@ -69,6 +69,7 @@ const mapStateToProps = state => {
 }
 
 const mapDispatchToProps = (dispatch) => ({
+    saveMarchedResource: (resource, products) => dispatch(saveMarchedResource(resource, products)),
     fetchMatchResourceToProducts: () => dispatch(fetchMatchResourceToProducts()),
     setDailyPopularProduct:(product) =>dispatch(setDailyPopularProduct(product)),
     changeNonPaidInvoices:(receptionistName) => dispatch(changeNonPaidInvoices(receptionistName)),
@@ -321,6 +322,7 @@ class Main extends Component {
                                                                         changeDailyMiscellaneous={this.props.changeDailyMiscellaneous}
                                                                         dailyMiscellaneous={this.props.dailyMiscellaneous}
                                                                         setDailyPopularProduct={this.props.setDailyPopularProduct}
+                                                                        saveMarchedResource={this.props.saveMarchedResource}
 
                                                                         otherDailyReports={this.props.otherDailyReports}
                                                                         uploadProduct={this.props.uploadProduct}

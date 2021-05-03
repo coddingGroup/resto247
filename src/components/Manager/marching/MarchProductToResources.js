@@ -30,6 +30,7 @@ const MarchProductToResources = (props) => {
             event.preventDefault();
             return;
         }
+        props.saveMarchedResource(chosenResource, chosenProducts);
 
     }
 

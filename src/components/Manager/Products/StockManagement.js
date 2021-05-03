@@ -53,6 +53,7 @@ let StockManagement = (props) => {
                                                              products={props.resources}/>}/> />}/>
                     <Route exact path="/management/stock/marchProductToResources"
                            component={() => <MarchProductToResources marchResourceToProducts={props.marchResourceToProducts}
+                                                                     saveMarchedResource={props.saveMarchedResource}
                                                                      products={props.products} resources={props.resources}
                            />}/>
 

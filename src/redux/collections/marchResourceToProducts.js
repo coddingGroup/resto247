@@ -14,6 +14,10 @@ export const MarchResourceToProducts = (state = {
 
         case ActionTypes.MARCH_RESOURCE_TO_PRODUCTS_FAILED:
             return {...state, isLoading: false, errMess: action.payload}
+        case ActionTypes.ADD_MARCH_RESOURCE_TO_PRODUCTS:
+            let prev = [...state.marchResourceToProducts, action.payload];
+            return {...state, isLoading: false, errMess: null, marchResourceToProducts: prev}
+
 
         default:
             return state;
