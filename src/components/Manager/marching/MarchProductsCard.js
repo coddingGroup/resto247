@@ -57,6 +57,9 @@ let MarchProductsCard = (props) => {
             if (prev[indexOfProduct] === undefined || prev[indexOfProduct] ===null){
                 alert("choose productFirst");
             }
+            else if(event.target.value < 0){
+                alert("only positive numbers");
+            }
             else{
                 setProductQuantity(event.target.value);
                 prev[indexOfProduct].matchProductQuantity = event.target.value;
@@ -99,7 +102,7 @@ let MarchProductsCard = (props) => {
                 <div className="input-group-prepend">
                     <span className="input-group-text">Qtn</span>
                 </div>
-                <input value={productQuantity} type="number" name={"quantity"+index} onChange={handleQuantityChange} className="form-control"
+                <input value={productQuantity} type="number" min={0} name={"quantity"+index} onChange={handleQuantityChange} className="form-control"
                        aria-label="Amount (to the nearest dollar)"/>
             </div>
         </Col>

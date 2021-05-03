@@ -18,6 +18,9 @@ let MarchResourceCard = (props) =>{
         if(prev.name === undefined){
             alert("choose resources first");
         }
+        else if(value < 0){
+            alert("positive numbers only");
+        }
         else{
             setQuantity(value);
             prev.matchResourceQuantity = value;
@@ -70,7 +73,7 @@ let MarchResourceCard = (props) =>{
                                                 <div className="input-group-prepend">
                                                     <span className="input-group-text">Qtn</span>
                                                 </div>
-                                                <input type="number" name="" value={quantity} onChange={handleQuantityChange} className="form-control"
+                                                <input type="number" min={0} name="" value={quantity} onChange={handleQuantityChange} className="form-control"
                                                        aria-label="Amount (to the nearest dollar)"/>
                                             </div>
                                         </Col>

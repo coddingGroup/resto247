@@ -142,7 +142,7 @@ const MarchProductToResources = (props) => {
             <div className="row">
 
                 <div className="col-md-12">
-                    {prevMarched}
+
 
                     <div>
                         <div>
@@ -173,6 +173,12 @@ const MarchProductToResources = (props) => {
                             </Row>
                         </div>
                     </div>
+                    <div>
+                        <h2 className="mt-3 color2F d-flex justify-content-center mb-3"> <u> Previous marched </u> </h2>
+                        {prevMarched}
+                    </div>
+
+
                 </div>
 
             </div>
