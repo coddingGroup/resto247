@@ -17,10 +17,30 @@ import MarchResourceCard from "./MarchResourceCard";
 
 const MarchProductToResources = (props) => {
 
-    const [chosenProducts,setChosenProducts] = useState({});
+    let [chosenProducts,setChosenProducts] = useState({});
     const [chosenResource, setChosenResource] = useState({});
 
 
+    function isEmpty(obj) {
+        return Object.keys(obj).length === 0;
+    }
+    let handleSaving = (event) =>{
+        if(isEmpty(chosenProducts) || isEmpty(chosenResource)){
+            alert("choose both product and resource please");
+            event.preventDefault();
+            return;
+        }
+
+    }
+
+    let deleteProductItem = (index) =>{
+        if(chosenProducts[index] === undefined || chosenProducts[index] === null){
+            return;
+        }
+        let prev = {...chosenProducts};
+        delete prev[index];
+        setChosenProducts({...prev});
+    }
 
     let prevMarched = null;
     let marchResourceToProducts = props.marchResourceToProducts.marchResourceToProducts;
@@ -137,7 +157,7 @@ const MarchProductToResources = (props) => {
                                 </Col>
                                 <Col md={2} className="d-flex align-items-center justify-content-center">
                                     <div>
-                                        <Button type="button"  className="bottom-shadow bg-light add-to-cart-btn"><i
+                                        <Button type="button" onClick={handleSaving}  className="bottom-shadow bg-light add-to-cart-btn"><i
                                             className="fa fa-lg fa-save">Save</i>
                                         </Button>
                                     </div>
@@ -146,7 +166,7 @@ const MarchProductToResources = (props) => {
                                 <Col md={5}>
 
 
-                                    <MarchProductsCard products={props.products} chosenProducts={chosenProducts} setChosenProducts={setChosenProducts} />
+                                    <MarchProductsCard deleteProductItem={deleteProductItem} products={props.products} chosenProducts={chosenProducts} setChosenProducts={setChosenProducts} />
 
 
                                 </Col>
