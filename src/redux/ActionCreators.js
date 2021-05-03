@@ -470,7 +470,7 @@ export const signUp = (values, typeOfUser) => (dispatch) => {
         }).then((user) => {
         firestore.collection("userCollection").add({
             firstName: values.firstName,
-            secondName: values.secondName,
+            secondName: values.lastName,
             tel: values.telNum,
             typeOfUser: typeOfUser,
             userId: user.uid
@@ -482,6 +482,7 @@ export const signUp = (values, typeOfUser) => (dispatch) => {
                             const data = doc.data();
                             const id = doc.id;
                             // let userCollection = {id, ...data};
+                            alert("then go to login ");
                             dispatch(setUser(user, {id,...data}));
                         } else {
                             // doc.data() will be undefined in this case

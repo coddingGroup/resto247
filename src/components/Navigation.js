@@ -142,7 +142,7 @@ let Navigation = (props) => {
                                 <AddedCart cart={props.cart}/>
                             </Button>
                         </NavItem>
-                        {!(localStorage.getItem('user') !== null) ?
+                        {!(localStorage.getItem('user') !== null) ? <span>
                             <Button outline onClick={toggleModal}>
                                 <span className="fa fa-sign-in fa-lg"></span> Login
                                 {props.auth.isFetching ?
@@ -150,6 +150,15 @@ let Navigation = (props) => {
                                     : null
                                 }
                             </Button>
+                            <Button outline>
+                                <span className="fa fa-sign-in fa-lg"></span> <NavLink to="/signup">Sign up</NavLink>
+                                {props.auth.isFetching ?
+                                    <span className="fa fa-spinner fa-pulse fa-fw"></span>
+                                    : null
+                                }
+                            </Button>
+
+                            </span>
                             :
                             <React.Fragment>
                                 {getLink(props.userCollection.userCollection.typeOfUser)}
