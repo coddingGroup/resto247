@@ -14,8 +14,14 @@ const ReportsMainComponent = (props) => {
     props.reports.productMonthReport.map(report =>{
         monthIncome+= report.totalPrice;
     })
+    let monthExpenseMiscellaneous = 0;
+    props.reports.miscellaneousMonthReport.map(report =>{
+        if(report.isExpanse){
+            monthExpenseMiscellaneous+= report.totalMoney;
+        }
+    })
 
-    // let popularProductCalc = () =>{
+        // let popularProductCalc = () =>{
     //     let popularProduct = {
     //         totalPrice:0,
     //         totalQuantity: 0,
@@ -73,7 +79,7 @@ const ReportsMainComponent = (props) => {
                 </div>
             </div>
             <div className="row">
-                <ProfitCard monthIncone={monthIncome} monthExpensesOnStock={monthExpensesOnStock} />
+                <ProfitCard monthIncone={monthIncome} monthExpensesOnStock={monthExpensesOnStock} monthExpenseMiscellaneous={monthExpenseMiscellaneous} />
             </div>
             <div className="row">
                 <div className="col">

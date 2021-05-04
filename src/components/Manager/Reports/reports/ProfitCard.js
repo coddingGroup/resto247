@@ -2,13 +2,15 @@ import '../../../../css/styles.css';
 
 
 let ProfitCard = (props) =>{
+    let grossProfit =props.monthIncone - props.monthExpensesOnStock;
+    let operatingProfit =grossProfit - props.monthExpenseMiscellaneous;
     return(
         <div className="container">
             <div className="row">
                 <div className="col-sm-6">
                     <div className="card-box-outer color2">
                         <div className="inner">
-                            <h3> {props.monthIncone - props.monthExpensesOnStock} </h3>
+                            <h3> {grossProfit} </h3>
                             <p> Gross Profit </p>
                         </div>
                         <div href="#" className="card-box-footer">
@@ -62,8 +64,8 @@ let ProfitCard = (props) =>{
                 <div className="col-sm-6">
                     <div className="card-box-outer bg-light color2F">
                         <div className="inner">
-                            <h3> 13436 </h3>
-                            <p> Student Strength </p>
+                            <h3> {operatingProfit} </h3>
+                            <p> Operating profit </p>
                         </div>
                         <div href="#" className="card-box-footer">
                             <div className="row">
@@ -77,8 +79,8 @@ let ProfitCard = (props) =>{
                                 <div className="col-sm-6">
                                     <div className="card-box color2">
                                         <div className="inner">
-                                            <h3> ₹185358 </h3>
-                                            <p> Today’s Collection </p>
+                                            <h3> {grossProfit} </h3>
+                                            <p> grossProfit </p>
                                         </div>
                                         <div className="icon">
                                             <i className="fa fa-money" aria-hidden="true"></i>
@@ -88,8 +90,8 @@ let ProfitCard = (props) =>{
                                 <div className="col-sm-6">
                                     <div className="card-box bg-warning">
                                         <div className="inner">
-                                            <h3> 5464 </h3>
-                                            <p> New Admissions </p>
+                                            <h3> {props.monthExpenseMiscellaneous} </h3>
+                                            <p> Miscellaneous (Expense) </p>
                                         </div>
                                         <div className="icon">
                                             <i className="fa fa-user-plus" aria-hidden="true"></i>

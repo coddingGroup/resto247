@@ -4,7 +4,8 @@ export const Reports = (state = {
     isLoading: true,
     errMess: null,
     resourceMonthReport: [],
-    productMonthReport: []
+    productMonthReport: [],
+    miscellaneousMonthReport:[]
 }, action) => {
     switch (action.type) {
         case ActionTypes.ADD_RESOURCE_MONTH_REPORT:
@@ -14,6 +15,10 @@ export const Reports = (state = {
         case ActionTypes.ADD_PRODUCT_MONTH_REPORT:
             return {
                 ...state, isLoading: false, errMess: null, productMonthReport: action.payload
+            };
+        case ActionTypes.ADD_MISCELLANEOUS_MONTH_REPORT:
+            return {
+                ...state, isLoading: false, errMess: null, miscellaneousMonthReport: action.payload
             };
 
         // case ActionTypes.SET_PRODUCTS_IN_DAILY_INVOICE_DETAILS:

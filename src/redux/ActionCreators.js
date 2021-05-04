@@ -286,6 +286,42 @@ export const uploadMiscellaneous = (values, proof) => (dispatch) => {
                         console.log("No such document!");
                     }
                 })
+        }).then(() =>{
+            let date = new Date();
+            let month = date.getMonth();
+            let year = date.getFullYear();
+
+            let id = month + '_' + year + '_' + values.reason;
+
+            firestore.collection('miscellaneousMonthReport').doc(id).get()
+                .then(doc =>{
+                    if(doc.exists){
+                        let data = doc.data();
+                        let totalMoney = parseInt(data.totalMoney) + parseInt(values.price);
+                        firestore.collection('miscellaneousMonthReport').doc(id).set({
+                            totalMoney: totalMoney,
+                            updateAt: firebasestore.FieldValue.serverTimestamp()
+                        },{merge:true}).then(() => {
+                            console.log('save succeed');
+                        }).catch(error =>{
+                            console.log(error.message);
+                        });
+                    }else{
+                        firestore.collection('miscellaneousMonthReport').doc(id).set({
+                            reason: values.reason,
+                            totalMoney: (values.price),
+                            month:month,
+                            year:year,
+                            isExpanse:values.isExpanse,
+                            updateAt: firebasestore.FieldValue.serverTimestamp()
+                        }).then(() =>{
+
+                            console.log("success");
+                        })
+                    }
+                }).catch(error => {
+                console.log(error.message);
+            });
         })
         .catch(error => {
             dispatch(miscellaneousFailed(error));

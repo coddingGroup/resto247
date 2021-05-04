@@ -32,6 +32,7 @@ import {
 } from "../redux/ActionCreators";
 import {changeDailyDetailsInvoices, changeDailyInvoices, changeDailyStockUp,changeDailyMiscellaneous,
     changeNonPaidInvoices,setDailyPopularProduct,fetchMatchResourceToProducts,fetchResourceMonthReport,fetchProductMonthReport,
+    fetchMiscellaneousMonthReport,
     changeDailyResourcesReports,saveMarchedResource} from "../redux/ActionCreator2";
 import {actions} from "react-redux-form";
 import {CSSTransition, TransitionGroup} from "react-transition-group";
@@ -70,6 +71,7 @@ const mapStateToProps = state => {
 }
 
 const mapDispatchToProps = (dispatch) => ({
+    fetchMiscellaneousMonthReport:(year, month) => dispatch(fetchMiscellaneousMonthReport(year,month)),
     fetchResourceMonthReport:(year, month) => dispatch(fetchResourceMonthReport(year,month)),
     fetchProductMonthReport:(year, month) =>dispatch(fetchProductMonthReport(year, month)),
     saveMarchedResource: (resource, products) => dispatch(saveMarchedResource(resource, products)),
@@ -161,6 +163,8 @@ class Main extends Component {
         let date = new Date();
         this.props.fetchResourceMonthReport(date.getFullYear(), date.getMonth());
         this.props.fetchProductMonthReport(date.getFullYear(), date.getMonth());
+        this.props.fetchMiscellaneousMonthReport(date.getFullYear(), date.getMonth());
+
 
 
     }
@@ -352,6 +356,7 @@ class Main extends Component {
                                                                         reports={this.props.reports}
                                                                         fetchResourceMonthReport={this.props.fetchResourceMonthReport}
                                                                         fetchProductMonthReport={this.props.fetchProductMonthReport}
+                                                                        fetchMiscellaneousMonthReport={this.props.fetchMiscellaneousMonthReport}
                                           />}
 
 

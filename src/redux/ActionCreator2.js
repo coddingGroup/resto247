@@ -372,3 +372,28 @@ export const setProductMonthReport =(productMonthReport) =>({
     type:ActionTypes.ADD_PRODUCT_MONTH_REPORT,
     payload: productMonthReport
 });
+
+
+
+
+export const fetchMiscellaneousMonthReport = (year , month) => dispatch =>{
+    firestore.collection('miscellaneousMonthReport').where('year','==',year).where('month','==',month).get()
+        .then(snapshot =>{
+            let miscellaneousMonthReport =[];
+            snapshot.forEach(doc =>{
+                let id = doc.id;
+                let data = doc.data();
+                miscellaneousMonthReport.push({id,...data});
+            });
+            return miscellaneousMonthReport;
+        }).then((miscellaneousMonthReport) =>{
+        dispatch(setMiscellaneousMonthReport(miscellaneousMonthReport));
+
+    }).catch(error =>{
+        console.log(error.message);
+    });
+};
+export const setMiscellaneousMonthReport =(miscellaneousMonthReport) =>({
+    type:ActionTypes.ADD_MISCELLANEOUS_MONTH_REPORT,
+    payload: miscellaneousMonthReport
+});

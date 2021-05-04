@@ -40,8 +40,13 @@ const CircleMenu = ({items, uploadProduct, uploadResource, uploadMiscellaneous})
 
     let handleProductSubmit = (values, event) => {
         const file = values.image[0];
+        let fileName = '';
 
-        const fileName = file.name;
+        if(file === undefined || file ===null){
+            uploadProduct(values, "images/logo.jpg");
+            return;
+        }
+        fileName = file.name;
         const fileExtension = fileName.split('.').pop();
         alert(fileExtension);
         const name = values.productName + '-' + (+new Date());
@@ -58,6 +63,10 @@ const CircleMenu = ({items, uploadProduct, uploadResource, uploadMiscellaneous})
     let handleResourceSubmit = (values, event) => {
         const file = values.image[0];
 
+        if(file === undefined || file ===null){
+            uploadResource(values, "images/logo.jpg");
+            return;
+        }
         const fileName = file.name;
         const fileExtension = fileName.split('.').pop();
         const name = values.resourceName + '-' + (+new Date());
@@ -72,6 +81,11 @@ const CircleMenu = ({items, uploadProduct, uploadResource, uploadMiscellaneous})
     };
     let handleMiscellaneousSubmit = (values, event) => {
         const file = values.proof[0];
+
+        if(file === undefined || file ===null){
+            uploadMiscellaneous(values, "images/logo.jpg");
+            return;
+        }
 
         const fileName = file.name;
         const fileExtension = fileName.split('.').pop();
