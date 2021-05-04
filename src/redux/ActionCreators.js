@@ -1,5 +1,6 @@
 import * as ActionTypes from './ActionTypes';
-import {auth, fireauth, firebasestore, firestore} from '../firebase/firebase';
+import {auth, fireauth, firebaseStorage, firebasestore, firestore} from '../firebase/firebase';
+import firebase from "firebase";
 
 
 export const addComment = (comment) => ({
@@ -52,13 +53,17 @@ export const increaseStock = (resourceId, unitPrice, quantity, from, name) => (d
                                     totalCost += (parseInt(quantity) * parseInt(unitPrice));
                                     stockQuantity += parseInt(quantity);
 
-                                    dispatch(enableFlippingCardSaveButton());
+                                    //dispatch(enableFlippingCardSaveButton());
 
                                     firestore.collection('resources').doc(resourceId).update({
                                         stockQuantity: stockQuantity,
                                         totalCost: totalCost,
                                         updatedAt: firebasestore.FieldValue.serverTimestamp()
-                                    })
+                                    }).then(
+                                        () =>{
+                                            dispatch(changeResourceInfo(resourceId,totalCost,stockQuantity));
+                                        }
+                                    )
                                         .catch(error => {
                                             dispatch(failedToSaveFlippingCardSaveButton());
                                             console.log(error.message);
@@ -77,13 +82,45 @@ export const increaseStock = (resourceId, unitPrice, quantity, from, name) => (d
                         console.log("No such document!");
                     }
                 })
+        }).then(() =>{
+            let date = new Date();
+            let month = date.getMonth();
+            let year = date.getFullYear();
+
+            let id = month + '_' + year + '_' + name;
+
+            firestore.collection('resourceMonthReport').doc(id).get()
+                .then(doc =>{
+                    if(doc.exists){
+
+                    }else{
+                        firestore.collection('resourceMonthReport').doc(id).set({
+                            name: name,
+                            totalCost: (unitPrice * quantity),
+                            totalQuantity:quantity,
+                            month:month,
+                            year:year,
+                            updateAt: firebasestore.FieldValue.serverTimestamp(),
+                            createdAt:  firebasestore.FieldValue.serverTimestamp()
+                        }).then(() =>{
+
+                            console.log("sucessifull");
+                        })
+                    }
+                }).catch(error => {
+                    console.log(error.message);
+            });
         })
         .catch(error => {
             console.log('Post comments ', error.message);
             console.log('Your comment could not be posted\nError: ' + error.message);
         })
 }
+export const changeResourceInfo = (resourceId,totalCost, stockQuantity) =>({
+    type: ActionTypes.CHANGE_RESOURCE_INFO,
+    payload:{resourceId, totalCost,stockQuantity}
 
+});
 
 export const uploadProduct = (values, image) => (dispatch) => {
     if (!auth.currentUser) {
@@ -374,13 +411,17 @@ export const updateProduct = (values) => (dispatch) => {
         updatedAt: firebasestore.FieldValue.serverTimestamp()
     }).then(() => {
         console.log("updateComplete");
-        //dispatch(updateComplete);
+        dispatch(changeProductInfo(values))
     })
         .catch(error => {
             dispatch(failedToSaveFlippingCardSaveButton());
             console.log(error.message);
         });
 }
+export const changeProductInfo = (values) => ({
+    type: ActionTypes.CHANGE_PRODUCT_INFO,
+    payload: values
+})
 export const addResourcesReport = (resourceId, unitPrice, quantity, to, name) => (dispatch) => {
     if (!auth.currentUser) {
         console.log("login first");

@@ -17,6 +17,17 @@ export const Resources = (state = {
         case ActionTypes.ADD_ONE_RESOURCE:
             let prev = state.products;
             return {...state, isLoading: false, errMess: null, products: [...prev, action.payload]};
+        case ActionTypes.CHANGE_RESOURCE_INFO:
+            let pre = state.products;
+            pre.forEach(resource => {
+               if(resource.id === action.payload.resourceId){
+                   resource.totalCost= action.payload.totalCost;
+                   resource.stockQuantity = action.payload.stockQuantity;
+               }
+            });
+            return {...state, isLoading: false, errMess: null, products: [...pre]};
+
+
 
         default:
             return state;

@@ -8,7 +8,7 @@ import RenderCard3 from "../homepagecomponents/RenderCard3";
 
 const SearchFilterInM = (props) => {
 
-    const [activeTab, setActiveTab] = useState('food');
+    const [activeTab, setActiveTab] = useState(localStorage.getItem('activeTabInProducts')===null? 'food': localStorage.getItem('activeTabInProducts'));
     // const[cathegories,setCAthegories] = useState(ITEMS);
     if (props.isLoading) {
         return (
@@ -62,7 +62,11 @@ const SearchFilterInM = (props) => {
 
 
         const toggle = tab => {
-            if (activeTab !== tab) setActiveTab(tab);
+            if (activeTab !== tab) {
+                setActiveTab(tab);
+                localStorage.setItem('activeTabInProducts',tab);
+            }
+
         }
 
 

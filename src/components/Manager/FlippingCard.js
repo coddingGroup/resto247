@@ -26,15 +26,18 @@ const BlogCard = (props) => {
 
     const [flipped, setFlipped] = useState(false);
 
-    let flip = () => {
-        setFlipped(!flipped);
+    let flipEnter = () => {
+        setFlipped(true);
 
+    }
+    let flipLeave = () =>{
+        setFlipped(false);
     }
 
     return (
 
 
-        <div onMouseEnter={flip} onMouseLeave={flip} className={"card-container" + (flipped ? " flipped" : "")}>
+        <div onMouseEnter={flipEnter} onMouseLeave={flipLeave} className={"card-container" + (flipped ? " flipped" : "")}>
 
             <Front  opName={props.opName} oneProduct={props.oneProduct}/>
 
