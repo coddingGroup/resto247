@@ -1,10 +1,14 @@
 
-import DailyInvoicesComponent from "../DailyInvoicesComponent";
-import React from "react";
+import React, {useState} from "react";
 import ChooseMonth from "./ChooseMonth";
 import ProfitCard from "./ProfitCard";
+import TempleteToDisplayDataInTableFromArray from "./TempleteToDisplayDataInTableFromArray";
 
 const ReportsMainComponent = (props) => {
+    let date = new Date();
+    const [month,setMonth] = useState(date.getMonth() + 1);
+    const [year, setYear] = useState(date.getFullYear());
+
     let monthExpensesOnStock = 0;
     props.reports.resourceMonthReport.map(report =>{
         monthExpensesOnStock += report.totalCost;
@@ -20,6 +24,12 @@ const ReportsMainComponent = (props) => {
             monthExpenseMiscellaneous+= report.totalMoney;
         }
     })
+
+    let makeFetchingAction = (mth) =>{
+        props.fetchResourceMonthReport(year, mth);
+        props.fetchProductMonthReport(year,mth);
+        props.fetchMiscellaneousMonthReport(year,mth);
+    }
 
         // let popularProductCalc = () =>{
     //     let popularProduct = {
@@ -73,7 +83,8 @@ const ReportsMainComponent = (props) => {
                     <h3>Choose Date</h3>
                 </div>
                 <div className="col-12 col-md-8 ">
-                    <ChooseMonth/>
+                    <ChooseMonth  month={month} setMonth={setMonth} year={year}
+                                  setYear={setYear} makeFetchingAction={makeFetchingAction}   />
 
 
                 </div>
@@ -86,21 +97,38 @@ const ReportsMainComponent = (props) => {
 
                 </div>
             </div>
+            <div className="row">
+                <div className="col-sm-12">
+
+
+                    <TempleteToDisplayDataInTableFromArray reports={props.reports} dataToDisplay={props.reports.productMonthReport}
+                                                           data={{name:"name",totalPrice:"total Price",totalQuantity: 'Total quantity',month:"month",year:"year"}}
+                                                           displayName={"product Month Report"}
+                                                           idToUse={"scrollableDivInProductMonthReport"}
+
+                    />
+                </div>
+            </div>
 
             <div className="row">
-                <div className="col-12">
+                <div className="col-sm-6">
 
 
-                    <DailyInvoicesComponent
-                        dailyInvoices={props.dailyInvoices}
-                        addToCart={props.addToCart}
-                        removeToCart={props.removeToCart}
-                        waiters={props.waiters}
-                        cart={props.cart}
-                        uploadMiscellaneous={props.uploadMiscellaneous}
-                        pushInvoice={props.pushInvoice}
-                        products={props.products}
-                        changeDailyInvoices={props.changeDailyInvoices}
+                    <TempleteToDisplayDataInTableFromArray reports={props.reports} dataToDisplay={props.reports.resourceMonthReport}
+                                                           data={{name:"name",totalCost:"total Cost",totalQuantity: 'Total quantity',month:"month",year:"year"}}
+                                                           displayName={"Resource Month Report"}
+                                                           idToUse={"scrollableDivInResourceMonthReport"}
+
+                    />
+                </div>
+                <div className="col-sm-6">
+
+
+                    <TempleteToDisplayDataInTableFromArray reports={props.reports} dataToDisplay={props.reports.miscellaneousMonthReport}
+                                                           data={{reason:"reason",totalMoney:"total Money",month:"month",year:"year"}}
+                                                           displayName={"Miscellaneous Month Report"}
+                                                           idToUse={"scrollableDivInMiscellaneousMonthReport"}
+
                     />
                 </div>
             </div>

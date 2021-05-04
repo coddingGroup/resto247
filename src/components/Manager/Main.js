@@ -87,6 +87,7 @@ const MainManager = (props) => {
                             reports={props.reports}
                             fetchResourceMonthReport={props.fetchResourceMonthReport}
                             fetchProductMonthReport={props.fetchProductMonthReport}
+                            fetchMiscellaneousMonthReport={props.fetchMiscellaneousMonthReport}
 
 
                             changeDailyDetailsInvoices={props.changeDailyDetailsInvoices}

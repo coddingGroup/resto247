@@ -1,7 +1,7 @@
 import {Col, Form, Row} from "reactstrap";
 import React from "react";
 
-let ChooseMonth  = () =>{
+let ChooseMonth  = (props) =>{
     let months = [
         '1 January',
         '2 February',
@@ -40,6 +40,17 @@ let ChooseMonth  = () =>{
         )
     });
 
+    let handleChange = (event) =>{
+        let name = event.target.name;
+        if(name === "year"){
+            props.setYear(event.target.value);
+        }
+        else if(name==='month'){
+            props.setMonth(event.target.value);
+            props.makeFetchingAction(event.target.value);
+        }
+    }
+
 
     return (
         <Row>
@@ -49,9 +60,9 @@ let ChooseMonth  = () =>{
                         <Col>
                             <div className="input-group mb-3">
                                 <div className="input-group-prepend">
-                                    <label className="input-group-text" htmlFor="inputGroupSelect01">Year</label>
+                                    <label className="input-group-text" htmlFor="year">Year</label>
                                 </div>
-                                <select name='year' className="custom-select" onChange="{changeChosenProduct}">
+                                <select name='year' className="custom-select" onChange={handleChange}>
                                     <option value="null" selected>Choose...</option>
                                     {yearsInOptions}
                                 </select>
@@ -60,9 +71,9 @@ let ChooseMonth  = () =>{
                         <Col>
                             <div className="input-group mb-3">
                                 <div className="input-group-prepend">
-                                    <label className="input-group-text" htmlFor="inputGroupSelect01">Month</label>
+                                    <label className="input-group-text" htmlFor="month">Month</label>
                                 </div>
-                                <select name='year' className="custom-select" onChange="{changeChosenProduct}">
+                                <select name='month' className="custom-select" onChange={handleChange}>
                                     <option value="null" selected>Choose...</option>
                                     {monthsInOptions}
                                 </select>

@@ -327,7 +327,7 @@ let addMarchResourceToProducts = (data)=>({
 })
 
 export const fetchResourceMonthReport = (year , month) => dispatch =>{
-    firestore.collection('resourceMonthReport').where('year','==',year).where('month','==',month).get()
+    firestore.collection('resourceMonthReport').where('year','==',parseInt(year)).where('month','==',parseInt(month)).get()
         .then(snapshot =>{
             let resourceMonthReport =[];
             snapshot.forEach(doc =>{
@@ -352,7 +352,7 @@ export const setResourceMonthReport =(resourceMonthReport) =>({
 
 
 export const fetchProductMonthReport = (year , month) => dispatch =>{
-    firestore.collection('productMonthReport').where('year','==',year).where('month','==',month).get()
+    firestore.collection('productMonthReport').where('year','==',parseInt(year)).where('month','==',parseInt(month)).get()
         .then(snapshot =>{
             let productMonthReport =[];
             snapshot.forEach(doc =>{
@@ -377,7 +377,7 @@ export const setProductMonthReport =(productMonthReport) =>({
 
 
 export const fetchMiscellaneousMonthReport = (year , month) => dispatch =>{
-    firestore.collection('miscellaneousMonthReport').where('year','==',year).where('month','==',month).get()
+    firestore.collection('miscellaneousMonthReport').where('year','==',parseInt(year)).where('month','==',parseInt(month)).get()
         .then(snapshot =>{
             let miscellaneousMonthReport =[];
             snapshot.forEach(doc =>{
