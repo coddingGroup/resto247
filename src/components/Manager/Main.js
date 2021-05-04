@@ -5,7 +5,7 @@ import {Redirect, Route, Switch} from "react-router-dom";
 import SignUp from "../SignUp";
 import CircleMenu from "../Receptions/UIcomponents/CicleMenu";
 import StockManagement from "./Products/StockManagement";
-
+import ReportsMainComponent from "./Reports/reports/ReportsMainComponent";
 
 const MainManager = (props) => {
     let items = [
@@ -79,6 +79,36 @@ const MainManager = (props) => {
                             pushInvoice={props.pushInvoice}
                             products={props.products}
                             changeDailyInvoices={props.changeDailyInvoices} dailyInvoices={props.dailyInvoices}/>}/>
+
+
+
+                        <Route exact path="/management/reports" component={() => <ReportsMainComponent
+
+                            reports={props.reports}
+                            fetchResourceMonthReport={props.fetchResourceMonthReport}
+                            fetchProductMonthReport={props.fetchProductMonthReport}
+
+
+                            changeDailyDetailsInvoices={props.changeDailyDetailsInvoices}
+                            dailyStockUp={props.dailyStockUp}
+                            changeDailyStockUp={props.changeDailyStockUp}
+                            addToCart={props.addToCart}
+                            removeToCart={props.removeToCart}
+                            waiters={props.waiters}
+                            dailyInvoiceDetails={props.dailyInvoiceDetails}
+                            cart={props.cart}
+                            otherDailyReports={props.otherDailyReports}
+                            changeDailyResourcesReports={props.changeDailyResourcesReports}
+                            dailyResourcesReports={props.dailyResourcesReports}
+                            changeDailyMiscellaneous={props.changeDailyMiscellaneous}
+                            dailyMiscellaneous={props.dailyMiscellaneous}
+                            setDailyPopularProduct={props.setDailyPopularProduct}
+                            uploadMiscellaneous={props.uploadMiscellaneous}
+                            pushInvoice={props.pushInvoice}
+                            products={props.products}
+                            changeDailyInvoices={props.changeDailyInvoices} dailyInvoices={props.dailyInvoices}
+
+                        />}/>
 
                         <Redirect to="/management/dashboard"/>
                     </Switch>

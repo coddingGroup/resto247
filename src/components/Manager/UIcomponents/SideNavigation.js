@@ -32,7 +32,7 @@ let sideBarItems = [
         name: 'Report',
         icon: 'fa fa-plus',
         color: 'btn-success',
-        to: '/management/Report'
+        to: '/management/reports'
     },
     {
         name: 'Products info',

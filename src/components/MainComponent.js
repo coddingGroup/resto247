@@ -31,7 +31,7 @@ import {
     uploadResource
 } from "../redux/ActionCreators";
 import {changeDailyDetailsInvoices, changeDailyInvoices, changeDailyStockUp,changeDailyMiscellaneous,
-    changeNonPaidInvoices,setDailyPopularProduct,fetchMatchResourceToProducts,
+    changeNonPaidInvoices,setDailyPopularProduct,fetchMatchResourceToProducts,fetchResourceMonthReport,fetchProductMonthReport,
     changeDailyResourcesReports,saveMarchedResource} from "../redux/ActionCreator2";
 import {actions} from "react-redux-form";
 import {CSSTransition, TransitionGroup} from "react-transition-group";
@@ -64,11 +64,14 @@ const mapStateToProps = state => {
         dailyMiscellaneous: state.dailyMiscellaneous,
         nonPaidInvoices: state.nonPaidInvoices,
         otherDailyReports:state.otherDailyReports,
-        marchResourceToProducts: state.marchResourceToProducts
+        marchResourceToProducts: state.marchResourceToProducts,
+        reports: state.reports
     }
 }
 
 const mapDispatchToProps = (dispatch) => ({
+    fetchResourceMonthReport:(year, month) => dispatch(fetchResourceMonthReport(year,month)),
+    fetchProductMonthReport:(year, month) =>dispatch(fetchProductMonthReport(year, month)),
     saveMarchedResource: (resource, products) => dispatch(saveMarchedResource(resource, products)),
     fetchMatchResourceToProducts: () => dispatch(fetchMatchResourceToProducts()),
     setDailyPopularProduct:(product) =>dispatch(setDailyPopularProduct(product)),
@@ -155,6 +158,9 @@ class Main extends Component {
         this.props.fetchResources();
         this.props.fetchWaiters();
         this.props.fetchMatchResourceToProducts();
+        let date = new Date();
+        this.props.fetchResourceMonthReport(date.getFullYear(), date.getMonth());
+        this.props.fetchProductMonthReport(date.getFullYear(), date.getMonth());
 
 
     }
@@ -343,6 +349,9 @@ class Main extends Component {
                                                                         behaviors={this.props.behaviors}
                                                                         outOfStockProducts={this.props.outOfStockProducts}
                                                                         marchResourceToProducts={this.props.marchResourceToProducts}
+                                                                        reports={this.props.reports}
+                                                                        fetchResourceMonthReport={this.props.fetchResourceMonthReport}
+                                                                        fetchProductMonthReport={this.props.fetchProductMonthReport}
                                           />}
 
 

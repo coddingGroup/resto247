@@ -21,6 +21,7 @@ import {DailyInvoiceDetails} from "./others/dailyInvoiceDetails";
 import {DailyInvoices} from "./others/dailyInvoices";
 import {NonPaidInvoice} from "./others/nonPaidInvoices";
 import {MarchResourceToProducts} from "./collections/marchResourceToProducts";
+import {Reports} from "./others/reports";
 import thunk from "redux-thunk";
 import logger from 'redux-logger';
 import {addMiscellaneous, addNewProduct, addNewResource, InitialFeedback, login, quantity, signUp} from "./Forms";
@@ -48,6 +49,7 @@ export const ConfigureStore = () => {
             dailyStockUp: DailyStockUp,
             nonPaidInvoices:NonPaidInvoice,
             marchResourceToProducts:MarchResourceToProducts,
+            reports: Reports,
             cart: Cart,
             ...createForms({
                 feedback: InitialFeedback,

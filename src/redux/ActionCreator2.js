@@ -325,3 +325,50 @@ let addMarchResourceToProducts = (data)=>({
     type:ActionTypes.ADD_MARCH_RESOURCE_TO_PRODUCTS,
     payload: data
 })
+
+export const fetchResourceMonthReport = (year , month) => dispatch =>{
+    firestore.collection('resourceMonthReport').where('year','==',year).where('month','==',month).get()
+        .then(snapshot =>{
+            let resourceMonthReport =[];
+            snapshot.forEach(doc =>{
+                let id = doc.id;
+                let data = doc.data();
+
+                resourceMonthReport.push({id,...data});
+            });
+            return resourceMonthReport;
+        }).then((resourceMonthReport) =>{
+            dispatch(setResourceMonthReport(resourceMonthReport));
+
+    }).catch(error =>{
+        console.log(error.message);
+    });
+};
+export const setResourceMonthReport =(resourceMonthReport) =>({
+   type:ActionTypes.ADD_RESOURCE_MONTH_REPORT,
+    payload: resourceMonthReport
+});
+
+
+
+export const fetchProductMonthReport = (year , month) => dispatch =>{
+    firestore.collection('productMonthReport').where('year','==',year).where('month','==',month).get()
+        .then(snapshot =>{
+            let productMonthReport =[];
+            snapshot.forEach(doc =>{
+                let id = doc.id;
+                let data = doc.data();
+                productMonthReport.push({id,...data});
+            });
+            return productMonthReport;
+        }).then((productMonthReport) =>{
+        dispatch(setProductMonthReport(productMonthReport));
+
+    }).catch(error =>{
+        console.log(error.message);
+    });
+};
+export const setProductMonthReport =(productMonthReport) =>({
+    type:ActionTypes.ADD_PRODUCT_MONTH_REPORT,
+    payload: productMonthReport
+});
