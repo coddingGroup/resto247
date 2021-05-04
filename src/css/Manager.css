@@ -131,7 +131,8 @@ body #root footer {
     overflow-x: scroll;
     overflow-y: hidden;
     white-space: nowrap;
-    height: 600px;
+    max-height: 560px;
+    min-height: 100px;
 }
 
 .searchResult {

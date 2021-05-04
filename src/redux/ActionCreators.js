@@ -63,7 +63,9 @@ export const increaseStock = (resourceId, unitPrice, quantity, from, name) => (d
                                         () =>{
                                             dispatch(changeResourceInfo(resourceId,totalCost,stockQuantity));
                                         }
-                                    )
+                                    ).then(() =>{
+                                        dispatch(fetchOutOfStockProducts());
+                                    })
                                         .catch(error => {
                                             dispatch(failedToSaveFlippingCardSaveButton());
                                             console.log(error.message);
@@ -92,7 +94,18 @@ export const increaseStock = (resourceId, unitPrice, quantity, from, name) => (d
             firestore.collection('resourceMonthReport').doc(id).get()
                 .then(doc =>{
                     if(doc.exists){
-
+                        let data = doc.data();
+                        let totalCost = parseInt(data.totalCost) + (unitPrice * quantity);
+                        let totalQuantity = (parseInt(data.totalQuantity) + parseInt(quantity));
+                        firestore.collection('resourceMonthReport').doc(id).set({
+                            totalCost: totalCost,
+                            totalQuantity:totalQuantity,
+                            updateAt: firebasestore.FieldValue.serverTimestamp()
+                        },{merge:true}).then(() => {
+                            console.log('save succeed');
+                        }).catch(error =>{
+                            console.log(error.message);
+                        });
                     }else{
                         firestore.collection('resourceMonthReport').doc(id).set({
                             name: name,
@@ -104,7 +117,7 @@ export const increaseStock = (resourceId, unitPrice, quantity, from, name) => (d
                             createdAt:  firebasestore.FieldValue.serverTimestamp()
                         }).then(() =>{
 
-                            console.log("sucessifull");
+                            console.log("success");
                         })
                     }
                 }).catch(error => {
@@ -331,7 +344,47 @@ export const pushInvoice = (receptionistName, waiterName, clientName, paymentSta
                                                 console.log("No such document!");
                                             }
 
-                                        })
+                                        }).then(() =>{
+                                        let date = new Date();
+                                        let month = date.getMonth();
+                                        let year = date.getFullYear();
+
+                                        let id = month + '_' + year + '_' + order.productName;
+
+                                        firestore.collection('productMonthReport').doc(id).get()
+                                            .then(doc =>{
+                                                if(doc.exists){
+                                                    let data = doc.data();
+                                                    let totalPrice = parseInt(data.totalPrice) + (order.price * order.quantity);
+                                                    let totalQuantity = (parseInt(data.totalQuantity) + parseInt(order.quantity));
+                                                    firestore.collection('productMonthReport').doc(id).set({
+                                                        totalPrice: totalPrice,
+                                                        totalQuantity:totalQuantity,
+                                                        updateAt: firebasestore.FieldValue.serverTimestamp()
+                                                    },{merge:true}).then(() => {
+                                                        console.log('save succeed');
+                                                    }).catch(error =>{
+                                                        console.log(error.message);
+                                                    });
+                                                }else{
+                                                    firestore.collection('productMonthReport').doc(id).set({
+                                                        name: order.productName,
+                                                        totalPrice: (order.price * order.quantity),
+                                                        totalQuantity:order.quantity,
+                                                        month:month,
+                                                        year:year,
+                                                        updateAt: firebasestore.FieldValue.serverTimestamp(),
+                                                        createdAt:  firebasestore.FieldValue.serverTimestamp()
+                                                    }).then(() =>{
+
+                                                        console.log("success");
+                                                    })
+                                                }
+                                            }).catch(error => {
+                                            console.log(error.message);
+                                        });
+
+                                    })
                                         .catch(error => {
                                             console.log(error.message);
                                             dispatch(invoiceDetailsFailed(error));
@@ -458,6 +511,10 @@ export const addResourcesReport = (resourceId, unitPrice, quantity, to, name) =>
                                     firestore.collection('resources').doc(resourceId).update({
                                         stockQuantity: stockQuantity,
                                         totalCost: totalCost
+                                    }).then(() =>{
+                                        dispatch(changeResourceInfo(resourceId,totalCost,stockQuantity));
+                                    }).then(() =>{
+                                        dispatch(fetchOutOfStockProducts());
                                     })
                                         .catch(error => {
                                             dispatch(failedToSaveFlippingCardSaveButton());

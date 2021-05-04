@@ -61,6 +61,9 @@ let sideBarItems = [
 ];
 
 var Navigation = (props) => {
+    let changeActiveTabInProduct = () =>{
+      localStorage.setItem('activeTabInProducts','food');
+    };
     const [isOpen, setIsOpen] = useState(false);
     const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -71,7 +74,7 @@ var Navigation = (props) => {
 
     let output = sideBarItems.map(item => {
         return (
-            <NavItem>
+            <NavItem onClick={changeActiveTabInProduct}>
                 <NavLink className="nav-link" to={item.to}>
                     <span className={item.icon}> {item.name} </span>
                 </NavLink>
