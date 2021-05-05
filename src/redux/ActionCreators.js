@@ -180,6 +180,64 @@ export const uploadProductFailed = (error) => ({
     type: ActionTypes.UPLOAD_PRODUCT_FAILED,
     payload: error
 });
+
+
+
+
+export const uploadWaiter = (values, image) => (dispatch) => {
+    if (!auth.currentUser) {
+        console.log("login first");
+        console.log("login first");
+        return;
+    }
+    firestore.collection('waiters').add({
+
+        image: image,
+        firstName:values.firstName,
+        lastName:values.lastName,
+        featured: true,
+        createdAt: firebasestore.FieldValue.serverTimestamp(),
+        updatedAt: firebasestore.FieldValue.serverTimestamp()
+    })
+        .then(docRef => {
+            firestore.collection('waiters').doc(docRef.id).get()
+                .then(doc => {
+                    if (doc.exists) {
+                        const data = doc.data();
+                        const id = doc.id;
+                        let newWaiter = {id, ...data};
+                        dispatch(addOneWaiter(newWaiter));
+                    } else {
+                        // doc.data() will be undefined in this case
+                        console.log("No such document!");
+                    }
+
+                })
+                .catch(error => {
+                    console.log(error.message);
+                });
+        }).catch(error => {
+        console.log(error.message);
+        dispatch(uploadWaiterFailed(error));
+    });
+}
+export const uploadWaiterFailed = (error) => ({
+    type: ActionTypes.UPLOAD_WAITER_FAILED,
+    payload: error
+});
+
+
+export const addOneWaiter = (newWaiter) => ({
+    type: ActionTypes.ADD_ONE_WAITER,
+    payload: newWaiter
+});
+
+
+
+
+
+
+
 export const addOneProduct = (newProduct) => ({
     type: ActionTypes.ADD_ONE_PRODUCT,
     payload: newProduct

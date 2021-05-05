@@ -24,7 +24,16 @@ import {MarchResourceToProducts} from "./collections/marchResourceToProducts";
 import {Reports} from "./others/reports";
 import thunk from "redux-thunk";
 import logger from 'redux-logger';
-import {addMiscellaneous, addNewProduct, addNewResource, InitialFeedback, login, quantity, signUp} from "./Forms";
+import {
+    addMiscellaneous,
+    addNewProduct,
+    addNewResource,
+    addWaiter,
+    InitialFeedback,
+    login,
+    quantity,
+    signUp
+} from "./Forms";
 
 export const ConfigureStore = () => {
     const store = createStore(
@@ -58,7 +67,8 @@ export const ConfigureStore = () => {
                 signUp: signUp,
                 addMiscellaneous: addMiscellaneous,
                 addNewProduct: addNewProduct,
-                addNewResource: addNewResource
+                addNewResource: addNewResource,
+                addWaiter: addWaiter
             })
 
         }),

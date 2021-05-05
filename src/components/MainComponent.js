@@ -28,7 +28,8 @@ import {
     updateProduct,
     uploadMiscellaneous,
     uploadProduct,
-    uploadResource
+    uploadResource,
+    uploadWaiter
 } from "../redux/ActionCreators";
 import {changeDailyDetailsInvoices, changeDailyInvoices, changeDailyStockUp,changeDailyMiscellaneous,
     changeNonPaidInvoices,setDailyPopularProduct,fetchMatchResourceToProducts,fetchResourceMonthReport,fetchProductMonthReport,
@@ -84,6 +85,7 @@ const mapDispatchToProps = (dispatch) => ({
     changeDailyDetailsInvoices: (stateDate, endDate) => dispatch(changeDailyDetailsInvoices(stateDate, endDate)),
     changeDailyInvoices: (startDate, endDate) => dispatch(changeDailyInvoices(startDate, endDate)),
     uploadMiscellaneous: (values, proof) => dispatch(uploadMiscellaneous(values, proof)),
+    uploadWaiter: (values, image) => dispatch(uploadWaiter(values, image)),
     uploadResource: (values, image) => dispatch(uploadResource(values, image)),
     uploadProduct: (values, image) => dispatch(uploadProduct(values, image)),
     pushInvoice: (receptionistName, waiterName, clientName, paymentStatus, totalPrice, orders) => dispatch(pushInvoice(receptionistName, waiterName, clientName, paymentStatus, totalPrice, orders)),
@@ -357,6 +359,7 @@ class Main extends Component {
                                                                         fetchResourceMonthReport={this.props.fetchResourceMonthReport}
                                                                         fetchProductMonthReport={this.props.fetchProductMonthReport}
                                                                         fetchMiscellaneousMonthReport={this.props.fetchMiscellaneousMonthReport}
+                                                                        uploadWaiter={this.props.uploadWaiter}
                                           />}
 
 

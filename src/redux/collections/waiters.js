@@ -14,6 +14,9 @@ export const Waiters = (state = {
 
         case ActionTypes.WAITERS_FAILURE:
             return {...state, isLoading: false, errMess: action.payload, waiters: []};
+        case ActionTypes.ADD_ONE_WAITER:
+            let prev = state.waiters;
+            return {...state, isLoading: false,errMess: null,waiters:[...prev, action.payload] }
 
         default:
             return state;

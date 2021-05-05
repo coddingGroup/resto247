@@ -45,7 +45,12 @@ export const addMiscellaneous = {
     price: '',
     reason: '',
     isExpanse: true,
-    proof: '',
+    proof: null,
     by: '',
     description: 'no more info'
+}
+export const addWaiter={
+    firstName:'',
+    lastName:'',
+    image:null
 }

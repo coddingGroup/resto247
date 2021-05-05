@@ -4,7 +4,7 @@ import {Button, Col, Label, Modal, ModalBody, ModalHeader, Row} from "reactstrap
 import {Control, Errors, Form} from "react-redux-form";
 import {firebaseStorage} from "../../../firebase/firebase";
 
-const CircleMenu = ({items, uploadProduct, uploadResource, uploadMiscellaneous}) => {
+const CircleMenu = ({items, uploadProduct, uploadResource, uploadMiscellaneous, uploadWaiter}) => {
     //const [image, setImage] = useState('');
 
 
@@ -38,17 +38,21 @@ const CircleMenu = ({items, uploadProduct, uploadResource, uploadMiscellaneous})
     const togglerModalR = () => setIsModalOpenR(!isModalOpenR);
 
 
-    let handleProductSubmit = (values, event) => {
-        const file = values.image[0];
-        let fileName = '';
+    const [isModalOpenWaiter, setIsModalOpenWaiter] = useState(false);
+    const togglerModalWaiter = () => setIsModalOpenWaiter(!isModalOpenWaiter);
 
-        if(file === undefined || file ===null){
+
+    let handleProductSubmit = (values, event) => {
+        const image = values.image;
+
+        if(image === undefined || image ===null){
             uploadProduct(values, "images/logo.jpg");
             return;
         }
-        fileName = file.name;
+
+        let file = values.image[0];
+        let fileName = file.name;
         const fileExtension = fileName.split('.').pop();
-        alert(fileExtension);
         const name = values.productName + '-' + (+new Date());
         let ref = firebaseStorage.ref();
         let imagePath = "images/products/" + name + '.' + fileExtension;
@@ -61,12 +65,14 @@ const CircleMenu = ({items, uploadProduct, uploadResource, uploadMiscellaneous})
     };
 
     let handleResourceSubmit = (values, event) => {
-        const file = values.image[0];
+        const image = values.image;
 
-        if(file === undefined || file ===null){
+        if(image === undefined || image ===null){
             uploadResource(values, "images/logo.jpg");
             return;
         }
+
+        let file = values.image[0];
         const fileName = file.name;
         const fileExtension = fileName.split('.').pop();
         const name = values.resourceName + '-' + (+new Date());
@@ -80,16 +86,17 @@ const CircleMenu = ({items, uploadProduct, uploadResource, uploadMiscellaneous})
         });
     };
     let handleMiscellaneousSubmit = (values, event) => {
-        const file = values.proof[0];
+        const image = values.image;
 
-        if(file === undefined || file ===null){
+        if(image === undefined || image ===null){
             uploadMiscellaneous(values, "images/logo.jpg");
             return;
         }
 
+        let file = values.image[0];
+
         const fileName = file.name;
         const fileExtension = fileName.split('.').pop();
-        alert(fileExtension);
         const name = values.reason + '-' + (+new Date());
         let ref = firebaseStorage.ref();
         let imagePath = "images/miscellaneous/" + name + '.' + fileExtension;
@@ -97,6 +104,29 @@ const CircleMenu = ({items, uploadProduct, uploadResource, uploadMiscellaneous})
         const task = fullRef.put(file);
         task.then((snapshot) => {
             uploadMiscellaneous(values, imagePath);
+
+        });
+    };
+
+
+    let handleWaiterSubmit = (values, event) => {
+        const image = values.image;
+
+        if(image === undefined || image ===null){
+            uploadWaiter(values, "images/logo.jpg");
+            return;
+        }
+
+        let file = values.image[0];
+        const fileName = file.name;
+        const fileExtension = fileName.split('.').pop();
+        const name = values.reason + '-' + (+new Date());
+        let ref = firebaseStorage.ref();
+        let imagePath = "images/miscellaneous/" + name + '.' + fileExtension;
+        let fullRef = ref.child(imagePath);
+        const task = fullRef.put(file);
+        task.then((snapshot) => {
+            uploadWaiter(values, imagePath);
 
         });
     };
@@ -561,6 +591,95 @@ const CircleMenu = ({items, uploadProduct, uploadResource, uploadMiscellaneous})
                     </Form>
                 </ModalBody>
             </Modal>
+
+
+            <Modal isOpen={isModalOpenWaiter} toggle={togglerModalWaiter}>
+                <ModalHeader toggle={togglerModalWaiter}>Add Waiter</ModalHeader>
+                <ModalBody>
+                    <Form model="addWaiter" onSubmit={handleWaiterSubmit} encType="multipart/form-data">
+                        <Row className="form-group">
+                            <Label htmlFor="firstName" md={2}> First Name</Label>
+
+
+                            <Col md={10}>
+                                <Control.text model=".firstName" id="firstName" name="firstName"
+                                              placeholder="first name"
+                                              className="form-control"
+                                              validators={{
+                                                  required, minLength: minLength(3), maxLength: maxLength(15)
+                                              }}
+                                />
+                                <Errors
+                                    className="text-danger"
+                                    model=".firstName"
+                                    show="touched"
+                                    messages={{
+                                        required: 'Required',
+                                        minLength: 'Must be greater than 2 characters',
+                                        maxLength: 'Must be 15 characters or less'
+                                    }}
+                                />
+                            </Col>
+                        </Row>
+                        <Row className="form-group">
+                            <Label htmlFor="lastName" md={2}> Second name</Label>
+                            <Col md={10}>
+                                <Control.text model=".lastName" id="lastName" name="lastName"
+                                              placeholder="lastName"
+                                              className="form-control"
+                                              validators={{
+                                                  required, minLength: minLength(3), maxLength: maxLength(15)
+                                              }}
+                                />
+                                <Errors
+                                    className="text-danger"
+                                    model=".lastName"
+                                    show="touched"
+                                    messages={{
+                                        required: 'Required',
+                                        minLength: 'Must be greater than 2 characters',
+                                        maxLength: 'Must be 15 chatacters or less'
+                                    }}
+                                />
+
+                            </Col>
+                        </Row>
+
+                        <Row className="form-group">
+                            <Label htmlFor="image" md={2}> image</Label>
+                            <Col md={10}>
+                                <Control.file model=".image" id="image" name="image"
+                                              placeholder="image"
+                                              className="form-control"
+                                    // validators={{
+                                    //     required, minLength: minLength(4), maxLength: maxLength(30)
+                                    // }}
+                                />
+                                {/*<Errors*/}
+                                {/*    className="text-danger"*/}
+                                {/*    model=".description"*/}
+                                {/*    show="touched"*/}
+                                {/*    messages={{*/}
+                                {/*        required: 'Required',*/}
+                                {/*        minLength: 'Must be greater than 4 characters',*/}
+                                {/*        maxLength: 'Must be 30 chatacters or less'*/}
+                                {/*    }}*/}
+                                {/*/>*/}
+
+                            </Col>
+                        </Row>
+
+                        <Row className="form-group">
+                            <Col md={{size: 10, offset: 2}}>
+                                <Button type="submit" color="primary">
+                                    Save
+                                </Button>
+                            </Col>
+                        </Row>
+                    </Form>
+                </ModalBody>
+            </Modal>
+
             <div class="panel-heading">
 
             </div>
@@ -590,6 +709,15 @@ const CircleMenu = ({items, uploadProduct, uploadResource, uploadMiscellaneous})
                             className="fa fa-money"></i>
                         </button>
                         <span className="row"> Add other expenses </span>
+                    </div>
+                </div>
+
+                <div className="col ">
+                    <div className="">
+                        <button onClick={togglerModalWaiter} type="button" className="btn-primary btn btn-circle btn-xl "><i
+                            className="fa fa-users"></i>
+                        </button>
+                        <span className="row"> Add other waiter </span>
                     </div>
                 </div>
 

@@ -32,6 +32,7 @@ const MainManager = (props) => {
 
                     <CircleMenu uploadResource={props.uploadResource}
                                 uploadMiscellaneous={props.uploadMiscellaneous}
+                                uploadWaiter={props.uploadWaiter}
                                 uploadProduct={props.uploadProduct} items={items}/>
                 </div>
             </div>
