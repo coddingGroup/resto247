@@ -36,6 +36,7 @@ const TableItems = React.forwardRef(
     (props, ref) => {
 
 
+
         if (props.cart.items.length === 0) {
             return <tr></tr>
         } else {
@@ -51,18 +52,24 @@ const TableItems = React.forwardRef(
                 let value = event.target.value;
                 if(name==="waiterName"){
                     props.setWaiterName(value);
+                    localStorage.setItem('waiterName',value);
                 }
                 else if(name==="paymentStatus"){
                     let isChecked = event.target.checked;
                     if(isChecked){
                         props.setPaymentStatus('paid');
+                        props.setChecked(true);
+                        localStorage.setItem('paymentCheckBox','true');
                     }
                     else {
                         props.setPaymentStatus('notPaid');
+                        props.setChecked(false);
+                        localStorage.setItem('paymentCheckBox','false');
                     }
                 }
                 else if(name==="clientName"){
                     props.setClientName(value);
+                    localStorage.setItem('clientName',value);
                 }
 
             }
@@ -158,7 +165,7 @@ const TableItems = React.forwardRef(
                                             <Label className="dontPrint" > <b> Order is paid ?</b></Label>
                                         </Col>
                                         <Col>
-                                            <Input className="dontPrint" name="paymentStatus" value={props.paymentStatus} onChange={handleChange} type="checkBox"/>
+                                            <Input className="dontPrint" name="paymentStatus" defaultChecked={props.checked} onChange={handleChange} type="checkBox"/>
 
                                         </Col>
 
@@ -201,10 +208,11 @@ let TableAddedCarts = ({cart, removeToCart, pushInvoice,waiters}) => {
     const [date, setDate] = useState('');
     const [totalQuantity] = useState(0);
     const [totalPrice] = useState(0);
+    const [checked, setChecked] = useState(localStorage.getItem('paymentCheckBox') === 'true');
     //const [order,setOrder] = useState(null);
-    const [waiterName, setWaiterName] = useState(waiters[0] === undefined?'':waiters[0].firstName);
-    const [clientName, setClientName] = useState('client');
-    const [paymentStatus, setPaymentStatus] = useState("notPaid");
+    const [waiterName, setWaiterName] = useState(localStorage.getItem('waiterName') === null?(waiters[0] === undefined?'':waiters[0].firstName):localStorage.getItem('waiterName'));
+    const [clientName, setClientName] = useState(localStorage.getItem('clientName')===null?'client':localStorage.getItem('clientName'));
+    const [paymentStatus, setPaymentStatus] = useState(localStorage.getItem("paymentCheckBox")==='true'?'paid':'notPaid');
     const [receptionistName] = useState('aime');
     const componentRef = useRef();
     const handlePrint = useReactToPrint({
@@ -213,6 +221,12 @@ let TableAddedCarts = ({cart, removeToCart, pushInvoice,waiters}) => {
 
 
     let handleClick = (event) => {
+        localStorage.setItem('paymentCheckBox','false');
+        setPaymentStatus('notPaid');
+        setClientName('client');
+        setChecked(false);
+
+        localStorage.setItem('clientName','client');
 
         let orderDate = new Date();
         let hour = String(orderDate.getHours()).padStart(2, '0');
@@ -259,6 +273,7 @@ let TableAddedCarts = ({cart, removeToCart, pushInvoice,waiters}) => {
                         waiters={waiters}
                         totalPrice={totalPrice} totalQuantity={totalQuantity} receptionistName={receptionistName}
                         waiterName={waiterName} setWaiterName={setWaiterName}
+                        checked={checked} setChecked={setChecked}
                         clientName={clientName} setClientName={setClientName}
                         paymentStatus={paymentStatus} setPaymentStatus={setPaymentStatus}
                         removeToCart={removeToCart} ref={componentRef}/>

@@ -50,7 +50,7 @@ const CircleMenu = ({items, uploadProduct, uploadResource, uploadMiscellaneous, 
             return;
         }
 
-        let file = values.image[0];
+        const file = values.image[0];
         let fileName = file.name;
         const fileExtension = fileName.split('.').pop();
         const name = values.productName + '-' + (+new Date());
@@ -72,7 +72,7 @@ const CircleMenu = ({items, uploadProduct, uploadResource, uploadMiscellaneous, 
             return;
         }
 
-        let file = values.image[0];
+        const file = values.image[0];
         const fileName = file.name;
         const fileExtension = fileName.split('.').pop();
         const name = values.resourceName + '-' + (+new Date());
@@ -93,7 +93,7 @@ const CircleMenu = ({items, uploadProduct, uploadResource, uploadMiscellaneous, 
             return;
         }
 
-        let file = values.image[0];
+        const file = values.image[0];
 
         const fileName = file.name;
         const fileExtension = fileName.split('.').pop();
@@ -117,12 +117,13 @@ const CircleMenu = ({items, uploadProduct, uploadResource, uploadMiscellaneous, 
             return;
         }
 
-        let file = values.image[0];
+        const file = values.image[0];
+
         const fileName = file.name;
         const fileExtension = fileName.split('.').pop();
         const name = values.reason + '-' + (+new Date());
         let ref = firebaseStorage.ref();
-        let imagePath = "images/miscellaneous/" + name + '.' + fileExtension;
+        let imagePath = "images/waiter/" + name + '.' + fileExtension;
         let fullRef = ref.child(imagePath);
         const task = fullRef.put(file);
         task.then((snapshot) => {
