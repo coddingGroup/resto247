@@ -298,6 +298,7 @@ export const saveMarchedResource = (resource, products) => dispatch =>{
         image: resource.image,
         resourceName: resource.name,
         resourceId: resource.id,
+        autoMatch: false,
         resourceQuantity: resource.matchResourceQuantity,
         products: productsTo
 

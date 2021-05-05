@@ -146,7 +146,7 @@ export const uploadProduct = (values, image) => (dispatch) => {
         description: values.description,
         image: image,
         name: values.productName,
-        marched: false,
+        matched: false,
         price: values.soldPrice,
         quantity: 0,
         featured: true,
@@ -201,6 +201,7 @@ export const uploadResource = (values, image) => (dispatch) => {
         totalCost: 0,
         unit: values.unit,
         featured: true,
+        matched:false,
         createdAt: firebasestore.FieldValue.serverTimestamp(),
         updatedAt: firebasestore.FieldValue.serverTimestamp()
     })
@@ -346,6 +347,7 @@ export const pushInvoice = (receptionistName, waiterName, clientName, paymentSta
         totalPrice: totalPrice,
         featured: true,
         status: "active",
+        orders:orders,
         createdAt: firebasestore.FieldValue.serverTimestamp(),
         updatedAt: firebasestore.FieldValue.serverTimestamp()
     })

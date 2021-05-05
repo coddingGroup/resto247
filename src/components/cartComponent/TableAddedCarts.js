@@ -229,10 +229,22 @@ let TableAddedCarts = ({cart, removeToCart, pushInvoice,waiters}) => {
         let totalPrice = 0;
         let totalQuantity = 0;
         keys.forEach(key => {
+            let matched ;
+            if(cart.items[key].matched !==undefined){
+                matched = cart.items[key].matched;
+            }
+            else if(cart.items[key].marched !==undefined){
+                //miss typing at first data
+                matched = cart.items[key].marched;
+            }
+            else{
+                matched=false;
+            }
             order = [...order, {
                 price: cart.items[key].price
                 , productName: cart.items[key].name
                 , quantity: cart.items[key].quantity,
+                matched: matched
             }];
             totalQuantity = totalQuantity + parseInt(cart.items[key].quantity);
             totalPrice = totalPrice + (cart.items[key].price * cart.items[key].quantity);
