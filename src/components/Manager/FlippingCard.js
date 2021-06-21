@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useState, useEffect} from "react";
 import '../../css/Manager.css';
 import {Form, FormGroup, Input, Label} from "reactstrap";
 import {setImage} from "../../functions/setImage";
@@ -215,7 +215,10 @@ const Back = (props) => {
 
 
 let ImageArea = ({oneProduct}) => {
-    setImage(oneProduct.image);
+    useEffect(() => {
+        setImage(oneProduct.image);
+
+      });
 
     return (
         <div className="image-container">

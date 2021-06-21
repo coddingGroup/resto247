@@ -1,13 +1,15 @@
 import {Button, Card, CardBody, CardImg, CardSubtitle, CardText, CardTitle, Col, Form, Input, Row} from "reactstrap";
 import {Loading} from "../LoadingComponent";
-import React, {useState} from "react";
+import React, {useState, useEffect} from "react";
 import '../../css/Some.css';
 import {setImage} from "../../functions/setImage";
 
 function RenderCard3({item, addToCart, cart}) {
+    useEffect(() => {
+        setImage(item.image);
+      });
 
-
-    setImage(item.image);
+    
     //categorized cards
     const [quantity, setQuantity] = useState('qty:1');
     const [displayD, setDisplayD] = useState("descriptionPartOfCartD_none");

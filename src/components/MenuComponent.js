@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {Breadcrumb, BreadcrumbItem, Card, CardImg, CardImgOverlay, CardTitle} from 'reactstrap';
 import {Link} from "react-router-dom";
 import {Loading} from "./LoadingComponent";
@@ -6,7 +6,10 @@ import {setImage} from "../functions/setImage";
 import '../css/styles.css'
 
 function RenderMenuItem({dish, onClick}) {
+    useEffect(() => {
     setImage(dish.image);
+        
+      });
     return (
         <Card className="card_main">
             {/*{`/menu/${dish.id}}*/}
