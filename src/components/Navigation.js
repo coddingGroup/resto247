@@ -138,9 +138,11 @@ let Navigation = (props) => {
                     <span className="mr-5"> <Search searchText={searchText}  setText={setText} text={text} searchbar="searchbar"/></span>
                     <Nav className="ml-auto" navbar>
                         <NavItem>
-                            <Button className="bg-light">
+                            {/* <Button className="bg-light btn"> */}
+                            <span className="cart-in-nav">
                                 <AddedCart cart={props.cart}/>
-                            </Button>
+                                </span>
+                            {/* </Button> */}
                         </NavItem>
                         {!(localStorage.getItem('user') !== null) ? <span>
                             <Button outline onClick={toggleModal}>

@@ -105,13 +105,13 @@ function Home(props) {
                 <div id="carouselExampleControls" className="carousel slide" data-ride="carousel">
                     <div className="carousel-inner">
                         <div className="carousel-item active">
-                            <img src="https://firebasestorage.googleapis.com/v0/b/resto247-2c1f2.appspot.com/o/images%2Frachel-park-hrlvr2ZlUNk-unsplash.jpg?alt=media&token=206b6974-4f50-48ad-8dbd-f0b59b040a45" className="d-block w-100" alt="food"/>
+                            <img src="https://firebasestorage.googleapis.com/v0/b/restaurant-management-2a3f1.appspot.com/o/brooke-lark-aGjP08-HbYY-unsplash.jpg?alt=media&token=43e34223-e9d6-45ba-8aa5-b7c25e9b739a" className="d-block w-100" alt="food"/>
                         </div>
                         <div className="carousel-item">
-                            <img src="https://firebasestorage.googleapis.com/v0/b/resto247-2c1f2.appspot.com/o/images%2Flily-banse--YHSwy6uqvk-unsplash.jpg?alt=media&token=1bd3db4f-ff6c-45f9-b49d-6d9d8231c272" className="d-block w-100" alt="food"/>
+                            <img src="https://firebasestorage.googleapis.com/v0/b/restaurant-management-2a3f1.appspot.com/o/lily-banse--YHSwy6uqvk-unsplash.jpg?alt=media&token=c97d6974-caef-46f1-a208-2e1f3996b749" className="d-block w-100" alt="food"/>
                         </div>
                         <div className="carousel-item">
-                            <img src="https://firebasestorage.googleapis.com/v0/b/resto247-2c1f2.appspot.com/o/images%2Fbrooke-lark-aGjP08-HbYY-unsplash.jpg?alt=media&token=cd771977-dadb-440d-b6b5-a6e8aeae44fd" className="d-block w-100" alt="food"/>
+                            <img src="https://firebasestorage.googleapis.com/v0/b/restaurant-management-2a3f1.appspot.com/o/rachel-park-hrlvr2ZlUNk-unsplash.jpg?alt=media&token=84c4a0cb-7742-4247-8baa-5928de31a94d" className="d-block w-100" alt="food"/>
                         </div>
                     </div>
                     <a className="carousel-control-prev" href="#carouselExampleControls" role="button"
