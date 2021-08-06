@@ -39,7 +39,7 @@ let StockManagement = (props) => {
                                                              handleSaving={handleSavingForResources}
                                                              changeFlippingCardSaveBehavior={props.changeFlippingCardSaveBehavior}
                                                              increaseStock={props.increaseStock}
-                                                             products={props.resources}/>}/> />}/>
+                                                             products={props.resources}/>}/>
 
                     <Route exact path="/management/stock/dailyUsage"
                            component={() => <IncreaseProduct outOfStockProducts={props.outOfStockProducts}
@@ -50,7 +50,7 @@ let StockManagement = (props) => {
                                                              behaviors={props.behaviors}
                                                              changeFlippingCardSaveBehavior={props.changeFlippingCardSaveBehavior}
                                                              increaseStock={props.increaseStock}
-                                                             products={props.resources}/>}/> />}/>
+                                                             products={props.resources}/>}/>
                     <Route exact path="/management/stock/marchProductToResources"
                            component={() => <MarchProductToResources marchResourceToProducts={props.marchResourceToProducts}
                                                                      saveMarchedResource={props.saveMarchedResource}
